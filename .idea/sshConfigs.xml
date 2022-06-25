@@ -2,7 +2,7 @@
 <project version="4">
   <component name="SshConfigs">
     <configs>
-      <sshConfig host="3.39.73.225" id="ae1690fd-8af5-4c86-a0f3-c6f8d5f37b93" keyPath="C:\Users\so464\Desktop\라이징캠프\RC-6th-Server-a.pem" port="22" nameFormat="DESCRIPTIVE" username="ubuntu" useOpenSSHConfig="true" />
+      <sshConfig host="43.200.100.43" id="8a2310e9-0172-4434-92b5-a84ccf3a0b9c" keyPath="C:\Users\so464\Desktop\라이징캠프\라이징테스트\rising test.pem" port="22" nameFormat="DESCRIPTIVE" username="ubuntu" useOpenSSHConfig="true" />
     </configs>
   </component>
 </project>
