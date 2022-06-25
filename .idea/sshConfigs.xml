@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SshConfigs">
+    <configs>
+      <sshConfig host="3.39.73.225" id="ae1690fd-8af5-4c86-a0f3-c6f8d5f37b93" keyPath="C:\Users\so464\Desktop\라이징캠프\RC-6th-Server-a.pem" port="22" nameFormat="DESCRIPTIVE" username="ubuntu" useOpenSSHConfig="true" />
+    </configs>
+  </component>
+</project>

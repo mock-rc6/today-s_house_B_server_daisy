@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="4014f151-a6f6-4eac-bba5-910a026aa913" name="springboot_rc" url="http://www.daisylee.shop">
+        <fileTransfer rootFolder="/var/www/api-server-spring-boot" accessType="SFTP" host="3.39.73.225" port="22" sshConfigId="ae1690fd-8af5-4c86-a0f3-c6f8d5f37b93" sshConfig="ubuntu@3.39.73.225:22 key" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
