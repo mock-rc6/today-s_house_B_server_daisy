@@ -29,10 +29,23 @@ public enum BaseResponseStatus {
     POST_USERS_EMPTY_EMAIL(false, 2015, "이메일을 입력해주세요."),
     POST_USERS_INVALID_EMAIL(false, 2016, "이메일 형식을 확인해주세요."),
     POST_USERS_EXISTS_EMAIL(false,2017,"중복된 이메일입니다."),
+    POST_USERS_EXISTS_NAME(false, 2018, "중복된 닉네임입니다."),
+    POST_USERS_EMPTY_PASSWORD(false, 2019, "비밀번호를 입력해주세요."),
+    POST_USERS_INVALID_BORN_YEAR(false, 2020,"출생년도를 확인해주세요."),
+    POST_USERS_EMPTY_BORN_YEAR(false, 2021, "출생년도를 입력해주세요."),
+    POST_USERS_EMPTY_NAME(false, 2022, "닉네임을 입력해주세요."),
+    POST_USERS_EMPTY_GENDER(false, 2023, "성별을 입력해주세요."),
+    POST_USERS_SHORT_PASSWORD(false, 2027, "비밀번호가 너무 짧습니다."),
 
     // Common : id형식이 long이어야하는데 String형이 들어왔을 경우/ long의 범위를 넘어갈 경우
-    INVALID_ID(false, 2018, "올바르지 않은 id 형식입니다.")
-    ,
+    INVALID_ID(false, 2024, "올바르지 않은 id 형식입니다."),
+
+    // [POST] /users/log-in
+    POST_LOGIN_CHECK_EMAIL_OR_PW(false, 2025, "이메일이나 패스워드를 확인해주세요."),
+
+    // [PATCH] /users/:userId
+    PATCH_PASSWORD_EMPTY(false, 2026, "변경할 비밀번호를 입력하세요."),
+    PATCH_PASSWORD_SHORT(false, 2028, "변경할 비밀번호가 너무 짧습니다."),
 
     /**
      * 3000 : Response 오류
@@ -44,6 +57,7 @@ public enum BaseResponseStatus {
     DUPLICATED_EMAIL(false, 3013, "중복된 이메일입니다."),
     FAILED_TO_LOGIN(false,3014,"없는 아이디거나 비밀번호가 틀렸습니다."),
 
+    USER_NOT_EXISTS(false, 3015, "존재하지 않는 유저입니다."),
 
 
     /**
@@ -56,8 +70,9 @@ public enum BaseResponseStatus {
     MODIFY_FAIL_USERNAME(false,4014,"유저네임 수정 실패"),
 
     PASSWORD_ENCRYPTION_ERROR(false, 4011, "비밀번호 암호화에 실패하였습니다."),
-    PASSWORD_DECRYPTION_ERROR(false, 4012, "비밀번호 복호화에 실패하였습니다.");
+    PASSWORD_DECRYPTION_ERROR(false, 4012, "비밀번호 복호화에 실패하였습니다."),
 
+    UPDATE_FAIL_PASSWORD(false, 4015, "유저 비밀번호 변경 실패");
 
     // 5000 : 필요시 만들어서 쓰세요
     // 6000 : 필요시 만들어서 쓰세요

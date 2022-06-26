@@ -29,5 +29,16 @@ public class ValidationRegex {
         }
         return true;
     }
+
+    public static   boolean isBornYear(String   year){
+        int length = year.length();
+
+        if(length != 4) return false;
+
+        for(int i=0;i<4;++i)
+            if(year.charAt(i)<'0' || year.charAt(i)>'9')
+                return false;
+        return true;
+    }
 }
 

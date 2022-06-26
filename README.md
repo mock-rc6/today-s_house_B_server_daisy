@@ -26,3 +26,4 @@
 ![오늘의_집_모의외주_프로젝트_20220626_123333](https://user-images.githubusercontent.com/47571973/175799127-263e05e1-550e-41e2-a6dc-d6dcb3a0ed35.png)
 - API 일부 구현 및 [API 명세서](https://docs.google.com/spreadsheets/d/17xysIzGC0r-gmkm_j8YGMpJk9vXouF4FdzwGY2p8GSk/edit?usp=sharing) 업데이트
 - [더미 데이터](https://www.notion.so/softsquared/e967108f6b34437d9a1368212f10a7d1) 일부 제작
+- 회원가입 API, 로그인 API, 비밀번호 변경 API들을 만들었다. 
