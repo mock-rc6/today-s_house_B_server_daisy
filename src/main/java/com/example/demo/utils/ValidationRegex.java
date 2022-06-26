@@ -10,5 +10,24 @@ public class ValidationRegex {
         Matcher matcher = pattern.matcher(target);
         return matcher.find();
     }
+
+    public static boolean   canConvertLong(String   id){
+        int length = id.length();
+
+        if(length > 19){
+            return false;
+        }
+
+        for(int i=0;i<length;++i){
+            if(id.charAt(i)<'0' || id.charAt(i)>'9'){
+                return false;
+            }
+        }
+
+        if(length == 19){
+            return id.compareTo("9223372036854775809") < 0;
+        }
+        return true;
+    }
 }
 
