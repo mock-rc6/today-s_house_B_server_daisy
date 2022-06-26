@@ -1,4 +1,4 @@
-package com.example.demo.src.user;
+package com.example.demo.src.user.dao;
 
 
 import com.example.demo.src.user.model.*;

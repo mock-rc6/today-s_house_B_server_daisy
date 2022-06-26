@@ -30,7 +30,9 @@ public enum BaseResponseStatus {
     POST_USERS_INVALID_EMAIL(false, 2016, "이메일 형식을 확인해주세요."),
     POST_USERS_EXISTS_EMAIL(false,2017,"중복된 이메일입니다."),
 
-
+    // Common : id형식이 long이어야하는데 String형이 들어왔을 경우/ long의 범위를 넘어갈 경우
+    INVALID_ID(false, 2018, "올바르지 않은 id 형식입니다.")
+    ,
 
     /**
      * 3000 : Response 오류
