@@ -12,5 +12,7 @@ import java.util.List;
 public class GetCategoryRes {
     long            categoryId;
     List<String>    categoryList;
+    List<Long>      categoryIdList;
     List<String>    subCategoryList;
+    List<Long>      subCategoryIdList;
 }

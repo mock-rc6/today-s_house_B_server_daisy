@@ -40,11 +40,16 @@ public class CategoryDao {
                 "WHERE categoryId = ?;";
         long                retrieveCategoryQueryParams = categoryId;
         String              subqueryForRetrieveCategoriesQuery = "SELECT name FROM Categories;";
+        String              subqueryForRetrieveCategoryIdQuery = "SELECT categoryId FROM Categories;";
+        String              retrieveCategoryIdQuery = "SELECT subCategoryId FROM SubCategories\n" +
+                "WHERE categoryId = ?;";
 
         return  new GetCategoryRes(
                 categoryId,
                 this.jdbcTemplate.query(subqueryForRetrieveCategoriesQuery, (rs, rowNum)-> rs.getString("name")),
-                this.jdbcTemplate.query(retrieveCategoryQuery, (rs, rowNum)->rs.getString("name"), retrieveCategoryQueryParams)
+                this.jdbcTemplate.query(subqueryForRetrieveCategoryIdQuery, (rs, rowNum)-> rs.getLong("categoryId")),
+                this.jdbcTemplate.query(retrieveCategoryQuery, (rs, rowNum)->rs.getString("name"), retrieveCategoryQueryParams),
+                this.jdbcTemplate.query(retrieveCategoryIdQuery, (rs, rowNum)->rs.getLong("subCategoryId"), retrieveCategoryQueryParams)
         );
     }
 }
