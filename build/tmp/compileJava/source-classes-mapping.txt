@@ -18,14 +18,22 @@ com/example/demo/utils/ValidationRegex.java
  com.example.demo.utils.ValidationRegex
 com/example/demo/src/user/controller/UserController.java
  com.example.demo.src.user.controller.UserController
+com/example/demo/src/review/service/ReviewService.java
+ com.example.demo.src.review.service.ReviewService
+com/example/demo/src/category/controller/CategoryController.java
+ com.example.demo.src.category.controller.CategoryController
 com/example/demo/config/BaseResponseStatus.java
  com.example.demo.config.BaseResponseStatus
 com/example/demo/src/main/controller/MainController.java
  com.example.demo.src.main.controller.MainController
+com/example/demo/src/category/model/GetCategoryRes.java
+ com.example.demo.src.category.model.GetCategoryRes
 com/example/demo/src/store/model/GetStoreRes.java
  com.example.demo.src.store.model.GetStoreRes
 com/example/demo/src/WebSecurityConfig.java
  com.example.demo.src.WebSecurityConfig
+com/example/demo/src/category/model/GetAllCategoryRes.java
+ com.example.demo.src.category.model.GetAllCategoryRes
 com/example/demo/src/test/TestController.java
  com.example.demo.src.test.TestController
 com/example/demo/src/img/model/Img.java
@@ -38,6 +46,8 @@ com/example/demo/config/secret/Secret.java
  com.example.demo.config.secret.Secret
 com/example/demo/src/main/MainProvider.java
  com.example.demo.src.main.MainProvider
+com/example/demo/src/review/ReviewProvider.java
+ com.example.demo.src.review.ReviewProvider
 com/example/demo/src/main/model/GetEventsRes.java
  com.example.demo.src.main.model.GetEventsRes
 com/example/demo/src/user/model/PostUserRes.java
@@ -50,6 +60,8 @@ com/example/demo/src/store/StoreProvider.java
  com.example.demo.src.store.StoreProvider
 com/example/demo/src/user/model/PostLogInReq.java
  com.example.demo.src.user.model.PostLogInReq
+com/example/demo/src/review/dao/ReviewDao.java
+ com.example.demo.src.review.dao.ReviewDao
 com/example/demo/config/BaseException.java
  com.example.demo.config.BaseException
 com/example/demo/DemoApplication.java
@@ -60,6 +72,8 @@ com/example/demo/utils/JwtService.java
  com.example.demo.utils.JwtService
 com/example/demo/src/user/model/PatchPasswordReq.java
  com.example.demo.src.user.model.PatchPasswordReq
+com/example/demo/src/review/controller/ReviewController.java
+ com.example.demo.src.review.controller.ReviewController
 com/example/demo/src/user/UserProvider.java
  com.example.demo.src.user.UserProvider
 com/example/demo/config/AWSConfig.java

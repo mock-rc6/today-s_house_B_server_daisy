@@ -47,6 +47,10 @@ public enum BaseResponseStatus {
     PATCH_PASSWORD_EMPTY(false, 2026, "변경할 비밀번호를 입력하세요."),
     PATCH_PASSWORD_SHORT(false, 2028, "변경할 비밀번호가 너무 짧습니다."),
 
+    // [GET] /app/categories?category-id=:categoryId
+    EMPTY_CATEGORY_ID(false, 2029, "카테고리가 비어있습니다."),
+    GET_CATEGORY_NOT_EXISTS(false, 2030, "없는 카테고리입니다."),
+
     /**
      * 3000 : Response 오류
      */
