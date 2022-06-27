@@ -40,5 +40,17 @@ public class ValidationRegex {
                 return false;
         return true;
     }
+
+    public static   boolean isRegexUrl(String   url){
+        String regex = "((http|https)://)(www.)?"
+                + "[a-zA-Z0-9@:%._\\+~#?&//=]"
+                + "{2,256}\\.[a-z]"
+                + "{2,6}\\b([-a-zA-Z0-9@:%"
+                + "._\\+~#?&//=]*)";
+
+        Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(url);
+        return  matcher.find();
+    }
 }
 

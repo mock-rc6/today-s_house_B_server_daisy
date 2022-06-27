@@ -5,6 +5,7 @@ import com.example.demo.config.BaseResponse;
 import com.example.demo.config.BaseResponseStatus;
 import com.example.demo.src.category.CategoryProvider;
 import com.example.demo.src.category.model.GetCategoryRes;
+import com.example.demo.utils.JwtService;
 import com.example.demo.utils.ValidationRegex;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 public class CategoryController {
     @Autowired
     private final CategoryProvider      categoryProvider;
+    @Autowired
+    private final JwtService            jwtService;
 
     @ResponseBody
     @GetMapping("")
@@ -36,4 +39,7 @@ public class CategoryController {
             return  new BaseResponse<>(baseException.getStatus());
         }
     }
+
+    //@ResponseBody
+    //@GetMapping("/{categoryId}")
 }
