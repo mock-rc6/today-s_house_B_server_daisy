@@ -51,6 +51,12 @@ public enum BaseResponseStatus {
     EMPTY_CATEGORY_ID(false, 2029, "카테고리가 비어있습니다."),
     GET_CATEGORY_NOT_EXISTS(false, 2030, "없는 카테고리입니다."),
 
+    // COMMON
+    EMPTY_PATH_VARIABLE(false, 2031, "path variable이 비어있습니다."),
+
+    // [GET] /app/events/:eventId
+    EVENT_NOT_EXISTS(false, 2032, "존재하지 않는 이벤트입니다."),
+
     /**
      * 3000 : Response 오류
      */

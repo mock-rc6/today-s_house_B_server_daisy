@@ -1,5 +1,6 @@
 package com.example.demo.src.main.DAO;
 
+import com.example.demo.src.main.model.GetEventDetailRes;
 import com.example.demo.src.main.model.GetEventsRes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -39,5 +40,29 @@ public class MainDao {
                         rs.getString("due")
                 )
                 );
+    }
+
+    public int  checkEventId(long   eventId){
+        String      checkEventIdQuery = "SELECT EXISTS(\n" +
+                "    SELECT eventId FROM rising_test.Events\n" +
+                "    WHERE TIMESTAMPDIFF(DAY, CURRENT_TIMESTAMP, due) > -30 AND\n" +
+                "          TIMESTAMPDIFF(DAY, CURRENT_TIMESTAMP, due)<30 AND\n" +
+                "          eventId = ?\n" +
+                "           );";
+        long        checkEventIdQueryParams = eventId;
+
+        return this.jdbcTemplate.queryForObject(checkEventIdQuery, int.class, checkEventIdQueryParams);
+    }
+
+    public GetEventDetailRes    retrieveEventDetails(long   eventId){
+        String      retrieveEventDetailsQuery = "SELECT\n" +
+                "    imgUrl\n" +
+                "FROM    EventImgs   WHERE eventId = ?;";
+        long        retrieveEventDetailsQueryParams = eventId;
+
+        return  new GetEventDetailRes(eventId,
+                this.jdbcTemplate.query(retrieveEventDetailsQuery,
+                        (rs, rowNum)-> rs.getString("imgUrl")
+                        ,retrieveEventDetailsQueryParams));
     }
 }

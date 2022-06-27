@@ -54,6 +54,8 @@ com/example/demo/src/user/model/PostUserRes.java
  com.example.demo.src.user.model.PostUserRes
 com/example/demo/config/BaseResponse.java
  com.example.demo.config.BaseResponse
+com/example/demo/src/main/model/GetEventDetailRes.java
+ com.example.demo.src.main.model.GetEventDetailRes
 com/example/demo/src/store/controller/StoreController.java
  com.example.demo.src.store.controller.StoreController
 com/example/demo/src/store/StoreProvider.java
