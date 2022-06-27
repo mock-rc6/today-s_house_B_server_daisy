@@ -1,5 +1,3 @@
-com/example/demo/src/user/dao/UserDao.java
- com.example.demo.src.user.dao.UserDao
 com/example/demo/utils/SHA256.java
  com.example.demo.utils.SHA256
 com/example/demo/src/user/model/PostUserReq.java
@@ -8,30 +6,52 @@ com/example/demo/src/user/model/PostLogInRes.java
  com.example.demo.src.user.model.PostLogInRes
 com/example/demo/config/Constant.java
  com.example.demo.config.Constant
-com/example/demo/config/secret/Secret.java
- com.example.demo.config.secret.Secret
+com/example/demo/src/category/dao/CategoryDao.java
+ com.example.demo.src.category.dao.CategoryDao
 com/example/demo/src/store/dao/StoreDao.java
  com.example.demo.src.store.dao.StoreDao
-com/example/demo/src/user/model/PostUserRes.java
- com.example.demo.src.user.model.PostUserRes
+com/example/demo/src/img/service/ImgService.java
+ com.example.demo.src.img.service.ImgService
+com/example/demo/src/main/DAO/MainDao.java
+ com.example.demo.src.main.DAO.MainDao
 com/example/demo/utils/ValidationRegex.java
  com.example.demo.utils.ValidationRegex
-com/example/demo/config/BaseResponse.java
- com.example.demo.config.BaseResponse
 com/example/demo/src/user/controller/UserController.java
  com.example.demo.src.user.controller.UserController
+com/example/demo/config/BaseResponseStatus.java
+ com.example.demo.config.BaseResponseStatus
+com/example/demo/src/main/controller/MainController.java
+ com.example.demo.src.main.controller.MainController
+com/example/demo/src/store/model/GetStoreRes.java
+ com.example.demo.src.store.model.GetStoreRes
+com/example/demo/src/WebSecurityConfig.java
+ com.example.demo.src.WebSecurityConfig
+com/example/demo/src/test/TestController.java
+ com.example.demo.src.test.TestController
+com/example/demo/src/img/model/Img.java
+ com.example.demo.src.img.model.Img
+com/example/demo/src/category/CategoryProvider.java
+ com.example.demo.src.category.CategoryProvider
+com/example/demo/src/user/dao/UserDao.java
+ com.example.demo.src.user.dao.UserDao
+com/example/demo/config/secret/Secret.java
+ com.example.demo.config.secret.Secret
+com/example/demo/src/main/MainProvider.java
+ com.example.demo.src.main.MainProvider
+com/example/demo/src/main/model/GetEventsRes.java
+ com.example.demo.src.main.model.GetEventsRes
+com/example/demo/src/user/model/PostUserRes.java
+ com.example.demo.src.user.model.PostUserRes
+com/example/demo/config/BaseResponse.java
+ com.example.demo.config.BaseResponse
 com/example/demo/src/store/controller/StoreController.java
  com.example.demo.src.store.controller.StoreController
 com/example/demo/src/store/StoreProvider.java
  com.example.demo.src.store.StoreProvider
 com/example/demo/src/user/model/PostLogInReq.java
  com.example.demo.src.user.model.PostLogInReq
-com/example/demo/config/BaseResponseStatus.java
- com.example.demo.config.BaseResponseStatus
 com/example/demo/config/BaseException.java
  com.example.demo.config.BaseException
-com/example/demo/src/WebSecurityConfig.java
- com.example.demo.src.WebSecurityConfig
 com/example/demo/DemoApplication.java
  com.example.demo.DemoApplication
 com/example/demo/src/store/service/StoreService.java
@@ -40,9 +60,9 @@ com/example/demo/utils/JwtService.java
  com.example.demo.utils.JwtService
 com/example/demo/src/user/model/PatchPasswordReq.java
  com.example.demo.src.user.model.PatchPasswordReq
-com/example/demo/src/test/TestController.java
- com.example.demo.src.test.TestController
 com/example/demo/src/user/UserProvider.java
  com.example.demo.src.user.UserProvider
+com/example/demo/config/AWSConfig.java
+ com.example.demo.config.AWSConfig
 com/example/demo/src/user/service/UserService.java
  com.example.demo.src.user.service.UserService

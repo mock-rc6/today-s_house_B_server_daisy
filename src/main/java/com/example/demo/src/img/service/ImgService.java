@@ -21,6 +21,7 @@ import java.util.Optional;
 @Slf4j
 public class ImgService {
 
+    /*
     private final AmazonS3Client    amazonS3Client;
 
     @Value("${cloud.aws.s3.bucket}")
@@ -63,5 +64,5 @@ public class ImgService {
             return Optional.of(convertFile);
         }
         return Optional.empty();
-    }
+    }*/
 }
