@@ -31,5 +31,7 @@
 ### 3️⃣ 3일차 [2022-06-27] 진행 상황
 - 이벤트 배너를 가져오는 API 작성
 - 카테고리 분류 불러오는 API 작성
+- 이벤트 상세페이지 불러오는 API 작성
+- URL Validation을 위한 함수 추가
 - 이미지 업로드를 위한 AWS S3 틀 작성
-- 테이블 추가(MiniCategories)
+- 테이블 추가(MiniCategories, EventImgs)
