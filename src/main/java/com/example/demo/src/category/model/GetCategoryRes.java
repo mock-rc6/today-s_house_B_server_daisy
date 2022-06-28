@@ -10,9 +10,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 public class GetCategoryRes {
-    long            categoryId;
-    List<String>    categoryList;
-    List<Long>      categoryIdList;
-    List<String>    subCategoryList;
-    List<Long>      subCategoryIdList;
+    long                categoryId;
+    List<GetCategory>   categories;
+    List<GetCategory>   subCategories;
 }

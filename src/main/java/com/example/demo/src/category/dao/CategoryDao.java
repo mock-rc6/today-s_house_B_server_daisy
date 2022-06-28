@@ -1,11 +1,13 @@
 package com.example.demo.src.category.dao;
 
+import com.example.demo.src.category.model.GetCategory;
 import com.example.demo.src.category.model.GetCategoryRes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
+import java.util.List;
 
 @Repository
 public class CategoryDao {
@@ -35,21 +37,28 @@ public class CategoryDao {
         return  this.jdbcTemplate.queryForObject(checkMiniCategoryQuery, int.class, checkMiniCategoryParams);
     }
 
-    public GetCategoryRes   retrieveCategory(long   categoryId){
-        String              retrieveCategoryQuery = "SELECT name FROM SubCategories\n" +
-                "WHERE categoryId = ?;";
-        long                retrieveCategoryQueryParams = categoryId;
-        String              subqueryForRetrieveCategoriesQuery = "SELECT name FROM Categories;";
-        String              subqueryForRetrieveCategoryIdQuery = "SELECT categoryId FROM Categories;";
-        String              retrieveCategoryIdQuery = "SELECT subCategoryId FROM SubCategories\n" +
-                "WHERE categoryId = ?;";
+    public List<GetCategory> retrieveMainCategory(){
+        String              retrieveMainCategoryQuery = "SELECT name, categoryId FROM Categories;";
 
+        return this.jdbcTemplate.query(
+                retrieveMainCategoryQuery,
+                (rs, rowNum) -> new GetCategory(rs.getString("name"), rs.getLong("categoryId"))
+        );
+    }
+
+    public List<GetCategory>    retrieveSubCategory(){
+        String  retrieveSubCategoryQuery = "SELECT subCategoryId, name FROM SubCategories;";
+
+        return this.jdbcTemplate.query(retrieveSubCategoryQuery,
+                (rs, rowNum) -> new GetCategory(
+                        rs.getString("name"), rs.getLong("subCategoryId")
+                ));
+    }
+    public GetCategoryRes   retrieveCategory(long   categoryId){
         return  new GetCategoryRes(
                 categoryId,
-                this.jdbcTemplate.query(subqueryForRetrieveCategoriesQuery, (rs, rowNum)-> rs.getString("name")),
-                this.jdbcTemplate.query(subqueryForRetrieveCategoryIdQuery, (rs, rowNum)-> rs.getLong("categoryId")),
-                this.jdbcTemplate.query(retrieveCategoryQuery, (rs, rowNum)->rs.getString("name"), retrieveCategoryQueryParams),
-                this.jdbcTemplate.query(retrieveCategoryIdQuery, (rs, rowNum)->rs.getLong("subCategoryId"), retrieveCategoryQueryParams)
+                retrieveMainCategory(),
+                retrieveSubCategory()
         );
     }
 }

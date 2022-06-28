@@ -86,6 +86,8 @@ com/example/demo/src/review/controller/ReviewController.java
  com.example.demo.src.review.controller.ReviewController
 com/example/demo/src/user/UserProvider.java
  com.example.demo.src.user.UserProvider
+com/example/demo/src/category/model/GetCategory.java
+ com.example.demo.src.category.model.GetCategory
 com/example/demo/config/AWSConfig.java
  com.example.demo.config.AWSConfig
 com/example/demo/src/user/service/UserService.java
