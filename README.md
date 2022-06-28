@@ -35,3 +35,7 @@
 - URL Validation을 위한 함수 추가
 - 이미지 업로드를 위한 AWS S3 틀 작성
 - 테이블 추가(MiniCategories, EventImgs)
+
+### 4️⃣ 4일차 [2022-06-28] 진행 상황
+- 메인 화면 불러오는 API 추가
+- 

@@ -1,8 +1,6 @@
 package com.example.demo.src.main.DAO;
 
-import com.example.demo.src.main.model.GetEventDetailRes;
-import com.example.demo.src.main.model.GetEventsRes;
-import com.example.demo.src.main.model.GetMainRes;
+import com.example.demo.src.main.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -67,22 +65,39 @@ public class MainDao {
                         ,retrieveEventDetailsQueryParams));
     }
 
-    public GetMainRes       retrieveMain()  {
+    public List<GetMainEventRes>      retrieveMainEvents(){
         String      getEventInfosQuery = "SELECT eventId, bannerPic\n" +
                 "FROM rising_test.Events\n" +
                 "WHERE TIMESTAMPDIFF(DAY, CURRENT_TIMESTAMP, due) > -30 AND\n" +
                 "      TIMESTAMPDIFF(DAY, CURRENT_TIMESTAMP, due) < 30;";
-        String      getCategoryIdQuery = "SELECT categoryId FROM Categories;";
+
+        return  this.jdbcTemplate.query(
+                getEventInfosQuery,
+                (rs, rowNum) -> new GetMainEventRes(
+                        rs.getString("bannerPic"),
+                        rs.getLong("eventId")
+                )
+        );
+    }
+
+    public List<GetMainHouseRes>    retrieveMainHouse(){
         String      getHouseInfosQuery = "SELECT houseImgUrl, description\n" +
                 "FROM HousePictures HP inner join HouseImgs HI on HP.housePicId = HI.housePicId\n" +
                 "GROUP BY HP.housePicId;";
 
+        return  this.jdbcTemplate.query(getHouseInfosQuery,
+                (rs, rowNum) -> new GetMainHouseRes(
+                        rs.getString("houseImgUrl"),
+                        rs.getString("description")
+                ));
+    }
+    public GetMainRes       retrieveMain()  {
+        String      getCategoryIdQuery = "SELECT categoryId FROM Categories;";
+
         return  new GetMainRes(
-                this.jdbcTemplate.query(getEventInfosQuery, (rs, rowNum)-> rs.getString("bannerPic")),
-                this.jdbcTemplate.query(getEventInfosQuery, (rs, rowNum)-> rs.getLong("eventId")),
+                retrieveMainEvents(),
                 this.jdbcTemplate.query(getCategoryIdQuery, (rs, rowNum) -> rs.getLong("categoryId")),
-                this.jdbcTemplate.query(getHouseInfosQuery, (rs, rowNum)->rs.getString("houseImgUrl")),
-                this.jdbcTemplate.query(getHouseInfosQuery, (rs, rowNum)->rs.getString("description"))
+                retrieveMainHouse()
         );
     }
 }

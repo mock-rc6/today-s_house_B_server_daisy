@@ -19,8 +19,8 @@ public class StoreController {
     private final StoreProvider storeProvider;
     private final StoreService  storeService;
     private final ImgService    imgService;
-/*
-    @ResponseBody
+
+  /*  @ResponseBody
     @GetMapping("")
     public BaseResponse<GetStoreRes>   retrieveStore() throws BaseException{
         try{
@@ -28,6 +28,6 @@ public class StoreController {
         }catch (BaseException baseException){
             return  new BaseResponse<>(baseException.getStatus());
         }
-    }
-    */
+    }*/
+
 }

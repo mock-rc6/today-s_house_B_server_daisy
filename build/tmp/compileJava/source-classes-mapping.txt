@@ -24,6 +24,8 @@ com/example/demo/src/category/controller/CategoryController.java
  com.example.demo.src.category.controller.CategoryController
 com/example/demo/config/BaseResponseStatus.java
  com.example.demo.config.BaseResponseStatus
+com/example/demo/src/main/model/GetMainEventRes.java
+ com.example.demo.src.main.model.GetMainEventRes
 com/example/demo/src/main/controller/MainController.java
  com.example.demo.src.main.controller.MainController
 com/example/demo/src/category/model/GetCategoryRes.java
@@ -62,6 +64,8 @@ com/example/demo/src/main/model/GetEventDetailRes.java
  com.example.demo.src.main.model.GetEventDetailRes
 com/example/demo/src/store/controller/StoreController.java
  com.example.demo.src.store.controller.StoreController
+com/example/demo/src/main/model/GetMainHouseRes.java
+ com.example.demo.src.main.model.GetMainHouseRes
 com/example/demo/src/store/StoreProvider.java
  com.example.demo.src.store.StoreProvider
 com/example/demo/src/user/model/PostLogInReq.java

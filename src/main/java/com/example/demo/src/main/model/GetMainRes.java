@@ -12,9 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @RequiredArgsConstructor
 public class GetMainRes {
-    List<String>        eventList;
-    List<Long>          eventIdList;
-    List<Long>          categoryList;
-    List<String>        houseImgList;
-    List<String>        houseDescriptionList;
+    List<GetMainEventRes>     getEventInfos;
+    List<Long>                categoryList;
+    List<GetMainHouseRes>     getMainHouseInfos;
 }
