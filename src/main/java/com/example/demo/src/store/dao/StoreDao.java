@@ -1,5 +1,8 @@
 package com.example.demo.src.store.dao;
 
+import com.example.demo.src.category.model.GetCategory;
+import com.example.demo.src.category.model.GetCategoryEventsRes;
+import com.example.demo.src.store.model.GetStoreCategoryRes;
 import com.example.demo.src.store.model.GetStoreMainEvents;
 import com.example.demo.src.store.model.GetStoreRes;
 import com.example.demo.src.store.model.GetTodaysDealMainRes;
@@ -73,6 +76,47 @@ public class StoreDao {
                 retrieveStoreEvents(),
                 this.jdbcTemplate.query(retrieveCategoryIdQuery, (rs, rowNum)->rs.getLong("categoryId")),
                 retrieveTodaysDealMain()
+        );
+    }
+
+    private List<GetCategory>     retrieveSubCategory(long    categoryId){
+        String      retrieveSubCategoryQuery = "SELECT\n" +
+                "    subCategoryId, SC.name\n" +
+                "FROM\n" +
+                "    SubCategories SC inner join Categories C on SC.categoryId = C.categoryId\n" +
+                "WHERE\n" +
+                "    C.categoryId = ?;";
+        long        retrieveSubCategoryQueryParams = categoryId;
+
+        return  this.jdbcTemplate.query(retrieveSubCategoryQuery,
+                (rs, rowNum) -> new GetCategory(rs.getString("SC.name"), rs.getLong("subCategoryId"))
+                ,retrieveSubCategoryQueryParams);
+    }
+
+    private List<GetCategoryEventsRes>  retrieveCategoryEventRes(long categoryId){
+        String      retrieveCategoryEventResQuery = "SELECT\n" +
+                "    C.categoryId, categoryEventImgUrl\n" +
+                "FROM Categories C inner join CategoryEvents CE on C.categoryId = CE.categoryId\n" +
+                "WHERE C.categoryId = ?;";
+        long        retrieveCategoryEventResQueryParams = categoryId;
+
+        return  this.jdbcTemplate.query(
+                retrieveCategoryEventResQuery,
+                (rs, rowNum) -> new GetCategoryEventsRes(
+                        rs.getLong("C.categoryId"),
+                        rs.getString("categoryEventImgUrl")
+                )
+                ,retrieveCategoryEventResQueryParams
+        );
+    }
+    public GetStoreCategoryRes retrieveStoreCategory(long  categoryId){
+        String      retrieveCategoryNameQuery = "SELECT name FROM Categories WHERE categoryId = ?;";
+        long        retrieveCategoryNameQueryParams = categoryId;
+
+        return  new GetStoreCategoryRes(
+                this.jdbcTemplate.queryForObject(retrieveCategoryNameQuery, String.class, retrieveCategoryNameQueryParams),
+                retrieveSubCategory(categoryId),
+                retrieveCategoryEventRes(categoryId)
         );
     }
 }

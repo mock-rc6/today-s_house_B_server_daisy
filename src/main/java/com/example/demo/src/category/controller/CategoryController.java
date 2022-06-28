@@ -23,7 +23,7 @@ public class CategoryController {
     @ResponseBody
     @GetMapping("")
     public BaseResponse<GetCategoryRes>       retrieveCategory(@RequestParam("category-id")String id)  throws BaseException{
-        if(id == null){
+        if(id == null|| id.equals("")){
             return  new BaseResponse<>(BaseResponseStatus.EMPTY_CATEGORY_ID);
         }
         if(!ValidationRegex.canConvertLong(id)){

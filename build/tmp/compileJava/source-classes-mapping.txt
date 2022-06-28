@@ -38,6 +38,8 @@ com/example/demo/src/store/controller/StoreController.java
  com.example.demo.src.store.controller.StoreController
 com/example/demo/src/store/StoreProvider.java
  com.example.demo.src.store.StoreProvider
+com/example/demo/src/category/model/GetCategoryEventsRes.java
+ com.example.demo.src.category.model.GetCategoryEventsRes
 com/example/demo/src/review/dao/ReviewDao.java
  com.example.demo.src.review.dao.ReviewDao
 com/example/demo/config/BaseException.java
@@ -80,6 +82,8 @@ com/example/demo/src/main/model/GetMainHouseRes.java
  com.example.demo.src.main.model.GetMainHouseRes
 com/example/demo/src/user/model/PostLogInReq.java
  com.example.demo.src.user.model.PostLogInReq
+com/example/demo/src/store/model/GetStoreCategoryRes.java
+ com.example.demo.src.store.model.GetStoreCategoryRes
 com/example/demo/DemoApplication.java
  com.example.demo.DemoApplication
 com/example/demo/src/store/service/StoreService.java
