@@ -20,14 +20,15 @@ public class StoreController {
     private final StoreService  storeService;
     private final ImgService    imgService;
 
-  /*  @ResponseBody
+    @ResponseBody
     @GetMapping("")
     public BaseResponse<GetStoreRes>   retrieveStore() throws BaseException{
         try{
-
+            GetStoreRes getStoreRes = storeProvider.retrieveStoreMain();
+            return new BaseResponse<GetStoreRes>(getStoreRes);
         }catch (BaseException baseException){
             return  new BaseResponse<>(baseException.getStatus());
         }
-    }*/
+    }
 
 }
