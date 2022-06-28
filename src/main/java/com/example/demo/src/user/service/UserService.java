@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UserService {
@@ -33,6 +34,7 @@ public class UserService {
 
     }
 
+    @Transactional
     public PostUserRes      createUser(PostUserReq postUserReq) throws BaseException{
         if(userProvider.checkEmail(postUserReq.getEmail()) == 1){
             throw new BaseException(BaseResponseStatus.POST_USERS_EXISTS_EMAIL);
@@ -61,6 +63,7 @@ public class UserService {
         }
     }
 
+    @Transactional
     public void     updatePassword(PatchPasswordReq patchPasswordReq)   throws BaseException{
         if(userProvider.checkUserId(patchPasswordReq.getUserId()) == 0){
             throw new BaseException(BaseResponseStatus.USER_NOT_EXISTS);

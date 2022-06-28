@@ -28,6 +28,8 @@ com/example/demo/src/main/controller/MainController.java
  com.example.demo.src.main.controller.MainController
 com/example/demo/src/category/model/GetCategoryRes.java
  com.example.demo.src.category.model.GetCategoryRes
+com/example/demo/src/main/model/GetMainRes.java
+ com.example.demo.src.main.model.GetMainRes
 com/example/demo/src/store/model/GetStoreRes.java
  com.example.demo.src.store.model.GetStoreRes
 com/example/demo/src/WebSecurityConfig.java
@@ -54,6 +56,8 @@ com/example/demo/src/user/model/PostUserRes.java
  com.example.demo.src.user.model.PostUserRes
 com/example/demo/config/BaseResponse.java
  com.example.demo.config.BaseResponse
+com/example/demo/src/category/model/GetCategoryDetailRes.java
+ com.example.demo.src.category.model.GetCategoryDetailRes
 com/example/demo/src/main/model/GetEventDetailRes.java
  com.example.demo.src.main.model.GetEventDetailRes
 com/example/demo/src/store/controller/StoreController.java

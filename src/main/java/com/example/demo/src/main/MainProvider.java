@@ -5,14 +5,17 @@ import com.example.demo.config.BaseResponseStatus;
 import com.example.demo.src.main.DAO.MainDao;
 import com.example.demo.src.main.model.GetEventDetailRes;
 import com.example.demo.src.main.model.GetEventsRes;
+import com.example.demo.src.main.model.GetMainRes;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
 @AllArgsConstructor
+@Transactional(readOnly = true)
 public class MainProvider {
     @Autowired
     private final MainDao   mainDao;
@@ -43,6 +46,16 @@ public class MainProvider {
             GetEventDetailRes   getEventDetailRes = mainDao.retrieveEventDetails(eventId);
             return  getEventDetailRes;
         }catch (Exception exception){
+            throw new BaseException(BaseResponseStatus.DATABASE_ERROR);
+        }
+    }
+
+    public GetMainRes       retrieveMain()  throws BaseException{
+        try{
+            GetMainRes  getMainRes = mainDao.retrieveMain();
+            return      getMainRes;
+        }
+        catch (Exception exception){
             throw new BaseException(BaseResponseStatus.DATABASE_ERROR);
         }
     }

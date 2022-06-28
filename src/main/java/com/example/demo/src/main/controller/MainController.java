@@ -6,6 +6,7 @@ import com.example.demo.config.BaseResponseStatus;
 import com.example.demo.src.main.MainProvider;
 import com.example.demo.src.main.model.GetEventDetailRes;
 import com.example.demo.src.main.model.GetEventsRes;
+import com.example.demo.src.main.model.GetMainRes;
 import com.example.demo.utils.JwtService;
 import com.example.demo.utils.ValidationRegex;
 import lombok.AllArgsConstructor;
@@ -23,6 +24,11 @@ public class MainController {
     @Autowired
     private final JwtService    jwtService;
 
+    /*
+    * [GET] /events
+    * 현재 마감기간이 30일 이전이거나
+    * 마감된지 30일이 안 된 이벤트들 목록을 불러온다.
+    * */
     @ResponseBody
     @GetMapping("/events")
     public BaseResponse<List<GetEventsRes>> retrieveEvents()    throws BaseException{
@@ -34,6 +40,12 @@ public class MainController {
         }
     }
 
+    /*
+    * [GET] /app/events/:eventId
+    * :eventId에 대한 세부 화면이 불러와진다.
+    * 오늘의 집에서는 세부 정보들이 이미지로 되어있으므로
+    * :eventId에 대한 이벤트 정보 이미지 파일들을 가져온다.
+    * */
     @ResponseBody
     @GetMapping("/events/{eventId}")
     public BaseResponse<GetEventDetailRes>  retrieveEventDetails(@PathVariable("eventId")   String id)  throws BaseException{
@@ -48,6 +60,21 @@ public class MainController {
             long                eventId = Long.parseLong(id);
             GetEventDetailRes   getEventDetailRes = mainProvider.retrieveEventDetails(eventId);
             return  new BaseResponse<>(getEventDetailRes);
+        }catch (BaseException baseException){
+            return  new BaseResponse<>(baseException.getStatus());
+        }
+    }
+
+    /*
+    * [GET] /app : 메인 화면을 불러오는 컨트롤러
+    * 메인 화면에는 이벤트 배너나 카테고리 등이 포함되어 있다.
+    * */
+    @ResponseBody
+    @GetMapping("")
+    public BaseResponse<GetMainRes>     retrieveMain()  throws BaseException{
+        try{
+            GetMainRes  getMainRes = mainProvider.retrieveMain();
+            return  new BaseResponse<GetMainRes>(getMainRes);
         }catch (BaseException baseException){
             return  new BaseResponse<>(baseException.getStatus());
         }

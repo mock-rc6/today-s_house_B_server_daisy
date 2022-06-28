@@ -2,6 +2,7 @@ package com.example.demo.src.main.DAO;
 
 import com.example.demo.src.main.model.GetEventDetailRes;
 import com.example.demo.src.main.model.GetEventsRes;
+import com.example.demo.src.main.model.GetMainRes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -64,5 +65,24 @@ public class MainDao {
                 this.jdbcTemplate.query(retrieveEventDetailsQuery,
                         (rs, rowNum)-> rs.getString("imgUrl")
                         ,retrieveEventDetailsQueryParams));
+    }
+
+    public GetMainRes       retrieveMain()  {
+        String      getEventInfosQuery = "SELECT eventId, bannerPic\n" +
+                "FROM rising_test.Events\n" +
+                "WHERE TIMESTAMPDIFF(DAY, CURRENT_TIMESTAMP, due) > -30 AND\n" +
+                "      TIMESTAMPDIFF(DAY, CURRENT_TIMESTAMP, due) < 30;";
+        String      getCategoryIdQuery = "SELECT categoryId FROM Categories;";
+        String      getHouseInfosQuery = "SELECT houseImgUrl, description\n" +
+                "FROM HousePictures HP inner join HouseImgs HI on HP.housePicId = HI.housePicId\n" +
+                "GROUP BY HP.housePicId;";
+
+        return  new GetMainRes(
+                this.jdbcTemplate.query(getEventInfosQuery, (rs, rowNum)-> rs.getString("bannerPic")),
+                this.jdbcTemplate.query(getEventInfosQuery, (rs, rowNum)-> rs.getLong("eventId")),
+                this.jdbcTemplate.query(getCategoryIdQuery, (rs, rowNum) -> rs.getLong("categoryId")),
+                this.jdbcTemplate.query(getHouseInfosQuery, (rs, rowNum)->rs.getString("houseImgUrl")),
+                this.jdbcTemplate.query(getHouseInfosQuery, (rs, rowNum)->rs.getString("description"))
+        );
     }
 }
