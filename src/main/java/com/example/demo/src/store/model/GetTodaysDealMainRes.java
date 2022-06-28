@@ -16,6 +16,7 @@ public class GetTodaysDealMainRes {
     long        subCategoryId;
     String      saleRate;
     String      price;
+    String      itemName;
     int         reviewNum;
     double      score;
 }

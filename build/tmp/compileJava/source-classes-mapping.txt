@@ -6,6 +6,8 @@ com/example/demo/utils/ValidationRegex.java
  com.example.demo.utils.ValidationRegex
 com/example/demo/src/user/controller/UserController.java
  com.example.demo.src.user.controller.UserController
+com/example/demo/src/category/model/GetCategoryItemRes.java
+ com.example.demo.src.category.model.GetCategoryItemRes
 com/example/demo/config/BaseResponseStatus.java
  com.example.demo.config.BaseResponseStatus
 com/example/demo/src/main/model/GetMainEventRes.java
@@ -40,6 +42,8 @@ com/example/demo/src/store/StoreProvider.java
  com.example.demo.src.store.StoreProvider
 com/example/demo/src/category/model/GetCategoryEventsRes.java
  com.example.demo.src.category.model.GetCategoryEventsRes
+com/example/demo/src/category/model/GetMiniCategoryRes.java
+ com.example.demo.src.category.model.GetMiniCategoryRes
 com/example/demo/src/review/dao/ReviewDao.java
  com.example.demo.src.review.dao.ReviewDao
 com/example/demo/config/BaseException.java

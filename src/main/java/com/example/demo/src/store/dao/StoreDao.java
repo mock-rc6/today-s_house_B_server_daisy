@@ -42,6 +42,7 @@ public class StoreDao {
                 "    SC.name as 'subCategory',\n" +
                 "    SC.subCategoryId as 'subcategoryId',\n" +
                 "    concat(round(IO.saledPrice*100/IO.price),'%') as 'sale rate',\n" +
+                "    I.itemName as 'itemName',\n" +
                 "    concat(IO.saledPrice,'원') as 'price',\n" +
                 "    (SELECT COUNT(*) FROM Reviews R WHERE R.optionId = IO.optionId) as 'review num',\n" +
                 "    CASE WHEN (SELECT AVG(score)   FROM Reviews R WHERE R.optionId = IO.optionId) is not null\n" +
@@ -64,6 +65,7 @@ public class StoreDao {
                         rs.getLong("subcategoryId"),
                         rs.getString("sale rate"),
                         rs.getString("price"),
+                        rs.getString("itemName"),
                         rs.getInt("review num"),
                         rs.getDouble("score")
                 )
