@@ -59,6 +59,7 @@ public enum BaseResponseStatus {
 
     // COMMON
     MINI_CATEGORY_NOT_EXISTS(false, 2033, "존재하지 않는 하위 카테고리입니다."),
+    TYPE_ERROR_NOT_BOOLEAN(false, 2034, "쿼리 파라미터는 boolean형이 들어와야합니다."),
 
 
     /**

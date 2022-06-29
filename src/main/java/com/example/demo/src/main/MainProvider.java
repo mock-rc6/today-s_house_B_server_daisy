@@ -4,6 +4,7 @@ import com.example.demo.config.BaseException;
 import com.example.demo.config.BaseResponseStatus;
 import com.example.demo.src.main.DAO.MainDao;
 import com.example.demo.src.main.model.*;
+import com.example.demo.src.review.model.GetMyReviewsRes;
 import com.example.demo.src.user.UserProvider;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,6 +83,18 @@ public class MainProvider {
             return  mainDao.retrieveMyShopping(userId);
         }
         catch (Exception exception){
+            throw new BaseException(BaseResponseStatus.DATABASE_ERROR);
+        }
+    }
+
+    public List<GetMyReviewsRes>    retrieveMyReviewRes(long  userId, boolean isPhotoReview, boolean isBestReviews) throws BaseException{
+        if(userProvider.checkUserId(userId) == 0){
+            throw   new BaseException(BaseResponseStatus.USER_NOT_EXISTS);
+        }
+
+        try{
+             return mainDao.retrieveMyReviews(userId, isPhotoReview, isBestReviews);
+        }catch (Exception exception){
             throw new BaseException(BaseResponseStatus.DATABASE_ERROR);
         }
     }

@@ -5,6 +5,7 @@ import com.example.demo.config.BaseResponse;
 import com.example.demo.config.BaseResponseStatus;
 import com.example.demo.src.main.MainProvider;
 import com.example.demo.src.main.model.*;
+import com.example.demo.src.review.model.GetMyReviewsRes;
 import com.example.demo.utils.JwtService;
 import com.example.demo.utils.ValidationRegex;
 import lombok.AllArgsConstructor;
@@ -127,6 +128,44 @@ public class MainController {
             return  new BaseResponse<GetMyShoppingRes>(getMyShoppingRes);
         }
         catch (BaseException baseException){
+            return  new BaseResponse<>(baseException.getStatus());
+        }
+    }
+
+    /*
+    * [GET] /app/:userId/reviews
+    * 해당 유저가 작성한 리뷰들을 모아서 볼 수 있다.
+    * 쿼리 파라미터로 필터링을 한다. 이때, 필터링은 필수가 아니다.
+    * */
+    @ResponseBody
+    @GetMapping("/{userId}/reviews")
+    public BaseResponse<List<GetMyReviewsRes>>      retrieveMyReviews(@PathVariable("userId") String id,
+                                                                      @RequestParam(name = "picture-reviews", defaultValue = "false")
+                                                                      String    isPictureReviews,
+                                                                      @RequestParam(name = "best-reviews", defaultValue = "true")
+                                                                      String    isBestReviews
+                                                                      ) throws BaseException{
+        if(!ValidationRegex.canConvertLong(id)){
+            return  new BaseResponse<>(BaseResponseStatus.INVALID_ID);
+        }
+        if(!ValidationRegex.isBoolean(isPictureReviews) || !ValidationRegex.isBoolean(isBestReviews)){
+            return  new BaseResponse<>(BaseResponseStatus.TYPE_ERROR_NOT_BOOLEAN);
+        }
+        try{
+            long    userId = Long.parseLong(id);
+            long    jwtUserId = jwtService.getUserId();
+
+            if(userId != jwtUserId){
+                return  new BaseResponse<>(BaseResponseStatus.INVALID_USER_JWT);
+            }
+
+            boolean pictureReviews = Boolean.parseBoolean(isPictureReviews);
+            boolean bestReviews = Boolean.parseBoolean(isBestReviews);
+
+            List<GetMyReviewsRes>   getMyReviewsResList = mainProvider.retrieveMyReviewRes(userId, pictureReviews, bestReviews);
+
+            return  new BaseResponse<List<GetMyReviewsRes>>(getMyReviewsResList);
+        }catch (BaseException baseException){
             return  new BaseResponse<>(baseException.getStatus());
         }
     }

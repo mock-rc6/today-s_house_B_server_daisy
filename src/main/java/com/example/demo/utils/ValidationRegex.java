@@ -52,5 +52,9 @@ public class ValidationRegex {
         Matcher matcher = pattern.matcher(url);
         return  matcher.find();
     }
+
+    public static   boolean isBoolean(String    str){
+        return  str.equals("true") || str.equals("false");
+    }
 }
 

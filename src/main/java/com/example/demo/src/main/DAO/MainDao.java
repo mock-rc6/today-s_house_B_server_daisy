@@ -1,6 +1,7 @@
 package com.example.demo.src.main.DAO;
 
 import com.example.demo.src.main.model.*;
+import com.example.demo.src.review.model.GetMyReviewsRes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -190,6 +191,63 @@ public class MainDao {
                         rs.getInt("scraps")
                 )
                 , retrieveMyShoppingQueryParams
+        );
+    }
+
+    /*
+    private int                     checkReviewPhoto(long   userId){
+        String      checkReviewPhotoQuery = "SELECT EXISTS(\n" +
+                "    SELECT reviewPicId FROM (ReviewPics RP inner join Reviews R on RP.reviewId = R.reviewId)\n" +
+                "    WHERE  R.userId = ?\n" +
+                "           );";
+        long        checkReviewPhotoQueryParams = userId;
+
+        return  this.jdbcTemplate.queryForObject(checkReviewPhotoQuery, int.class, checkReviewPhotoQueryParams);
+    }*/
+
+    public List<GetMyReviewsRes>      retrieveMyReviews(long  userId, boolean isPhotoReview, boolean isBestReviews){
+        String      retrieveMyReviewsQuery = ("SELECT\n" +
+                "    R.userId        as 'userId',\n" +
+                "    U.name          as 'userName',\n" +
+                "    U.profilePicUrl as 'profilePic',\n" +
+                "    R.score         as 'score',\n" +
+                "    DATE_FORMAT(R.createdAt,'%Y-%m-%d') as 'createdAt',\n" +
+                "    CASE WHEN R.buy = 0 THEN '오늘의집 구매'\n" +
+                "         ELSE '다른 쇼핑몰 구매' END as 'buyAt',\n" +
+                "    I.itemName  as 'itemName',\n" +
+                "    LEFT(R.description, 200) as 'description'\n" +
+                "FROM (((Reviews R inner join Users U on R.userId = U.userId)\n" +
+                "      inner join ItemOptions IO on IO.optionId = R.optionId)\n" +
+                "      inner join Items I on I.itemId = IO.itemId)\n" +
+                "WHERE U.userId = ?\n")+
+                (isPhotoReview? "AND EXISTS (SELECT reviewPicId FROM ReviewPics RP WHERE RP.reviewId = R.reviewId) = 1\n": "")+
+                (isBestReviews?"ORDER BY score DESC;" : "ORDER BY createdAt DESC;");
+
+        String      retrieveReviewImgsQuery = "SELECT reviewPicUrl\n" +
+                "FROM (ReviewPics RP inner join Reviews R on RP.reviewId = R.reviewId)\n" +
+                "WHERE R.userId = ?;";
+
+        long        retrieveMyReviewsQueryParams = userId;
+
+        return  this.jdbcTemplate.query(
+          retrieveMyReviewsQuery,
+                (rs, rowNum) -> new GetMyReviewsRes(
+                        rs.getLong("userId"),
+                        rs.getString("userName"),
+                        rs.getString("profilePic"),
+                        rs.getDouble("score"),
+                        rs.getString("createdAt"),
+                        rs.getString("buyAt"),
+                        rs.getString("itemName"),
+                        rs.getString("description"),
+                        this.jdbcTemplate.query(
+                            retrieveReviewImgsQuery,
+                                (rs2, rowNum2) -> rs2.getString("reviewPicUrl"),
+                                retrieveMyReviewsQueryParams
+                        )
+                )
+                ,
+                retrieveMyReviewsQueryParams
         );
     }
 }
