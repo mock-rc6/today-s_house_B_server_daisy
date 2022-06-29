@@ -54,11 +54,11 @@ public class StoreProvider {
         if(checkItemId(itemId) == 0){
             throw new BaseException(BaseResponseStatus.ITEM_ID_NOT_EXISTS);
         }
-        //try{
+        try{
             return storeDao.retrieveStoreItem(itemId);
-        //}
-       // catch (Exception exception){
-       //     throw new BaseException(BaseResponseStatus.DATABASE_ERROR);
-       // }
+        }
+        catch (Exception exception){
+            throw new BaseException(BaseResponseStatus.DATABASE_ERROR);
+        }
     }
 }

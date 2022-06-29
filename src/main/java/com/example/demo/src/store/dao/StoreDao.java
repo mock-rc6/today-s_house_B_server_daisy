@@ -152,7 +152,7 @@ public class StoreDao {
                 "FROM ((ReviewPics RP inner join Reviews R on RP.reviewId = R.reviewId)\n" +
                 "     inner join ItemOptions IO on IO.optionId = R.optionId)\n" +
                 "     inner join Items I on I.itemId = IO.itemId\n" +
-                "WHERE I.itemId = ?;";
+                "WHERE I.itemId = ? AND R.userId = ?;";
         long        retrieveReviewImgListQueryParams = itemId;
 
         return  this.jdbcTemplate.query(
@@ -169,7 +169,7 @@ public class StoreDao {
                         this.jdbcTemplate.query(
                                 retrieveReviewImgListQuery,
                                 (rs2, rowNum2) -> rs2.getString("reviewPicUrl"),
-                                retrieveReviewImgListQueryParams
+                                retrieveReviewImgListQueryParams, rs.getLong("userId")
                         )
                 )
                 ,
@@ -206,7 +206,7 @@ public class StoreDao {
                 "    I.itemId = ?;";
         long        retrieveStoreItemQueryParams = itemId;
 
-        String  retrieveItemImgQuery = "SELECT pictureUrl FROM ItemPictures WHERE itemId = ?;";
+        String  retrieveItemImgQuery = "SELECT pictureUrl FROM ItemPictures WHERE itemId = ? ;";
         String  retrieveItemInfoImgQuery = "SELECT itemInfoPicUrl FROM ItemInfoPics WHERE itemId = ?;";
 
         return  this.jdbcTemplate.queryForObject(
