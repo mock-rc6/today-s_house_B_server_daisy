@@ -86,6 +86,8 @@ com/example/demo/src/main/MainProvider.java
  com.example.demo.src.main.MainProvider
 com/example/demo/src/review/ReviewProvider.java
  com.example.demo.src.review.ReviewProvider
+com/example/demo/src/store/model/GetStoreItemRes.java
+ com.example.demo.src.store.model.GetStoreItemRes
 com/example/demo/src/main/model/GetMainHouseRes.java
  com.example.demo.src.main.model.GetMainHouseRes
 com/example/demo/src/user/model/PostLogInReq.java

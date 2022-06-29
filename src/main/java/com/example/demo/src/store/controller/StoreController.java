@@ -6,6 +6,7 @@ import com.example.demo.config.BaseResponseStatus;
 import com.example.demo.src.img.service.ImgService;
 import com.example.demo.src.store.StoreProvider;
 import com.example.demo.src.store.model.GetStoreCategoryRes;
+import com.example.demo.src.store.model.GetStoreItemRes;
 import com.example.demo.src.store.model.GetStoreRes;
 import com.example.demo.src.store.service.StoreService;
 import com.example.demo.utils.ValidationRegex;
@@ -41,6 +42,23 @@ public class StoreController {
             long    categoryId = Long.parseLong(id);
             GetStoreCategoryRes getStoreCategoryRes = storeProvider.retrieveStoreCategory(categoryId);
             return  new BaseResponse<GetStoreCategoryRes>(getStoreCategoryRes);
+        }
+        catch (BaseException baseException){
+            return  new BaseResponse<>(baseException.getStatus());
+        }
+    }
+
+    @ResponseBody
+    @GetMapping("/items")
+    public BaseResponse<GetStoreItemRes>   retrieveStoreItem(@RequestParam("id") String id)    throws BaseException{
+        if(!ValidationRegex.canConvertLong(id)){
+            return  new BaseResponse<>(BaseResponseStatus.INVALID_ID);
+        }
+        try{
+            long    itemId = Long.parseLong(id);
+            GetStoreItemRes getStoreItemRes = storeProvider.retrieveStoreItem(itemId);
+
+            return  new BaseResponse<GetStoreItemRes>(getStoreItemRes);
         }
         catch (BaseException baseException){
             return  new BaseResponse<>(baseException.getStatus());

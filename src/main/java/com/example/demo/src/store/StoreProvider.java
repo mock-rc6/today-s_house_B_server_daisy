@@ -5,11 +5,14 @@ import com.example.demo.config.BaseResponseStatus;
 import com.example.demo.src.category.CategoryProvider;
 import com.example.demo.src.store.dao.StoreDao;
 import com.example.demo.src.store.model.GetStoreCategoryRes;
+import com.example.demo.src.store.model.GetStoreItemRes;
 import com.example.demo.src.store.model.GetStoreRes;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -37,5 +40,25 @@ public class StoreProvider {
         }catch(Exception exception){
             throw   new BaseException(BaseResponseStatus.DATABASE_ERROR);
         }
+    }
+
+    public int          checkItemId(long    itemId) throws BaseException{
+        try{
+            return  storeDao.checkItemId(itemId);
+        }catch(Exception exception){
+            throw new BaseException(BaseResponseStatus.DATABASE_ERROR);
+        }
+    }
+
+    public GetStoreItemRes    retrieveStoreItem(long   itemId) throws BaseException{
+        if(checkItemId(itemId) == 0){
+            throw new BaseException(BaseResponseStatus.ITEM_ID_NOT_EXISTS);
+        }
+        //try{
+            return storeDao.retrieveStoreItem(itemId);
+        //}
+       // catch (Exception exception){
+       //     throw new BaseException(BaseResponseStatus.DATABASE_ERROR);
+       // }
     }
 }

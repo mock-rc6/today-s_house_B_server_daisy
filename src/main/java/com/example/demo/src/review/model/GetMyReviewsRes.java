@@ -14,9 +14,9 @@ public class GetMyReviewsRes {
     String          userName;
     String          profilePic;
     double          score;
-    String            createdAt;
-    String       buyAt;
-    String       itemName;
-    String           description;
+    String          createdAt;
+    String          buyAt;
+    String          itemName;
+    String          description;
     List<String>    imgList;
 }
