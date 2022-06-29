@@ -60,12 +60,12 @@ public class UserDao {
     }
 
     public long createUser(PostUserReq  postUserReq){
-        String      createUserQuery = "INSERT INTO Users(email, profilePicUrl, name, password, gender, bornYear)\n" +
+        String      createUserQuery = "INSERT INTO Users(email, profilePicUrl, name, password)\n" +
                 "VALUES\n" +
-                "    (?, ?, ?, ?, ?, ?);";
+                "    (?, ?, ?, ?);";
 
         Object[]    createUserQueryParams = new Object[]{postUserReq.getEmail(), postUserReq.getProfilePicUrl(),
-        postUserReq.getName(), postUserReq.getPassword(), postUserReq.getGender(), Integer.parseInt(postUserReq.getBornYear())};
+        postUserReq.getName(), postUserReq.getPassword()};
 
         // 데이터 삽입 쿼리
         this.jdbcTemplate.update(createUserQuery, createUserQueryParams);

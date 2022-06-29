@@ -49,17 +49,9 @@ public class UserController {
         if(postUserReq.getPassword().length()<8){
             return new BaseResponse<>(BaseResponseStatus.POST_USERS_SHORT_PASSWORD);
         }
-        if(postUserReq.getBornYear() == null){
-            return new BaseResponse<>(BaseResponseStatus.POST_USERS_EMPTY_BORN_YEAR);
-        }
-        if(!ValidationRegex.isBornYear(postUserReq.getBornYear())){
-            return new BaseResponse<>(BaseResponseStatus.POST_USERS_INVALID_BORN_YEAR);
-        }
+
         if(postUserReq.getName() == null){
             return new BaseResponse<>(BaseResponseStatus.POST_USERS_EMPTY_NAME);
-        }
-        if(postUserReq.getGender() == null){
-            return  new BaseResponse<>(BaseResponseStatus.POST_USERS_EMPTY_GENDER);
         }
         if(postUserReq.getProfilePicUrl()== null){
             postUserReq.setProfilePicUrl("");

@@ -12,6 +12,4 @@ public class PostUserReq {
     String      profilePicUrl;
     String      name;
     String      password;
-    String      gender;
-    String      bornYear;
 }
