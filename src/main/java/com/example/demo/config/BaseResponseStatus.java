@@ -57,6 +57,10 @@ public enum BaseResponseStatus {
     // [GET] /app/events/:eventId
     EVENT_NOT_EXISTS(false, 2032, "존재하지 않는 이벤트입니다."),
 
+    // COMMON
+    MINI_CATEGORY_NOT_EXISTS(false, 2033, "존재하지 않는 하위 카테고리입니다."),
+
+
     /**
      * 3000 : Response 오류
      */

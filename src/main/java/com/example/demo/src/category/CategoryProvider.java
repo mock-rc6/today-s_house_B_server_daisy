@@ -4,6 +4,7 @@ import com.example.demo.config.BaseException;
 import com.example.demo.config.BaseResponseStatus;
 import com.example.demo.src.category.dao.CategoryDao;
 import com.example.demo.src.category.model.GetCategory;
+import com.example.demo.src.category.model.GetCategoryDetailRes;
 import com.example.demo.src.category.model.GetCategoryRes;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +53,18 @@ public class CategoryProvider {
         }
         catch (Exception exception){
             throw  new BaseException(BaseResponseStatus.DATABASE_ERROR);
+        }
+    }
+
+    public GetCategoryDetailRes     retrieveMiniCategoryDetailRes(long  miniCategoryId) throws BaseException{
+        if(checkMiniCategoryId(miniCategoryId) == 0){
+            throw new BaseException(BaseResponseStatus.MINI_CATEGORY_NOT_EXISTS);
+        }
+
+        try{
+            return  categoryDao.retrieveCategoryDetailRes(miniCategoryId);
+        }catch (Exception exception){
+            throw new BaseException(BaseResponseStatus.DATABASE_ERROR);
         }
     }
 }

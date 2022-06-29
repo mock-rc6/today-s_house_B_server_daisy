@@ -8,6 +8,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class GetCategoryItemRes {
+    long            itemId;
     long            companyId;
     String          companyName;
     String          itemName;

@@ -10,6 +10,9 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 public class GetCategoryDetailRes {
-    int             miniCategoryId;
-
+    long                            miniCategoryId;
+    List<GetCategory>               smallestCategoryList;
+    List<GetCategoryEventsRes>      categoryEventList;
+    List<GetCategoryItemRes>        MDPickItemList;
+    List<GetCategoryItemRes>        miniCategoryItemList;
 }
