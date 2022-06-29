@@ -215,7 +215,8 @@ public class MainDao {
                 "    CASE WHEN R.buy = 0 THEN '오늘의집 구매'\n" +
                 "         ELSE '다른 쇼핑몰 구매' END as 'buyAt',\n" +
                 "    I.itemName  as 'itemName',\n" +
-                "    LEFT(R.description, 200) as 'description'\n" +
+                "    LEFT(R.description, 200) as 'description',\n" +
+                "    reviewId\n" +
                 "FROM (((Reviews R inner join Users U on R.userId = U.userId)\n" +
                 "      inner join ItemOptions IO on IO.optionId = R.optionId)\n" +
                 "      inner join Items I on I.itemId = IO.itemId)\n" +
@@ -225,7 +226,7 @@ public class MainDao {
 
         String      retrieveReviewImgsQuery = "SELECT reviewPicUrl\n" +
                 "FROM (ReviewPics RP inner join Reviews R on RP.reviewId = R.reviewId)\n" +
-                "WHERE R.userId = ?;";
+                "WHERE R.userId = ? AND R.reviewId = ?;";
 
         long        retrieveMyReviewsQueryParams = userId;
 
@@ -243,7 +244,7 @@ public class MainDao {
                         this.jdbcTemplate.query(
                             retrieveReviewImgsQuery,
                                 (rs2, rowNum2) -> rs2.getString("reviewPicUrl"),
-                                retrieveMyReviewsQueryParams
+                                retrieveMyReviewsQueryParams, rs.getLong("reviewId")
                         )
                 )
                 ,
