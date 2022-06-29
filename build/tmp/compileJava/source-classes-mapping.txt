@@ -20,6 +20,8 @@ com/example/demo/src/main/model/GetMainRes.java
  com.example.demo.src.main.model.GetMainRes
 com/example/demo/src/store/model/GetStoreRes.java
  com.example.demo.src.store.model.GetStoreRes
+com/example/demo/src/main/model/GetMyShoppingRes.java
+ com.example.demo.src.main.model.GetMyShoppingRes
 com/example/demo/src/img/model/Img.java
  com.example.demo.src.img.model.Img
 com/example/demo/src/category/CategoryProvider.java

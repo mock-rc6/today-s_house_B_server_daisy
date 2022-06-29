@@ -36,7 +36,7 @@ public class UserDao {
     public int  checkName(String    name){
         String      checkNameQuery = "SELECT\n" +
                 "    EXISTS(\n" +
-                "        SELECT name    FROM Users WHERE name = ?\n" +
+                "        SELECT name    FROM Users WHERE name = ? AND status = 'ACTIVE'\n" +
                 "        );";
         String      checkNameQueryParams = name;
 

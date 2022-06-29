@@ -4,10 +4,7 @@ import com.example.demo.config.BaseException;
 import com.example.demo.config.BaseResponse;
 import com.example.demo.config.BaseResponseStatus;
 import com.example.demo.src.main.MainProvider;
-import com.example.demo.src.main.model.GetEventDetailRes;
-import com.example.demo.src.main.model.GetEventsRes;
-import com.example.demo.src.main.model.GetMainRes;
-import com.example.demo.src.main.model.GetMyProfileRes;
+import com.example.demo.src.main.model.*;
 import com.example.demo.utils.JwtService;
 import com.example.demo.utils.ValidationRegex;
 import lombok.AllArgsConstructor;
@@ -102,6 +99,34 @@ public class MainController {
             GetMyProfileRes getMyProfileRes = mainProvider.retrieveMyProfile(userId);
             return  new BaseResponse<GetMyProfileRes>(getMyProfileRes);
         }catch (BaseException baseException){
+            return  new BaseResponse<>(baseException.getStatus());
+        }
+    }
+
+    /*
+    * [GET] /app/:userId/my-shoppings
+    * 마이페이지 옆 탭의 마이 쇼핑을 호출했을 때
+    * */
+
+    @ResponseBody
+    @GetMapping("/{userId}/my-shoppings")
+    public BaseResponse<GetMyShoppingRes>  retrieveMyShopping(@PathVariable("userId")  String id)  throws BaseException{
+        if(!ValidationRegex.canConvertLong(id)){
+            return  new BaseResponse<>(BaseResponseStatus.INVALID_ID);
+        }
+
+        try{
+            long    userId = Long.parseLong(id);
+            long    jwtUserId = jwtService.getUserId();
+
+            if(userId != jwtUserId){
+                return new BaseResponse<>(BaseResponseStatus.INVALID_USER_JWT);
+            }
+
+            GetMyShoppingRes getMyShoppingRes = mainProvider.retrieveMyShopping(userId);
+            return  new BaseResponse<GetMyShoppingRes>(getMyShoppingRes);
+        }
+        catch (BaseException baseException){
             return  new BaseResponse<>(baseException.getStatus());
         }
     }

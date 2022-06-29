@@ -3,10 +3,7 @@ package com.example.demo.src.main;
 import com.example.demo.config.BaseException;
 import com.example.demo.config.BaseResponseStatus;
 import com.example.demo.src.main.DAO.MainDao;
-import com.example.demo.src.main.model.GetEventDetailRes;
-import com.example.demo.src.main.model.GetEventsRes;
-import com.example.demo.src.main.model.GetMainRes;
-import com.example.demo.src.main.model.GetMyProfileRes;
+import com.example.demo.src.main.model.*;
 import com.example.demo.src.user.UserProvider;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,6 +67,19 @@ public class MainProvider {
         }
         try{
             return  mainDao.retrieveMyProfile(userId);
+        }
+        catch (Exception exception){
+            throw new BaseException(BaseResponseStatus.DATABASE_ERROR);
+        }
+    }
+
+    public GetMyShoppingRes retrieveMyShopping(long userId) throws BaseException{
+        if(userProvider.checkUserId(userId) == 0){
+            throw new BaseException(BaseResponseStatus.USER_NOT_EXISTS);
+        }
+
+        try{
+            return  mainDao.retrieveMyShopping(userId);
         }
         catch (Exception exception){
             throw new BaseException(BaseResponseStatus.DATABASE_ERROR);

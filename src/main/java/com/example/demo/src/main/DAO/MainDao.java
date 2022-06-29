@@ -138,4 +138,58 @@ public class MainDao {
                 ),
                 retrieveMyProfileQueryParams);
     }
+
+    public GetMyShoppingRes     retrieveMyShopping(long userId){
+        String              retrieveMyShoppingQuery = "SELECT\n" +
+                "    (SELECT COUNT(couponId) FROM Coupons C WHERE C.userId = U.userId) as 'coupons',\n" +
+                "    U.point as 'points',\n" +
+                "    U.level as 'level',\n" +
+                "    (SELECT COUNT(receiptId) FROM Receipts R\n" +
+                "     WHERE TIMESTAMPDIFF(MONTH, R.createdAt, CURRENT_TIMESTAMP)<3 AND R.userId = U.userId\n" +
+                "           AND R.status = 0) as 'waiting',\n" +
+                "    (SELECT COUNT(receiptId) FROM Receipts R\n" +
+                "     WHERE TIMESTAMPDIFF(MONTH, R.createdAt, CURRENT_TIMESTAMP)<3 AND R.userId = U.userId\n" +
+                "           AND R.status = 1) as 'paid',\n" +
+                "    (SELECT COUNT(receiptId) FROM Receipts R\n" +
+                "     WHERE TIMESTAMPDIFF(MONTH, R.createdAt, CURRENT_TIMESTAMP)<3 AND R.userId = U.userId\n" +
+                "           AND R.status = 2) as 'ready',\n" +
+                "    (SELECT COUNT(receiptId) FROM Receipts R\n" +
+                "     WHERE TIMESTAMPDIFF(MONTH, R.createdAt, CURRENT_TIMESTAMP)<3 AND R.userId = U.userId\n" +
+                "           AND R.status = 3) as 'delivery',\n" +
+                "    (SELECT COUNT(receiptId) FROM Receipts R\n" +
+                "     WHERE TIMESTAMPDIFF(MONTH, R.createdAt, CURRENT_TIMESTAMP)<3 AND R.userId = U.userId\n" +
+                "           AND R.status = 4) as 'finish',\n" +
+                "    (SELECT COUNT(receiptId) FROM Receipts R\n" +
+                "     WHERE TIMESTAMPDIFF(MONTH, R.createdAt, CURRENT_TIMESTAMP)<3 AND R.userId = U.userId\n" +
+                "           AND R.status = 5) as 'reviewWritten',\n" +
+                "    (SELECT COUNT(receiptId) FROM Receipts R\n" +
+                "     WHERE TIMESTAMPDIFF(MONTH, R.createdAt, CURRENT_TIMESTAMP)<3 AND R.userId = U.userId) as 'bought',\n" +
+                "    (SELECT COUNT(reviewId) FROM Reviews R WHERE R.userId = U.userId) as 'review',\n" +
+                "    (SELECT COUNT(inquiryId) FROM Inquiry I WHERE I.userId = U.userId) as 'inquiry',\n" +
+                "    (SELECT COUNT(scrapBookId) FROM ScrapBooks S WHERE S.userId = U.userId) as 'scraps'\n" +
+                "FROM\n" +
+                "    Users U\n" +
+                "WHERE userId = ?;";
+        long                retrieveMyShoppingQueryParams = userId;
+
+        return this.jdbcTemplate.queryForObject(
+                retrieveMyShoppingQuery,
+                (rs, rowNum) -> new GetMyShoppingRes(
+                        rs.getInt("coupons"),
+                        rs.getInt("points"),
+                        rs.getString("level"),
+                        rs.getInt("waiting"),
+                        rs.getInt("paid"),
+                        rs.getInt("ready"),
+                        rs.getInt("delivery"),
+                        rs.getInt("finish"),
+                        rs.getInt("reviewWritten"),
+                        rs.getInt("bought"),
+                        rs.getInt("review"),
+                        rs.getInt("inquiry"),
+                        rs.getInt("scraps")
+                )
+                , retrieveMyShoppingQueryParams
+        );
+    }
 }
