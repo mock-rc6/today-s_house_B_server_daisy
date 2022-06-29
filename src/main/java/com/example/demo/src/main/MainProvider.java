@@ -6,6 +6,8 @@ import com.example.demo.src.main.DAO.MainDao;
 import com.example.demo.src.main.model.GetEventDetailRes;
 import com.example.demo.src.main.model.GetEventsRes;
 import com.example.demo.src.main.model.GetMainRes;
+import com.example.demo.src.main.model.GetMyProfileRes;
+import com.example.demo.src.user.UserProvider;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +20,9 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class MainProvider {
     @Autowired
-    private final MainDao   mainDao;
+    private final MainDao       mainDao;
+    @Autowired
+    private final UserProvider  userProvider;
 
     public List<GetEventsRes>   retrieveEvents()    throws BaseException{
         try{
@@ -54,6 +58,18 @@ public class MainProvider {
         try{
             GetMainRes  getMainRes = mainDao.retrieveMain();
             return      getMainRes;
+        }
+        catch (Exception exception){
+            throw new BaseException(BaseResponseStatus.DATABASE_ERROR);
+        }
+    }
+
+    public GetMyProfileRes  retrieveMyProfile(long  userId) throws BaseException{
+        if(userProvider.checkUserId(userId) == 0){
+            throw new BaseException(BaseResponseStatus.USER_NOT_EXISTS);
+        }
+        try{
+            return  mainDao.retrieveMyProfile(userId);
         }
         catch (Exception exception){
             throw new BaseException(BaseResponseStatus.DATABASE_ERROR);

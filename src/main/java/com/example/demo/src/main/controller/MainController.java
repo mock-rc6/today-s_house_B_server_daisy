@@ -7,6 +7,7 @@ import com.example.demo.src.main.MainProvider;
 import com.example.demo.src.main.model.GetEventDetailRes;
 import com.example.demo.src.main.model.GetEventsRes;
 import com.example.demo.src.main.model.GetMainRes;
+import com.example.demo.src.main.model.GetMyProfileRes;
 import com.example.demo.utils.JwtService;
 import com.example.demo.utils.ValidationRegex;
 import lombok.AllArgsConstructor;
@@ -75,6 +76,31 @@ public class MainController {
         try{
             GetMainRes  getMainRes = mainProvider.retrieveMain();
             return  new BaseResponse<GetMainRes>(getMainRes);
+        }catch (BaseException baseException){
+            return  new BaseResponse<>(baseException.getStatus());
+        }
+    }
+
+    /*
+    * [GET] /app/:userId
+    * 유저 마이페이지 화면
+    * */
+    @ResponseBody
+    @GetMapping("/{userId}")
+    public BaseResponse<GetMyProfileRes>    retrieveUserProfile(@PathVariable("userId") String id) throws BaseException{
+        if(!ValidationRegex.canConvertLong(id)){
+            return  new BaseResponse<>(BaseResponseStatus.INVALID_ID);
+        }
+        try{
+            long    userId = Long.parseLong(id);
+            long    jwtUserId = jwtService.getUserId();
+
+            if(userId != jwtUserId){
+                return  new BaseResponse<>(BaseResponseStatus.INVALID_USER_JWT);
+            }
+
+            GetMyProfileRes getMyProfileRes = mainProvider.retrieveMyProfile(userId);
+            return  new BaseResponse<GetMyProfileRes>(getMyProfileRes);
         }catch (BaseException baseException){
             return  new BaseResponse<>(baseException.getStatus());
         }

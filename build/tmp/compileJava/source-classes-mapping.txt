@@ -6,6 +6,8 @@ com/example/demo/utils/ValidationRegex.java
  com.example.demo.utils.ValidationRegex
 com/example/demo/src/user/controller/UserController.java
  com.example.demo.src.user.controller.UserController
+com/example/demo/src/main/model/GetMyProfileRes.java
+ com.example.demo.src.main.model.GetMyProfileRes
 com/example/demo/src/category/model/GetCategoryItemRes.java
  com.example.demo.src.category.model.GetCategoryItemRes
 com/example/demo/config/BaseResponseStatus.java
@@ -94,10 +96,10 @@ com/example/demo/utils/JwtService.java
  com.example.demo.utils.JwtService
 com/example/demo/src/user/model/PatchPasswordReq.java
  com.example.demo.src.user.model.PatchPasswordReq
-com/example/demo/src/store/model/GetStoreMainEvents.java
- com.example.demo.src.store.model.GetStoreMainEvents
 com/example/demo/src/user/UserProvider.java
  com.example.demo.src.user.UserProvider
+com/example/demo/src/store/model/GetStoreMainEvents.java
+ com.example.demo.src.store.model.GetStoreMainEvents
 com/example/demo/src/category/model/GetCategory.java
  com.example.demo.src.category.model.GetCategory
 com/example/demo/src/user/service/UserService.java

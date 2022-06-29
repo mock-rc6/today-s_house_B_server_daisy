@@ -100,4 +100,42 @@ public class MainDao {
                 retrieveMainHouse()
         );
     }
+
+    public GetMyProfileRes  retrieveMyProfile(long  userId){
+        String              retrieveMyProfileQuery = "SELECT\n" +
+                "    U.name              as 'name',\n" +
+                "    U.profilePicUrl     as 'profile',\n" +
+                "    (SELECT COUNT(F.userId) FROM Follows F\n" +
+                "            WHERE F.userId = U.userId) as 'follows',\n" +
+                "    (SELECT COUNT(*) FROM Follows F WHERE F.followedId = U.userId) as 'followers',\n" +
+                "    (SELECT COUNT(housePicId) FROM HousePicLikes HPC WHERE U.userId = HPC.userId) as 'likes',\n" +
+                "    (SELECT COUNT(scrapId)  FROM Scraps S WHERE S.userId = U.userId) as 'scraps',\n" +
+                "    (SELECT COUNT(receiptId) FROM Receipts R WHERE R.userId = U.userId AND\n" +
+                "                                                   TIMESTAMPDIFF(MONTH, R.createdAt, CURRENT_TIMESTAMP)<=3) AS 'order history',\n" +
+                "    (SELECT COUNT(couponId) FROM Coupons C WHERE C.userId = U.userId) as 'coupons',\n" +
+                "    U.point as 'points',\n" +
+                "    ((SELECT COUNT(inquiryId) FROM Inquiry I WHERE I.userId = U.userId)\n" +
+                "     +(SELECT COUNT(inquiryAnswerId) FROM InquiryAnswers IA WHERE IA.userId = U.userId)) as 'inquiry',\n" +
+                "    (SELECT COUNT(reviewId) FROM Reviews R WHERE R.userId = U.userId) as 'my reviews'\n" +
+                "FROM\n" +
+                "    Users U\n" +
+                "WHERE userId = ?;";
+        long                retrieveMyProfileQueryParams = userId;
+
+        return  this.jdbcTemplate.queryForObject(retrieveMyProfileQuery,
+                (rs, rowNum)->new GetMyProfileRes(
+                        rs.getString("name"),
+                        rs.getString("profile"),
+                        rs.getInt("follows"),
+                        rs.getInt("followers"),
+                        rs.getInt("likes"),
+                        rs.getInt("scraps"),
+                        rs.getInt("order history"),
+                        rs.getInt("coupons"),
+                        rs.getInt("points"),
+                        rs.getInt("inquiry"),
+                        rs.getInt("my reviews")
+                ),
+                retrieveMyProfileQueryParams);
+    }
 }
