@@ -82,6 +82,7 @@ public enum BaseResponseStatus {
     NOT_VALID_OPTION(false, 3017, "해당 상품에 속하지 않는 옵션입니다."),
     OPTION_ID_NOT_EXISTS(false, 3018, "존재하지 않는 옵션 id입니다."),
     INVALID_ITEM_OPTION(false, 3019, "올바르지 않은 상품 옵션입니다."),
+    KART_ID_NOT_EXISTS(false, 3020, "장바구니 옵션이 존재하지 않습니다."),
 
     /**
      * 4000 : Database, Server 오류

@@ -143,4 +143,36 @@ public class UserController {
             return new BaseResponse<>(baseException.getStatus());
         }
     }
+
+    @ResponseBody
+    @PatchMapping("/karts/{userId}")
+    public BaseResponse<PatchKartOptionRes> updateKartOptionNum(@PathVariable("userId") String id,
+                                                                @RequestParam("id")String kart,
+                                                                @RequestBody PatchKartOptionReq patchKartOptionReq) throws BaseException{
+
+        if (!ValidationRegex.canConvertLong(id) || !ValidationRegex.canConvertLong(kart)) {
+            return new BaseResponse<>(BaseResponseStatus.INVALID_ID);
+        }
+
+        try{
+            long    userId = Long.parseLong(id);
+            long    jwtUserId = jwtService.getUserId();
+
+            if(jwtUserId != userId){
+                return  new BaseResponse<>(BaseResponseStatus.INVALID_USER_JWT);
+            }
+
+            long    kartId = Long.parseLong(kart);
+
+            patchKartOptionReq.setKartId(kartId);
+            patchKartOptionReq.setUserId(userId);
+
+            PatchKartOptionRes patchKartOptionRes = userService.updateKartOptionNums(patchKartOptionReq);
+
+            return new BaseResponse<PatchKartOptionRes>(patchKartOptionRes);
+        }
+        catch (BaseException baseException){
+            return new BaseResponse<>(baseException.getStatus());
+        }
+    }
 }

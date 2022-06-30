@@ -3,12 +3,12 @@ package com.example.demo.src.user;
 
 import com.example.demo.config.BaseException;
 import com.example.demo.config.BaseResponseStatus;
+import com.example.demo.src.store.StoreProvider;
 import com.example.demo.src.user.dao.UserDao;
-import com.example.demo.src.user.model.GetUserKartRes;
-import com.example.demo.src.user.model.PostLogInReq;
-import com.example.demo.src.user.model.PostLogInRes;
+import com.example.demo.src.user.model.*;
 import com.example.demo.utils.JwtService;
 import com.example.demo.utils.SHA256;
+import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import static com.example.demo.config.BaseResponseStatus.*;
 
 @Service
+@AllArgsConstructor
 @Transactional(readOnly = true)
 public class UserProvider {
 
@@ -26,12 +27,6 @@ public class UserProvider {
 
 
     final Logger logger = LoggerFactory.getLogger(this.getClass());
-
-    @Autowired
-    public UserProvider(UserDao userDao, JwtService jwtService) {
-        this.userDao = userDao;
-        this.jwtService = jwtService;
-    }
 
     public int      checkEmail(String   email)  throws BaseException{
         try{
@@ -100,4 +95,14 @@ public class UserProvider {
             throw new BaseException(BaseResponseStatus.DATABASE_ERROR);
         }
     }
+
+    public int          checkKartId(long    kartId) throws BaseException{
+        try{
+            return  userDao.checkKartId(kartId);
+        }
+        catch (Exception exception){
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
+
 }

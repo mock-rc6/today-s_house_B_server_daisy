@@ -141,10 +141,10 @@ public class UserDao {
     public GetUserKartRes retrieveUserKartInfos(long  userId){
         String      retrieveUserKartInfosQuery = "SELECT\n" +
                 "    concat(FORMAT(SUM(deliveryPrice),0),'원')                   AS 'delivery',\n" +
-                "    concat(FORMAT(COUNT(number), 0),'개')                       AS 'number',\n" +
-                "    concat(FORMAT(SUM(saledPrice),0), '원')                     AS 'saledPrice',\n" +
-                "    concat(FORMAT(SUM(price),0),'원')                           AS 'price',\n" +
-                "    concat(FORMAT(SUM(price)-SUM(saledPrice),0),'원')           AS 'discountPrice'\n" +
+                "    concat(FORMAT(SUM(number), 0),'개')                       AS 'number',\n" +
+                "    concat(FORMAT(SUM(saledPrice*number),0), '원')                     AS 'saledPrice',\n" +
+                "    concat(FORMAT(SUM(price*number),0),'원')                           AS 'price',\n" +
+                "    concat(FORMAT(SUM(price*number)-SUM(saledPrice*number),0),'원')           AS 'discountPrice'\n" +
                 "FROM (KartItems K inner join ItemOptions IO on IO.optionId = K.optionId)\n" +
                 "WHERE\n" +
                 "    K.userId = ? AND K.status = 'N';";
@@ -160,5 +160,48 @@ public class UserDao {
                         rs.getString("delivery")
                 ),
                 retrieveUserKartInfosQueryParams);
+    }
+
+    public PatchKartOptionRes   updateKartOptionNum(PatchKartOptionReq patchKartOptionReq){
+        String      updateKartOptionNumQuery = "UPDATE KartItems\n" +
+                "SET number = ?\n" +
+                "WHERE status = 'N' AND kartId = ?;";
+        Object[]    updateKartOptionNumQueryParams = new Object[]{
+                patchKartOptionReq.getNumber(), patchKartOptionReq.getKartId()
+        };
+        this.jdbcTemplate.update(updateKartOptionNumQuery, updateKartOptionNumQueryParams);
+
+        String      retrieveUserKartQuery = "SELECT\n" +
+                "    concat(FORMAT(SUM(deliveryPrice),0),'원')                   AS 'delivery',\n" +
+                "    concat(FORMAT(SUM(number), 0),'개')                       AS 'number',\n" +
+                "    concat(FORMAT(SUM(saledPrice*number),0), '원')                     AS 'saledPrice',\n" +
+                "    concat(FORMAT(SUM(price*number),0),'원')                           AS 'price',\n" +
+                "    concat(FORMAT(SUM(price*number)-SUM(saledPrice*number),0),'원')           AS 'discountPrice'\n" +
+                "FROM (KartItems K inner join ItemOptions IO on IO.optionId = K.optionId)\n" +
+                "WHERE\n" +
+                "    K.userId = ? AND K.status = 'N';";
+        long        retrieveUserKartQueryParams = patchKartOptionReq.getUserId();
+
+        return this.jdbcTemplate.queryForObject(
+                retrieveUserKartQuery,
+                (rs, rowNum)-> new PatchKartOptionRes(
+                        retrieveUserKart(patchKartOptionReq.getUserId()),
+                        rs.getString("number"),
+                        rs.getString("saledPrice"),
+                        rs.getString("price"),
+                        rs.getString("discountPrice"),
+                        rs.getString("delivery")
+                ),
+                retrieveUserKartQueryParams
+        );
+    }
+
+    public int      checkKartId(long    kartId){
+        String      checkKartIdQuery = "SELECT EXISTS(\n" +
+                "    SELECT kartId FROM KartItems WHERE kartId = ? AND status = 'N'\n" +
+                "           );";
+        long        checkKartIdQueryParams = kartId;
+
+        return this.jdbcTemplate.queryForObject(checkKartIdQuery, int.class, checkKartIdQueryParams);
     }
 }

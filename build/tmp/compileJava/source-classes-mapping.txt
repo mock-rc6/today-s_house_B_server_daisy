@@ -2,6 +2,8 @@ com/example/demo/src/user/model/PostLogInRes.java
  com.example.demo.src.user.model.PostLogInRes
 com/example/demo/config/Constant.java
  com.example.demo.config.Constant
+com/example/demo/src/user/model/PatchKartOptionReq.java
+ com.example.demo.src.user.model.PatchKartOptionReq
 com/example/demo/utils/ValidationRegex.java
  com.example.demo.utils.ValidationRegex
 com/example/demo/src/user/controller/UserController.java
@@ -76,6 +78,8 @@ com/example/demo/src/img/service/ImgService.java
  com.example.demo.src.img.service.ImgService
 com/example/demo/src/main/DAO/MainDao.java
  com.example.demo.src.main.DAO.MainDao
+com/example/demo/src/user/model/PatchKartOptionRes.java
+ com.example.demo.src.user.model.PatchKartOptionRes
 com/example/demo/src/review/service/ReviewService.java
  com.example.demo.src.review.service.ReviewService
 com/example/demo/src/category/controller/CategoryController.java

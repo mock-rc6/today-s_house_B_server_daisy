@@ -4,35 +4,33 @@ package com.example.demo.src.user.service;
 
 import com.example.demo.config.BaseException;
 import com.example.demo.config.BaseResponseStatus;
+import com.example.demo.src.store.StoreProvider;
 import com.example.demo.src.user.dao.UserDao;
 import com.example.demo.src.user.UserProvider;
-import com.example.demo.src.user.model.PatchPasswordReq;
-import com.example.demo.src.user.model.PostUserReq;
-import com.example.demo.src.user.model.PostUserRes;
+import com.example.demo.src.user.model.*;
 import com.example.demo.utils.JwtService;
 import com.example.demo.utils.SHA256;
 import com.example.demo.utils.ValidationRegex;
+import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import static com.example.demo.config.BaseResponseStatus.*;
+import static com.example.demo.config.BaseResponseStatus.DATABASE_ERROR;
+
 @Service
+@Transactional
+@AllArgsConstructor
 public class UserService {
     final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private final UserDao userDao;
     private final UserProvider userProvider;
     private final JwtService jwtService;
-
-    @Autowired
-    public UserService(UserDao userDao, UserProvider userProvider, JwtService jwtService) {
-        this.userDao = userDao;
-        this.userProvider = userProvider;
-        this.jwtService = jwtService;
-
-    }
+    private final StoreProvider storeProvider;
 
     @Transactional
     public PostUserRes      createUser(PostUserReq postUserReq) throws BaseException{
@@ -89,5 +87,22 @@ public class UserService {
         catch (Exception exception){
             throw new BaseException(BaseResponseStatus.DATABASE_ERROR);
         }
+    }
+
+    public PatchKartOptionRes updateKartOptionNums(PatchKartOptionReq patchKartOptionReq) throws BaseException{
+        if(userProvider.checkUserId(patchKartOptionReq.getUserId()) == 0) {
+            throw new BaseException(USER_NOT_EXISTS);
+        }
+
+        if(userProvider.checkKartId(patchKartOptionReq.getKartId()) == 0){
+            throw new BaseException(KART_ID_NOT_EXISTS);
+        }
+
+        //try{
+            return  userDao.updateKartOptionNum(patchKartOptionReq);
+        //}
+       // catch (Exception exception){
+       //     throw new BaseException(DATABASE_ERROR);
+       // }
     }
 }
