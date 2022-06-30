@@ -4,11 +4,9 @@ import com.example.demo.config.BaseException;
 import com.example.demo.config.BaseResponseStatus;
 import com.example.demo.src.category.CategoryProvider;
 import com.example.demo.src.store.dao.StoreDao;
-import com.example.demo.src.store.model.GetItemOptionRes;
-import com.example.demo.src.store.model.GetStoreCategoryRes;
-import com.example.demo.src.store.model.GetStoreItemRes;
-import com.example.demo.src.store.model.GetStoreRes;
+import com.example.demo.src.store.model.*;
 import com.example.demo.src.user.UserProvider;
+import com.example.demo.src.user.model.GetUserKartRes;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -93,26 +91,18 @@ public class StoreProvider {
             throw new BaseException(BaseResponseStatus.OPTION_ID_NOT_EXISTS);
         }
 
-       // try{
+        try{
             return storeDao.checkItemOption(itemId, optionId);
-      //  }catch (Exception exception){
-       //     throw new BaseException(BaseResponseStatus.DATABASE_ERROR);
-      //  }
+        }catch (Exception exception){
+            throw new BaseException(BaseResponseStatus.DATABASE_ERROR);
+        }
     }
 
     public int      checkKartItem(long userId, long optionId)   throws BaseException{
-        if(userProvider.checkUserId(userId) == 0){
-            throw new BaseException(BaseResponseStatus.USER_NOT_EXISTS);
-        }
-
-        if(checkOptionId(optionId) == 0) {
-            throw new BaseException(BaseResponseStatus.OPTION_ID_NOT_EXISTS);
-        }
-
-       // try{
+        try{
             return storeDao.checkKartItem(userId, optionId);
-       // }catch (Exception exception){
-       //     throw new BaseException(BaseResponseStatus.DATABASE_ERROR);
-       // }
+        }catch (Exception exception){
+            throw new BaseException(BaseResponseStatus.DATABASE_ERROR);
+        }
     }
 }

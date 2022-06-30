@@ -39,9 +39,9 @@ public class StoreService {
             throw   new BaseException(BaseResponseStatus.INVALID_ITEM_OPTION);
         }
 
-       // if(storeProvider.checkKartItem(userId, optionId) == 1){
-      //      throw   new BaseException(BaseResponseStatus.KART_ITEM_ALREADY_EXISTS);
-     //   }
+        if(storeProvider.checkKartItem(userId, optionId) == 1){
+            throw   new BaseException(BaseResponseStatus.KART_ITEM_ALREADY_EXISTS);
+        }
 
         try{
             return storeDao.createKartItem(postKartItemReq, userId);

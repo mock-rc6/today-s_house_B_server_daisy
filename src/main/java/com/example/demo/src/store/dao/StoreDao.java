@@ -4,7 +4,8 @@ import com.example.demo.src.category.model.GetCategory;
 import com.example.demo.src.category.model.GetCategoryEventsRes;
 import com.example.demo.src.review.model.GetMyReviewsRes;
 import com.example.demo.src.store.model.*;
-import lombok.AllArgsConstructor;
+import com.example.demo.src.user.model.GetKartInfoRes;
+import com.example.demo.src.user.model.GetUserKartRes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -310,8 +311,10 @@ public class StoreDao {
                 "    SELECT kartId FROM KartItems\n" +
                 "    WHERE optionId = ? AND userId = ? AND status= 'N'\n" +
                 "           );";
+
         Object[]    checkKartItemQueryParams = new Object[]{optionId, userId};
 
-        return  this.jdbcTemplate.queryForObject(checkKartItemQuery, int.class, checkKartItemQueryParams);
+        return  this.jdbcTemplate.queryForObject(checkKartItemQuery, int.class,
+                checkKartItemQueryParams);
     }
 }

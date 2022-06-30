@@ -64,6 +64,7 @@ public enum BaseResponseStatus {
 
     EMPTY_OPTION_NUMBER(false, 2036, "구매할 상품의 개수를 입력해주세요."),
     EMPTY_OPTION_ID(false, 2037, "구매할 상품을 선택해주세요."),
+    KART_ITEM_ALREADY_EXISTS(false, 2038, "장바구니에 이미 담겨져있습니다."),
 
 
     /**
@@ -81,7 +82,6 @@ public enum BaseResponseStatus {
     NOT_VALID_OPTION(false, 3017, "해당 상품에 속하지 않는 옵션입니다."),
     OPTION_ID_NOT_EXISTS(false, 3018, "존재하지 않는 옵션 id입니다."),
     INVALID_ITEM_OPTION(false, 3019, "올바르지 않은 상품 옵션입니다."),
-    KART_ITEM_ALREADY_EXISTS(false, 3020, "장바구니에 이미 담겨져있습니다."),
 
     /**
      * 4000 : Database, Server 오류

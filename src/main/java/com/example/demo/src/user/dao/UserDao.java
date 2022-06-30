@@ -107,4 +107,58 @@ public class UserDao {
 
         return this.jdbcTemplate.update(updatePasswordQuery, updatePasswordQueryParams);
     }
+
+    private List<GetKartInfoRes>      retrieveUserKart(long   userId){
+        String      retrieveUserKartQuery = "SELECT\n" +
+                "    (SELECT pictureUrl FROM ItemOptionPictures IOP\n" +
+                "     WHERE IOP.optionId = IO.optionId\n" +
+                "     GROUP BY IOP.optionId)                             AS 'thumbnail',\n" +
+                "    IO.optionName                                       AS 'optionName',\n" +
+                "    IO.optionId                                         AS 'optionId',\n" +
+                "    number                                              AS 'itemNum',\n" +
+                "    concat(FORMAT(number*saledPrice, 0),'원')        AS 'price',\n" +
+                "    CASE WHEN deliveryPrice = 0 THEN '무료배송'\n" +
+                "         ELSE concat(FORMAT(deliveryPrice,0),'원') end   AS 'delivery'\n" +
+                "FROM ((KartItems K inner join ItemOptions IO on K.optionId = IO.optionId)\n" +
+                "     inner join Items I on I.itemId = IO.itemId)\n" +
+                "WHERE K.userId = ? AND K.status = 'N';";
+        long        retrieveUserKartQueryParams = userId;
+
+        return this.jdbcTemplate.query(
+                retrieveUserKartQuery,
+                (rs, rowNum) -> new GetKartInfoRes(
+                        rs.getString("thumbnail"),
+                        rs.getString("optionName"),
+                        rs.getLong("optionId"),
+                        rs.getInt("itemNum"),
+                        rs.getString("price"),
+                        rs.getString("delivery")
+                )
+                ,retrieveUserKartQueryParams
+        );
+    }
+
+    public GetUserKartRes retrieveUserKartInfos(long  userId){
+        String      retrieveUserKartInfosQuery = "SELECT\n" +
+                "    concat(FORMAT(SUM(deliveryPrice),0),'원')                   AS 'delivery',\n" +
+                "    concat(FORMAT(COUNT(number), 0),'개')                       AS 'number',\n" +
+                "    concat(FORMAT(SUM(saledPrice),0), '원')                     AS 'saledPrice',\n" +
+                "    concat(FORMAT(SUM(price),0),'원')                           AS 'price',\n" +
+                "    concat(FORMAT(SUM(price)-SUM(saledPrice),0),'원')           AS 'discountPrice'\n" +
+                "FROM (KartItems K inner join ItemOptions IO on IO.optionId = K.optionId)\n" +
+                "WHERE\n" +
+                "    K.userId = ? AND K.status = 'N';";
+        long        retrieveUserKartInfosQueryParams = userId;
+
+        return  this.jdbcTemplate.queryForObject(retrieveUserKartInfosQuery,
+                (rs, rowNum)-> new GetUserKartRes(
+                        retrieveUserKart(userId),
+                        rs.getString("number"),
+                        rs.getString("saledPrice"),
+                        rs.getString("price"),
+                        rs.getString("discountPrice"),
+                        rs.getString("delivery")
+                ),
+                retrieveUserKartInfosQueryParams);
+    }
 }

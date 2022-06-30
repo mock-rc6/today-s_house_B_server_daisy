@@ -32,6 +32,8 @@ com/example/demo/src/user/dao/UserDao.java
  com.example.demo.src.user.dao.UserDao
 com/example/demo/config/secret/Secret.java
  com.example.demo.config.secret.Secret
+com/example/demo/src/user/model/GetKartInfoRes.java
+ com.example.demo.src.user.model.GetKartInfoRes
 com/example/demo/src/main/model/GetEventsRes.java
  com.example.demo.src.main.model.GetEventsRes
 com/example/demo/src/user/model/PostUserRes.java
@@ -48,6 +50,8 @@ com/example/demo/src/store/StoreProvider.java
  com.example.demo.src.store.StoreProvider
 com/example/demo/src/category/model/GetCategoryEventsRes.java
  com.example.demo.src.category.model.GetCategoryEventsRes
+com/example/demo/src/user/model/GetUserKartRes.java
+ com.example.demo.src.user.model.GetUserKartRes
 com/example/demo/src/review/dao/ReviewDao.java
  com.example.demo.src.review.dao.ReviewDao
 com/example/demo/config/BaseException.java

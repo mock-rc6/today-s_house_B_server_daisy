@@ -2,7 +2,9 @@ package com.example.demo.src.user;
 
 
 import com.example.demo.config.BaseException;
+import com.example.demo.config.BaseResponseStatus;
 import com.example.demo.src.user.dao.UserDao;
+import com.example.demo.src.user.model.GetUserKartRes;
 import com.example.demo.src.user.model.PostLogInReq;
 import com.example.demo.src.user.model.PostLogInRes;
 import com.example.demo.utils.JwtService;
@@ -84,6 +86,18 @@ public class UserProvider {
             return  postLogInRes;
         }catch (Exception exception){
             throw new BaseException(FAILED_TO_LOGIN);
+        }
+    }
+
+    public GetUserKartRes retrieveUserKartInfos(long  userId) throws BaseException{
+        if(checkUserId(userId) == 0){
+            throw new BaseException(BaseResponseStatus.USER_NOT_EXISTS);
+        }
+
+        try{
+            return  userDao.retrieveUserKartInfos(userId);
+        }catch (Exception exception){
+            throw new BaseException(BaseResponseStatus.DATABASE_ERROR);
         }
     }
 }

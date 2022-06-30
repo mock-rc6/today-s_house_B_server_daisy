@@ -119,4 +119,28 @@ public class UserController {
             return  new BaseResponse<>(baseException.getStatus());
         }
     }
+
+    @ResponseBody
+    @GetMapping("/karts/{userId}")
+    public BaseResponse<GetUserKartRes>     retrieveUserKartInfos(@PathVariable("userId") String id)    throws BaseException{
+        if(!ValidationRegex.canConvertLong(id)){
+            return new BaseResponse<>(BaseResponseStatus.INVALID_ID);
+        }
+
+        try{
+            long    userId = Long.parseLong(id);
+            long    jwtUserId = jwtService.getUserId();
+
+            if(userId != jwtUserId){
+                return new BaseResponse<>(BaseResponseStatus.INVALID_USER_JWT);
+            }
+
+            GetUserKartRes getUserKartRes = userProvider.retrieveUserKartInfos(userId);
+
+            return  new BaseResponse<GetUserKartRes>(getUserKartRes);
+        }
+        catch (BaseException baseException){
+            return new BaseResponse<>(baseException.getStatus());
+        }
+    }
 }
