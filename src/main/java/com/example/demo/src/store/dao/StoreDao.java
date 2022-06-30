@@ -273,4 +273,45 @@ public class StoreDao {
                 retrieveItemOptionQueryParams
         );
     }
+
+    public  int         checkItemOption(long    itemId, long    optionId){
+        String      checkItemOptionQuery = "SELECT EXISTS(\n" +
+                "    SELECT optionId\n" +
+                "    FROM (ItemOptions IO inner join Items I on IO.itemId = I.itemId)\n" +
+                "    WHERE optionId = ? AND I.itemId = ?\n" +
+                "           );";
+        Object[]    checkItemOptionQueryParams = new Object[]{optionId, itemId};
+
+        return this.jdbcTemplate.queryForObject(checkItemOptionQuery, int.class, checkItemOptionQueryParams);
+    }
+
+    public int          checkOptionId(long  optionId){
+        String          checkOptionIdQuery = "SELECT EXISTS(\n" +
+                "    SELECT optionID FROM ItemOptions WHERE optionId = ?\n" +
+                "           );";
+        long            checkOptionIdQueryParams = optionId;
+
+        return this.jdbcTemplate.queryForObject(checkOptionIdQuery, int.class, checkOptionIdQueryParams);
+    }
+
+    public long         createKartItem(PostKartItemReq postKartItemReq, long userId){
+        String          createKartItemQuery = "INSERT INTO KartItems(optionId, userId, number)\n" +
+                "VALUES(?, ?, ?);";
+        Object[]        createKartItemQueryParams = new Object[]{
+                Long.parseLong(postKartItemReq.getOptionId()), userId, Integer.parseInt(postKartItemReq.getNumber())};
+        this.jdbcTemplate.update(createKartItemQuery, createKartItemQueryParams);
+
+        String          lastInsertIdQuery = "SELECT last_insert_id();";
+        return  this.jdbcTemplate.queryForObject(lastInsertIdQuery,long.class);
+    }
+
+    public int          checkKartItem(long  userId, long optionId){
+        String      checkKartItemQuery = "SELECT EXISTS(\n" +
+                "    SELECT kartId FROM KartItems\n" +
+                "    WHERE optionId = ? AND userId = ? AND status= 'N'\n" +
+                "           );";
+        Object[]    checkKartItemQueryParams = new Object[]{optionId, userId};
+
+        return  this.jdbcTemplate.queryForObject(checkKartItemQuery, int.class, checkKartItemQueryParams);
+    }
 }

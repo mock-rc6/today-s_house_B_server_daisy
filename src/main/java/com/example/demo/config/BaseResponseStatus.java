@@ -60,8 +60,10 @@ public enum BaseResponseStatus {
     // COMMON
     MINI_CATEGORY_NOT_EXISTS(false, 2033, "존재하지 않는 하위 카테고리입니다."),
     TYPE_ERROR_NOT_BOOLEAN(false, 2034, "쿼리 파라미터는 boolean형이 들어와야합니다."),
+    INVALID_ITEM_NUMBER(false, 2035, "구매할 제품의 개수는 0개거나 그 이하일 수 없습니다."),
 
-    ITEM_ID_NOT_EXISTS(false, 2035, "존재하지 않는 상품 id입니다."),
+    EMPTY_OPTION_NUMBER(false, 2036, "구매할 상품의 개수를 입력해주세요."),
+    EMPTY_OPTION_ID(false, 2037, "구매할 상품을 선택해주세요."),
 
 
     /**
@@ -75,7 +77,11 @@ public enum BaseResponseStatus {
     FAILED_TO_LOGIN(false,3014,"없는 아이디거나 비밀번호가 틀렸습니다."),
 
     USER_NOT_EXISTS(false, 3015, "존재하지 않는 유저입니다."),
-
+    ITEM_ID_NOT_EXISTS(false, 3016, "존재하지 않는 상품 id입니다."),
+    NOT_VALID_OPTION(false, 3017, "해당 상품에 속하지 않는 옵션입니다."),
+    OPTION_ID_NOT_EXISTS(false, 3018, "존재하지 않는 옵션 id입니다."),
+    INVALID_ITEM_OPTION(false, 3019, "올바르지 않은 상품 옵션입니다."),
+    KART_ITEM_ALREADY_EXISTS(false, 3020, "장바구니에 이미 담겨져있습니다."),
 
     /**
      * 4000 : Database, Server 오류

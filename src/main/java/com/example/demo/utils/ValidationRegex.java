@@ -56,5 +56,18 @@ public class ValidationRegex {
     public static   boolean isBoolean(String    str){
         return  str.equals("true") || str.equals("false");
     }
+
+    public  static  boolean canConvertInt(String    str){
+        int length = str.length();
+        if(length>9) return false;
+
+        for(int i=0;i<length;++i)
+            if(str.charAt(i)<'0'||str.charAt(i)>'9')
+                return false;
+        if(length == 9){
+            return str.compareTo("2147483647") < 0;
+        }
+        return true;
+    }
 }
 

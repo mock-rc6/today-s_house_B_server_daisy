@@ -5,10 +5,7 @@ import com.example.demo.config.BaseResponse;
 import com.example.demo.config.BaseResponseStatus;
 import com.example.demo.src.img.service.ImgService;
 import com.example.demo.src.store.StoreProvider;
-import com.example.demo.src.store.model.GetItemOptionRes;
-import com.example.demo.src.store.model.GetStoreCategoryRes;
-import com.example.demo.src.store.model.GetStoreItemRes;
-import com.example.demo.src.store.model.GetStoreRes;
+import com.example.demo.src.store.model.*;
 import com.example.demo.src.store.service.StoreService;
 import com.example.demo.utils.JwtService;
 import com.example.demo.utils.ValidationRegex;
@@ -97,6 +94,46 @@ public class StoreController {
         }
         catch (BaseException baseException){
             return  new BaseResponse<>(baseException.getStatus());
+        }
+    }
+
+    @ResponseBody
+    @PostMapping("/{userId}/items")
+    public BaseResponse<PostKartItemRes>       createKartItem(@PathVariable("userId") String id,
+            @RequestParam("id") String item,
+            @RequestBody PostKartItemReq postKartItemReq) throws BaseException{
+        if(postKartItemReq.getNumber() == null){
+            return  new BaseResponse<>(BaseResponseStatus.EMPTY_OPTION_NUMBER);
+        }
+
+        if(postKartItemReq.getOptionId() == null){
+            return new BaseResponse<>(BaseResponseStatus.EMPTY_OPTION_ID);
+        }
+
+        if(!ValidationRegex.canConvertLong(id) || !ValidationRegex.canConvertLong(item)
+        || !ValidationRegex.canConvertLong(postKartItemReq.getOptionId())
+                || !ValidationRegex.canConvertInt(postKartItemReq.getNumber())){
+            // String 형을 int형이나 long형으로 변환할 수 있는지 여부
+            return  new BaseResponse<>(BaseResponseStatus.INVALID_ID);
+        }
+
+        try{
+            long    userId = Long.parseLong(id);
+            long    jwtUserId = jwtService.getUserId();
+
+            if(userId != jwtUserId){
+                return new BaseResponse<>(BaseResponseStatus.INVALID_USER_JWT);
+            }
+
+            long    itemId = Long.parseLong(item);
+            long    kartId = storeService.createKartItem(postKartItemReq, userId, itemId);
+            String  message="성공적으로 장바구니에 추가되었습니다.";
+
+            PostKartItemRes postKartItemRes = new PostKartItemRes(kartId, message);
+
+            return new BaseResponse<PostKartItemRes>(postKartItemRes);
+        }catch (BaseException baseException){
+            return new BaseResponse<>(BaseResponseStatus.DATABASE_ERROR);
         }
     }
 }

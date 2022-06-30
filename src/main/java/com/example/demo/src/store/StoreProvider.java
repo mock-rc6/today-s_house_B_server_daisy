@@ -8,6 +8,7 @@ import com.example.demo.src.store.model.GetItemOptionRes;
 import com.example.demo.src.store.model.GetStoreCategoryRes;
 import com.example.demo.src.store.model.GetStoreItemRes;
 import com.example.demo.src.store.model.GetStoreRes;
+import com.example.demo.src.user.UserProvider;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,10 @@ public class StoreProvider {
     private final StoreDao          storeDao;
     @Autowired
     private final CategoryProvider  categoryProvider;
+
+    @Autowired
+    private final UserProvider userProvider;
+
     public GetStoreRes  retrieveStoreMain() throws BaseException{
         try{
             return  storeDao.retrieveStoreMain();
@@ -71,5 +76,43 @@ public class StoreProvider {
         }catch (Exception exception){
             throw   new BaseException(BaseResponseStatus.DATABASE_ERROR);
         }
+    }
+
+    public int              checkOptionId(long  optionId)   throws BaseException{
+        try{
+            return storeDao.checkOptionId(optionId);
+        }catch (Exception exception){
+            throw new BaseException(BaseResponseStatus.DATABASE_ERROR);
+        }
+    }
+    public int              checkItemOption(long    itemId, long    optionId)   throws BaseException{
+        if(checkItemId(itemId) == 0){
+            throw new BaseException(BaseResponseStatus.ITEM_ID_NOT_EXISTS);
+        }
+        if(checkOptionId(optionId) == 0){
+            throw new BaseException(BaseResponseStatus.OPTION_ID_NOT_EXISTS);
+        }
+
+       // try{
+            return storeDao.checkItemOption(itemId, optionId);
+      //  }catch (Exception exception){
+       //     throw new BaseException(BaseResponseStatus.DATABASE_ERROR);
+      //  }
+    }
+
+    public int      checkKartItem(long userId, long optionId)   throws BaseException{
+        if(userProvider.checkUserId(userId) == 0){
+            throw new BaseException(BaseResponseStatus.USER_NOT_EXISTS);
+        }
+
+        if(checkOptionId(optionId) == 0) {
+            throw new BaseException(BaseResponseStatus.OPTION_ID_NOT_EXISTS);
+        }
+
+       // try{
+            return storeDao.checkKartItem(userId, optionId);
+       // }catch (Exception exception){
+       //     throw new BaseException(BaseResponseStatus.DATABASE_ERROR);
+       // }
     }
 }

@@ -20,6 +20,8 @@ com/example/demo/src/main/model/GetMainRes.java
  com.example.demo.src.main.model.GetMainRes
 com/example/demo/src/store/model/GetStoreRes.java
  com.example.demo.src.store.model.GetStoreRes
+com/example/demo/src/store/model/PostKartItemRes.java
+ com.example.demo.src.store.model.PostKartItemRes
 com/example/demo/src/main/model/GetMyShoppingRes.java
  com.example.demo.src.main.model.GetMyShoppingRes
 com/example/demo/src/img/model/Img.java
@@ -94,6 +96,8 @@ com/example/demo/src/main/model/GetMainHouseRes.java
  com.example.demo.src.main.model.GetMainHouseRes
 com/example/demo/src/user/model/PostLogInReq.java
  com.example.demo.src.user.model.PostLogInReq
+com/example/demo/src/store/model/PostKartItemReq.java
+ com.example.demo.src.store.model.PostKartItemReq
 com/example/demo/src/store/model/GetStoreCategoryRes.java
  com.example.demo.src.store.model.GetStoreCategoryRes
 com/example/demo/DemoApplication.java
