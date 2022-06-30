@@ -216,7 +216,7 @@ public class StoreDao {
                 (rs, rowNum) -> new GetStoreItemRes(
                         rs.getString("itemName"),
                         this.jdbcTemplate.query(retrieveItemImgQuery,
-                                (rs2, rowNum2)-> rs2.getString("itemInfoPicUrl")
+                                (rs2, rowNum2)-> rs2.getString("pictureUrl")
                                 ,retrieveStoreItemQueryParams),
                         rs.getLong("companyId"),
                         rs.getString("companyName"),
@@ -239,6 +239,38 @@ public class StoreDao {
                         rs.getInt("inquiry")
                 ),
                 retrieveStoreItemQueryParams
+        );
+    }
+
+    public List<GetItemOptionRes>     retrieveItemOptions(long itemId){
+        String      retrieveItemOptionQuery = "SELECT\n" +
+                "    concat(round(saledPrice*100/price,0), '%')                  AS 'saleRate',\n" +
+                "    FORMAT(saledPrice,0)                                        AS 'saledPrice',\n" +
+                "    O.optionId                                                  AS 'optionId',\n" +
+                "    O.optionName                                                AS 'optionName',\n" +
+                "    CASE WHEN   round(saledPrice*100/price,0)>=30.0\n" +
+                "         THEN '특가' ELSE '' END                                 AS 'specialPrice',\n" +
+                "    CASE WHEN   O.deliveryPrice = 0 THEN '무료배송'\n" +
+                "         ELSE concat(O.deliveryPrice,'원') END                   AS 'delivery',\n" +
+                "    (SELECT pictureUrl FROM ItemOptionPictures IO\n" +
+                "              WHERE O.optionId = IO.optionId\n" +
+                "              GROUP BY IO.optionId)                             AS 'thumbnail'\n" +
+                "FROM (Items I inner join ItemOptions O on I.itemId = O.itemId)\n" +
+                "WHERE I.itemId = ?;";
+        long        retrieveItemOptionQueryParams = itemId;
+
+        return  this.jdbcTemplate.query(retrieveItemOptionQuery,
+                (rs, rowNum) -> new GetItemOptionRes(
+                        rs.getString("saleRate"),
+                        rs.getString("saledPrice"),
+                        rs.getLong("optionId"),
+                        rs.getString("optionName"),
+                        rs.getString("specialPrice"),
+                        rs.getString("delivery"),
+                        rs.getString("thumbnail")
+                )
+                ,
+                retrieveItemOptionQueryParams
         );
     }
 }

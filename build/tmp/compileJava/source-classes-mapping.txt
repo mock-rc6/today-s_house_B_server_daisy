@@ -62,6 +62,8 @@ com/example/demo/src/user/model/PostUserReq.java
  com.example.demo.src.user.model.PostUserReq
 com/example/demo/src/category/dao/CategoryDao.java
  com.example.demo.src.category.dao.CategoryDao
+com/example/demo/src/store/model/GetItemOptionRes.java
+ com.example.demo.src.store.model.GetItemOptionRes
 com/example/demo/src/store/dao/StoreDao.java
  com.example.demo.src.store.dao.StoreDao
 com/example/demo/src/img/service/ImgService.java

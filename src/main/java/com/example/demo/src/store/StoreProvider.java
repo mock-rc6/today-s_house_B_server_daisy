@@ -4,6 +4,7 @@ import com.example.demo.config.BaseException;
 import com.example.demo.config.BaseResponseStatus;
 import com.example.demo.src.category.CategoryProvider;
 import com.example.demo.src.store.dao.StoreDao;
+import com.example.demo.src.store.model.GetItemOptionRes;
 import com.example.demo.src.store.model.GetStoreCategoryRes;
 import com.example.demo.src.store.model.GetStoreItemRes;
 import com.example.demo.src.store.model.GetStoreRes;
@@ -56,9 +57,19 @@ public class StoreProvider {
         }
         try{
             return storeDao.retrieveStoreItem(itemId);
-        }
-        catch (Exception exception){
+        }catch (Exception exception){
             throw new BaseException(BaseResponseStatus.DATABASE_ERROR);
+        }
+    }
+
+    public List<GetItemOptionRes>   retrieveItemOptions(long    itemId) throws BaseException{
+        if(checkItemId(itemId) == 0){
+            throw   new BaseException(BaseResponseStatus.ITEM_ID_NOT_EXISTS);
+        }
+        try{
+            return  storeDao.retrieveItemOptions(itemId);
+        }catch (Exception exception){
+            throw   new BaseException(BaseResponseStatus.DATABASE_ERROR);
         }
     }
 }
