@@ -41,12 +41,13 @@ public class StoreDao {
                 "    SC.subCategoryId as 'subcategoryId',\n" +
                 "    concat(round(IO.saledPrice*100/IO.price),'%') as 'sale rate',\n" +
                 "    I.itemName as 'itemName',\n" +
-                "    concat(IO.saledPrice,'원') as 'price',\n" +
+                "    concat(FORMAT(IO.saledPrice, 0),'원') as 'price',\n" +
                 "    (SELECT COUNT(*) FROM Reviews R WHERE R.optionId = IO.optionId) as 'review num',\n" +
                 "    CASE WHEN (SELECT AVG(score)   FROM Reviews R WHERE R.optionId = IO.optionId) is not null\n" +
                 "         THEN (SELECT AVG(score)   FROM Reviews R WHERE R.optionId = IO.optionId)\n" +
                 "         ELSE '0' end\n" +
-                "        as 'score'\n" +
+                "        as 'score',\n" +
+                "    (SELECT pictureUrl FROM ItemPictures IP WHERE IP.itemId = I.itemId GROUP BY itemId) as 'hotdealThumbnail'\n" +
                 "FROM\n" +
                 "    ((((TodayDeals TD inner join Items I on TD.itemId = I.itemId)\n" +
                 "    inner join Companies C on C.companyId = I.companyId) inner join SubCategories SC on SC.subCategoryId = I.subCategoryId)\n" +
@@ -65,7 +66,8 @@ public class StoreDao {
                         rs.getString("price"),
                         rs.getString("itemName"),
                         rs.getInt("review num"),
-                        rs.getDouble("score")
+                        rs.getDouble("score"),
+                        rs.getString("hotdealThumbnail")
                 )
         );
     }

@@ -83,7 +83,7 @@ public class CategoryDao {
                 "    I.itemName              as 'itemName',\n" +
                 "    C.name                  as 'companyName',\n" +
                 "    concat(round(IO.saledPrice*100/IO.price,1),'%') as 'saleRate',\n" +
-                "    concat(IO.saledPrice,'원')   as 'price',\n" +
+                "    concat(FORMAT(IO.saledPrice, 0),'원')   as 'price',\n" +
                 "    (SELECT COUNT(*) FROM Reviews R WHERE R.optionId = IO.optionId) as 'review cnt',\n" +
                 "    case when (SELECT AVG(score) FROM Reviews R WHERE R.optionId = IO.optionId) is not null\n" +
                 "         then (SELECT AVG(score) FROM Reviews R WHERE R.optionId = IO.optionId)\n" +
