@@ -36,6 +36,7 @@ public enum BaseResponseStatus {
     POST_USERS_EMPTY_NAME(false, 2022, "닉네임을 입력해주세요."),
     POST_USERS_EMPTY_GENDER(false, 2023, "성별을 입력해주세요."),
     POST_USERS_SHORT_PASSWORD(false, 2027, "비밀번호가 너무 짧습니다."),
+    POST_USERS_SHORT_NAME(false, 2028, "닉네임이 너무 짧습니다."),
 
     // Common : id형식이 long이어야하는데 String형이 들어왔을 경우/ long의 범위를 넘어갈 경우
     INVALID_ID(false, 2024, "올바르지 않은 id 형식입니다."),

@@ -53,6 +53,10 @@ public class UserController {
         if(postUserReq.getName() == null){
             return new BaseResponse<>(BaseResponseStatus.POST_USERS_EMPTY_NAME);
         }
+
+        if(postUserReq.getName().length()<2){
+            return new BaseResponse<>(BaseResponseStatus.POST_USERS_SHORT_NAME);
+        }
         if(postUserReq.getProfilePicUrl()== null){
             postUserReq.setProfilePicUrl("");
         }
