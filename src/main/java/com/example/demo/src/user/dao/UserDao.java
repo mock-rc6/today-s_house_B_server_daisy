@@ -204,4 +204,36 @@ public class UserDao {
 
         return this.jdbcTemplate.queryForObject(checkKartIdQuery, int.class, checkKartIdQueryParams);
     }
+
+    public PatchKartOptionRes   updateKartOption(PatchKartOptionIdReq   patchKartOptionIdReq){
+        String          updateKartOptionQuery = "UPDATE KartItems\n" +
+                "SET optionId = ?\n" +
+                "WHERE kartId = ? AND status = 'N';";
+        Object[]        updateKartOptionQueryParams = new Object[] {patchKartOptionIdReq.getOptionId(), patchKartOptionIdReq.getKartId()};
+        this.jdbcTemplate.update(updateKartOptionQuery, updateKartOptionQueryParams);
+
+        String      retrieveUserKartQuery = "SELECT\n" +
+                "    concat(FORMAT(SUM(deliveryPrice),0),'원')                   AS 'delivery',\n" +
+                "    concat(FORMAT(SUM(number), 0),'개')                       AS 'number',\n" +
+                "    concat(FORMAT(SUM(saledPrice*number),0), '원')                     AS 'saledPrice',\n" +
+                "    concat(FORMAT(SUM(price*number),0),'원')                           AS 'price',\n" +
+                "    concat(FORMAT(SUM(price*number)-SUM(saledPrice*number),0),'원')           AS 'discountPrice'\n" +
+                "FROM (KartItems K inner join ItemOptions IO on IO.optionId = K.optionId)\n" +
+                "WHERE\n" +
+                "    K.userId = ? AND K.status = 'N';";
+        long        retrieveUserKartQueryParams = patchKartOptionIdReq.getUserId();
+
+        return this.jdbcTemplate.queryForObject(
+                retrieveUserKartQuery,
+                (rs, rowNum)-> new PatchKartOptionRes(
+                        retrieveUserKart(patchKartOptionIdReq.getUserId()),
+                        rs.getString("number"),
+                        rs.getString("saledPrice"),
+                        rs.getString("price"),
+                        rs.getString("discountPrice"),
+                        rs.getString("delivery")
+                ),
+                retrieveUserKartQueryParams
+        );
+    }
 }

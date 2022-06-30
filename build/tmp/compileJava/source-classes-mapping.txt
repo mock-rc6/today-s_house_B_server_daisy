@@ -94,6 +94,8 @@ com/example/demo/src/test/TestController.java
  com.example.demo.src.test.TestController
 com/example/demo/src/store/model/GetTodaysDealMainRes.java
  com.example.demo.src.store.model.GetTodaysDealMainRes
+com/example/demo/src/user/model/PatchKartOptionIdReq.java
+ com.example.demo.src.user.model.PatchKartOptionIdReq
 com/example/demo/src/main/MainProvider.java
  com.example.demo.src.main.MainProvider
 com/example/demo/src/review/ReviewProvider.java

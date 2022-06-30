@@ -105,4 +105,24 @@ public class UserService {
        //     throw new BaseException(DATABASE_ERROR);
        // }
     }
+
+    public PatchKartOptionRes updateKartOption(PatchKartOptionIdReq patchKartOptionIdReq) throws BaseException{
+        if(userProvider.checkUserId(patchKartOptionIdReq.getUserId()) == 0) {
+            throw new BaseException(USER_NOT_EXISTS);
+        }
+
+        if(userProvider.checkKartId(patchKartOptionIdReq.getKartId()) == 0){
+            throw new BaseException(KART_ID_NOT_EXISTS);
+        }
+
+        if(storeProvider.checkOptionId(patchKartOptionIdReq.getOptionId()) == 0){
+            throw new BaseException(OPTION_ID_NOT_EXISTS);
+        }
+
+        try {
+            return  userDao.updateKartOption(patchKartOptionIdReq);
+        }catch (Exception exception){
+            throw   new BaseException(DATABASE_ERROR);
+        }
+    }
 }
