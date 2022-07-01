@@ -26,6 +26,7 @@ public class StoreProvider {
     @Autowired
     private final UserProvider userProvider;
 
+    @Transactional(readOnly = true)
     public GetStoreRes  retrieveStoreMain() throws BaseException{
         try{
             return  storeDao.retrieveStoreMain();
@@ -34,6 +35,7 @@ public class StoreProvider {
        }
     }
 
+    @Transactional(readOnly = true)
     public GetStoreCategoryRes  retrieveStoreCategory(long  categoryId) throws BaseException{
         if(categoryProvider.checkCategoryId(categoryId) == 0){
             throw   new BaseException(BaseResponseStatus.GET_CATEGORY_NOT_EXISTS);
@@ -46,6 +48,7 @@ public class StoreProvider {
         }
     }
 
+    @Transactional(readOnly = true)
     public int          checkItemId(long    itemId) throws BaseException{
         try{
             return  storeDao.checkItemId(itemId);
@@ -54,6 +57,7 @@ public class StoreProvider {
         }
     }
 
+    @Transactional(readOnly = true)
     public GetStoreItemRes    retrieveStoreItem(long   itemId) throws BaseException{
         if(checkItemId(itemId) == 0){
             throw new BaseException(BaseResponseStatus.ITEM_ID_NOT_EXISTS);
@@ -65,6 +69,7 @@ public class StoreProvider {
         }
     }
 
+    @Transactional(readOnly = true)
     public List<GetItemOptionRes>   retrieveItemOptions(long    itemId) throws BaseException{
         if(checkItemId(itemId) == 0){
             throw   new BaseException(BaseResponseStatus.ITEM_ID_NOT_EXISTS);
@@ -76,6 +81,7 @@ public class StoreProvider {
         }
     }
 
+    @Transactional(readOnly = true)
     public int              checkOptionId(long  optionId)   throws BaseException{
         try{
             return storeDao.checkOptionId(optionId);
@@ -83,6 +89,7 @@ public class StoreProvider {
             throw new BaseException(BaseResponseStatus.DATABASE_ERROR);
         }
     }
+    @Transactional(readOnly = true)
     public int              checkItemOption(long    itemId, long    optionId)   throws BaseException{
         if(checkItemId(itemId) == 0){
             throw new BaseException(BaseResponseStatus.ITEM_ID_NOT_EXISTS);

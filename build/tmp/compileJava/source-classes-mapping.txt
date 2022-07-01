@@ -40,6 +40,8 @@ com/example/demo/src/main/model/GetEventsRes.java
  com.example.demo.src.main.model.GetEventsRes
 com/example/demo/src/user/model/PostUserRes.java
  com.example.demo.src.user.model.PostUserRes
+com/example/demo/src/user/model/GetScrapsRes.java
+ com.example.demo.src.user.model.GetScrapsRes
 com/example/demo/config/BaseResponse.java
  com.example.demo.config.BaseResponse
 com/example/demo/src/category/model/GetCategoryDetailRes.java
@@ -92,8 +94,12 @@ com/example/demo/src/category/model/GetAllCategoryRes.java
  com.example.demo.src.category.model.GetAllCategoryRes
 com/example/demo/src/test/TestController.java
  com.example.demo.src.test.TestController
+com/example/demo/src/store/model/PostScrapRes.java
+ com.example.demo.src.store.model.PostScrapRes
 com/example/demo/src/store/model/GetTodaysDealMainRes.java
  com.example.demo.src.store.model.GetTodaysDealMainRes
+com/example/demo/src/store/model/PostScrapReq.java
+ com.example.demo.src.store.model.PostScrapReq
 com/example/demo/src/user/model/PatchKartOptionIdReq.java
  com.example.demo.src.user.model.PatchKartOptionIdReq
 com/example/demo/src/main/MainProvider.java
@@ -122,6 +128,8 @@ com/example/demo/src/user/UserProvider.java
  com.example.demo.src.user.UserProvider
 com/example/demo/src/store/model/GetStoreMainEvents.java
  com.example.demo.src.store.model.GetStoreMainEvents
+com/example/demo/src/user/model/GetUserScrapRes.java
+ com.example.demo.src.user.model.GetUserScrapRes
 com/example/demo/src/category/model/GetCategory.java
  com.example.demo.src.category.model.GetCategory
 com/example/demo/src/user/service/UserService.java

@@ -138,4 +138,31 @@ public class StoreController {
         }
     }
 
+    @ResponseBody
+    @PostMapping("/items")
+    public BaseResponse<PostScrapRes>   createItemScrap(@RequestParam("id") String id,
+                                                        @RequestParam("user") String user)  throws BaseException{
+        if(!ValidationRegex.canConvertLong(id) || !ValidationRegex.canConvertLong(user)){
+            return  new BaseResponse<>(BaseResponseStatus.INVALID_ID);
+        }
+
+        try{
+            long        userId = Long.parseLong(user);
+            long        jwtUserId = jwtService.getUserId();
+
+            if(userId != jwtUserId){
+                return new BaseResponse<>(BaseResponseStatus.INVALID_USER_JWT);
+            }
+
+            long        itemId = Long.parseLong(id);
+
+            PostScrapReq postScrapReq = new PostScrapReq(itemId, userId);
+            PostScrapRes postScrapRes = storeService.createItemScrap(postScrapReq);
+
+            return new BaseResponse<PostScrapRes>(postScrapRes);
+        }
+        catch (BaseException baseException){
+            return  new BaseResponse<>(baseException.getStatus());
+        }
+    }
 }

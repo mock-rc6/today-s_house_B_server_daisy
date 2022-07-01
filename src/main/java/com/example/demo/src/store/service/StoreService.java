@@ -5,6 +5,8 @@ import com.example.demo.config.BaseResponseStatus;
 import com.example.demo.src.store.StoreProvider;
 import com.example.demo.src.store.dao.StoreDao;
 import com.example.demo.src.store.model.PostKartItemReq;
+import com.example.demo.src.store.model.PostScrapReq;
+import com.example.demo.src.store.model.PostScrapRes;
 import com.example.demo.src.user.UserProvider;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -50,4 +52,20 @@ public class StoreService {
         }
     }
 
+    public PostScrapRes     createItemScrap(PostScrapReq postScrapReq)  throws BaseException{
+        if(userProvider.checkUserId(postScrapReq.getUserId()) == 0){
+            throw   new BaseException(BaseResponseStatus.USER_NOT_EXISTS);
+        }
+
+        if(storeProvider.checkItemId(postScrapReq.getItemId()) == 0){
+            throw   new BaseException(BaseResponseStatus.ITEM_ID_NOT_EXISTS);
+        }
+
+        try{
+            return  storeDao.createItemScrap(postScrapReq);
+        }
+        catch (Exception exception){
+            throw new BaseException(BaseResponseStatus.DATABASE_ERROR);
+        }
+    }
 }

@@ -317,4 +317,19 @@ public class StoreDao {
         return  this.jdbcTemplate.queryForObject(checkKartItemQuery, int.class,
                 checkKartItemQueryParams);
     }
+
+    public PostScrapRes     createItemScrap(PostScrapReq    postScrapReq){
+        String          createItemScrapQuery = "INSERT INTO Scraps(userId, itemId)\n" +
+                "VALUES(?, ?);";
+        Object[]        createItemScrapQueryParams = new Object[]{postScrapReq.getUserId(), postScrapReq.getItemId()};
+        this.jdbcTemplate.update(createItemScrapQuery, createItemScrapQueryParams);
+
+        String          retrieveLastInsertIdQuery = "SELECT last_insert_id();";
+        String          message = "성공적으로 스크랩되었습니다.";
+
+        return  new PostScrapRes(
+                this.jdbcTemplate.queryForObject(retrieveLastInsertIdQuery, long.class)
+                ,message
+        );
+    }
 }
