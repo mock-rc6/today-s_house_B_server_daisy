@@ -36,6 +36,8 @@ com/example/demo/config/secret/Secret.java
  com.example.demo.config.secret.Secret
 com/example/demo/src/user/model/GetKartInfoRes.java
  com.example.demo.src.user.model.GetKartInfoRes
+com/example/demo/src/user/model/PostScrapBookRes.java
+ com.example.demo.src.user.model.PostScrapBookRes
 com/example/demo/src/main/model/GetEventsRes.java
  com.example.demo.src.main.model.GetEventsRes
 com/example/demo/src/user/model/PostUserRes.java
@@ -66,6 +68,8 @@ com/example/demo/config/AWSConfig.java
  com.example.demo.config.AWSConfig
 com/example/demo/src/review/model/GetMyReviewsRes.java
  com.example.demo.src.review.model.GetMyReviewsRes
+com/example/demo/src/user/model/PostScrapBookReq.java
+ com.example.demo.src.user.model.PostScrapBookReq
 com/example/demo/utils/SHA256.java
  com.example.demo.utils.SHA256
 com/example/demo/src/user/model/PostUserReq.java

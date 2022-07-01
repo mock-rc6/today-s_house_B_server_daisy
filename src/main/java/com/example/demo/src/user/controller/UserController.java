@@ -213,4 +213,37 @@ public class UserController {
             return new BaseResponse<>(baseException.getStatus());
         }
     }
+
+    @ResponseBody
+    @PostMapping("/scraps/{userId}")
+    public BaseResponse<PostScrapBookRes>   createScrapBook(@PathVariable("userId")String id,
+            @RequestBody PostScrapBookReq postScrapBookReq) throws BaseException{
+        if(!ValidationRegex.canConvertLong(id)){
+            return  new BaseResponse<>(BaseResponseStatus.INVALID_ID);
+        }
+
+        if(postScrapBookReq.getDescription() == null){
+            postScrapBookReq.setDescription("");
+        }
+
+        if(postScrapBookReq.getName() == null){
+            return  new BaseResponse<>(BaseResponseStatus.EMPTY_SCRAPBOOK_NAME);
+        }
+
+        try{
+            long        userId = Long.parseLong(id);
+            long        jwtUserId = jwtService.getUserId();
+
+            if(userId != jwtUserId){
+                return  new BaseResponse<>(BaseResponseStatus.INVALID_USER_JWT);
+            }
+
+            postScrapBookReq.setUserId(userId);
+
+            PostScrapBookRes postScrapBookRes = userService.createScrapBook(postScrapBookReq);
+            return  new BaseResponse<PostScrapBookRes>(postScrapBookRes);
+        }catch (BaseException baseException){
+            return  new BaseResponse<>(baseException.getStatus());
+        }
+    }
 }

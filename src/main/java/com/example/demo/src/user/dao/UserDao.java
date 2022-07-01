@@ -236,4 +236,17 @@ public class UserDao {
                 retrieveUserKartQueryParams
         );
     }
+
+    public PostScrapBookRes     createScrapBook(PostScrapBookReq postScrapBookReq){
+        String                  createScrapBookQuery = "INSERT INTO ScrapBooks(userId, name, description)\n" +
+                "VALUES(?, ?, ?);";
+        Object[]                createScrapBookQueryParams = new Object[]{postScrapBookReq.getUserId(), postScrapBookReq.getName(), postScrapBookReq.getDescription()};
+        this.jdbcTemplate.update(createScrapBookQuery, createScrapBookQueryParams);
+
+        String                  retrieveInsertIdQuery = "SELECT last_insert_id();";
+        String                  message = "성공적으로 스크랩북이 생성되었습니다.";
+        return  new PostScrapBookRes(
+                this.jdbcTemplate.queryForObject(retrieveInsertIdQuery, long.class)
+                , message);
+    }
 }

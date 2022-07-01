@@ -125,4 +125,16 @@ public class UserService {
             throw   new BaseException(DATABASE_ERROR);
         }
     }
+
+    public PostScrapBookRes         createScrapBook(PostScrapBookReq    postScrapBookReq) throws BaseException{
+        if(userProvider.checkUserId(postScrapBookReq.getUserId()) == 0){
+            throw new BaseException(USER_NOT_EXISTS);
+        }
+
+        try{
+            return userDao.createScrapBook(postScrapBookReq);
+        }catch (Exception exception){
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
 }

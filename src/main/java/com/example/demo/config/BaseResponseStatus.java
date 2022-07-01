@@ -67,6 +67,8 @@ public enum BaseResponseStatus {
     EMPTY_OPTION_ID(false, 2037, "구매할 상품을 선택해주세요."),
     KART_ITEM_ALREADY_EXISTS(false, 2038, "장바구니에 이미 담겨져있습니다."),
 
+    EMPTY_SCRAPBOOK_NAME(false, 2039, "스크랩북 이름을 입력해주세요."),
+
 
     /**
      * 3000 : Response 오류
