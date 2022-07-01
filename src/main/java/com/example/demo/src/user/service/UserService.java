@@ -148,7 +148,7 @@ public class UserService {
         }
 
         try{
-            userDao.retrieveUserCoupons(patchCouponStatusReq.getUserId());
+            userDao.updateCouponStatus(patchCouponStatusReq.getUserId());
 
             return;
         }
