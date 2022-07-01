@@ -1,3 +1,5 @@
+com/example/demo/src/user/model/GetUserCouponRes.java
+ com.example.demo.src.user.model.GetUserCouponRes
 com/example/demo/src/user/model/PostLogInRes.java
  com.example.demo.src.user.model.PostLogInRes
 com/example/demo/config/Constant.java
@@ -52,6 +54,8 @@ com/example/demo/src/main/model/GetEventDetailRes.java
  com.example.demo.src.main.model.GetEventDetailRes
 com/example/demo/src/store/controller/StoreController.java
  com.example.demo.src.store.controller.StoreController
+com/example/demo/src/user/model/GetScrapCategory.java
+ com.example.demo.src.user.model.GetScrapCategory
 com/example/demo/src/store/StoreProvider.java
  com.example.demo.src.store.StoreProvider
 com/example/demo/src/category/model/GetCategoryEventsRes.java

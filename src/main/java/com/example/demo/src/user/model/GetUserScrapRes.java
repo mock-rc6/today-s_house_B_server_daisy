@@ -10,7 +10,9 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 public class GetUserScrapRes {
+    long                    userId;
+    String                  userName;
+    String                  profilePicUrl;
     List<GetScrapsRes>      itemScrapList;
     List<GetScrapsRes>      houseScrapList;
-
 }

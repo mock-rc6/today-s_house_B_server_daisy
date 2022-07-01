@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 @RestController
 @RequestMapping("/users")
@@ -243,6 +244,30 @@ public class UserController {
             PostScrapBookRes postScrapBookRes = userService.createScrapBook(postScrapBookReq);
             return  new BaseResponse<PostScrapBookRes>(postScrapBookRes);
         }catch (BaseException baseException){
+            return  new BaseResponse<>(baseException.getStatus());
+        }
+    }
+
+    @ResponseBody
+    @GetMapping("/coupons/{userId}")
+    public BaseResponse<List<GetUserCouponRes>>       retrieveUserCoupons(@PathVariable("userId")String id)   throws BaseException{
+        if(!ValidationRegex.canConvertLong(id)){
+            return  new BaseResponse<>(BaseResponseStatus.INVALID_ID);
+        }
+
+        try{
+            long    userId = Long.parseLong(id);
+            long    jwtUserId = jwtService.getUserId();
+
+            if(userId != jwtUserId){
+                return  new BaseResponse<>(BaseResponseStatus.INVALID_USER_JWT);
+            }
+
+            List<GetUserCouponRes>  getUserCouponResList = userProvider.retrieveUserCoupons(userId);
+
+            return new BaseResponse<List<GetUserCouponRes>>(getUserCouponResList);
+        }
+        catch (BaseException baseException){
             return  new BaseResponse<>(baseException.getStatus());
         }
     }

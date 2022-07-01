@@ -52,7 +52,8 @@ public class StoreDao {
                 "FROM\n" +
                 "    ((((TodayDeals TD inner join Items I on TD.itemId = I.itemId)\n" +
                 "    inner join Companies C on C.companyId = I.companyId) inner join SubCategories SC on SC.subCategoryId = I.subCategoryId)\n" +
-                "    inner join ItemOptions IO on IO.itemId = I.itemId);";
+                "    inner join ItemOptions IO on IO.itemId = I.itemId)" +
+                "GROUP BY I.itemId;";
 
         return  this.jdbcTemplate.query(
                 retrieveTodaysDealMainQuery,

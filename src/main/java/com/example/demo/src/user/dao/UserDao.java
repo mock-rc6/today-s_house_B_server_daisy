@@ -249,4 +249,30 @@ public class UserDao {
                 this.jdbcTemplate.queryForObject(retrieveInsertIdQuery, long.class)
                 , message);
     }
+
+    public List<GetUserCouponRes>   retrieveUserCoupons (long   userId){
+        String      retrieveUserCouponsQuery = "SELECT\n" +
+                "    couponId,\n" +
+                "    DATE_FORMAT(due, '%Y년 %m월 %d일까지')       AS 'due',\n" +
+                "    description,\n" +
+                "    CASE WHEN saleAmount = 0 THEN concat(saleRate, '%')\n" +
+                "         ELSE FORMAT(saleAmount,'원') END       AS 'benefit',\n" +
+                "    CASE WHEN status = 'N'   THEN '받기'\n" +
+                "         ELSE '받음' END                        AS 'received'\n" +
+                "FROM Coupons\n" +
+                "WHERE userId = ? AND status != 'Y';";
+        long        retrieveUserCouponQueryParams = userId;
+
+        return this.jdbcTemplate.query(
+                retrieveUserCouponsQuery,
+                (rs, rowNum) -> new GetUserCouponRes(
+                        rs.getLong("couponId"),
+                        rs.getString("due"),
+                        rs.getString("description"),
+                        rs.getString("benefit"),
+                        rs.getString("received")
+                )
+                ,retrieveUserCouponQueryParams
+        );
+    }
 }

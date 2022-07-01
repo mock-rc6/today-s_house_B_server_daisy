@@ -15,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 import static com.example.demo.config.BaseResponseStatus.*;
 
 @Service
@@ -105,4 +107,16 @@ public class UserProvider {
         }
     }
 
+    public List<GetUserCouponRes>       retrieveUserCoupons(long    userId) throws BaseException{
+        if(checkUserId(userId) == 0){
+            throw   new BaseException(USER_NOT_EXISTS);
+        }
+
+        try{
+            return  userDao.retrieveUserCoupons(userId);
+        }
+        catch (Exception exception){
+            throw   new BaseException(DATABASE_ERROR);
+        }
+    }
 }
