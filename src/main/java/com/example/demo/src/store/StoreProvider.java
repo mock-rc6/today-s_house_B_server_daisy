@@ -58,15 +58,20 @@ public class StoreProvider {
     }
 
     @Transactional(readOnly = true)
-    public GetStoreItemRes    retrieveStoreItem(long   itemId) throws BaseException{
+    public GetStoreItemRes    retrieveStoreItem(long   itemId, long userId) throws BaseException{
         if(checkItemId(itemId) == 0){
             throw new BaseException(BaseResponseStatus.ITEM_ID_NOT_EXISTS);
         }
-        try{
-            return storeDao.retrieveStoreItem(itemId);
-        }catch (Exception exception){
-            throw new BaseException(BaseResponseStatus.DATABASE_ERROR);
+
+        if(userProvider.checkUserId(userId) == 0){
+            throw   new BaseException(BaseResponseStatus.USER_NOT_EXISTS);
         }
+
+        //try{
+            return storeDao.retrieveStoreItem(itemId, userId);
+        //}catch (Exception exception){
+        //    throw new BaseException(BaseResponseStatus.DATABASE_ERROR);
+        //}
     }
 
     @Transactional(readOnly = true)

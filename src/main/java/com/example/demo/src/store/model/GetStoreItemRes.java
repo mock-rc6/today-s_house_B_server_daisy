@@ -28,4 +28,5 @@ public class GetStoreItemRes {
     int                         two;
     int                         one;
     int                         inquiry;
+    boolean                     isScrap;
 }

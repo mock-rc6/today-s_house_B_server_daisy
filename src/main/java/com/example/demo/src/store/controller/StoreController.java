@@ -58,13 +58,21 @@ public class StoreController {
 
     @ResponseBody
     @GetMapping("/items")
-    public BaseResponse<GetStoreItemRes>   retrieveStoreItem(@RequestParam("id") String id)    throws BaseException{
-        if(!ValidationRegex.canConvertLong(id)){
+    public BaseResponse<GetStoreItemRes>   retrieveStoreItem(@RequestParam("id") String id,
+                                                             @RequestParam("user") String user)    throws BaseException{
+        if(!ValidationRegex.canConvertLong(id) || !ValidationRegex.canConvertLong(user)){
             return  new BaseResponse<>(BaseResponseStatus.INVALID_ID);
         }
         try{
             long    itemId = Long.parseLong(id);
-            GetStoreItemRes getStoreItemRes = storeProvider.retrieveStoreItem(itemId);
+            long    userId = Long.parseLong(user);
+            long    jwtUserId = jwtService.getUserId();
+
+            if(jwtUserId != userId){
+                return  new BaseResponse<>(BaseResponseStatus.INVALID_USER_JWT);
+            }
+
+            GetStoreItemRes getStoreItemRes = storeProvider.retrieveStoreItem(itemId, userId);
 
             return  new BaseResponse<GetStoreItemRes>(getStoreItemRes);
         }

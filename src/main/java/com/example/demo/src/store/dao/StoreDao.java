@@ -181,12 +181,14 @@ public class StoreDao {
 
     }
 
-    public GetStoreItemRes      retrieveStoreItem(long  itemId){
+    public GetStoreItemRes      retrieveStoreItem(long  itemId, long userId){
         String      retrieveStoreItemQuery = "SELECT\n" +
                 "    I.itemName                                                                          AS 'itemName',\n" +
                 "    C.companyId                                                                         AS 'companyId',\n" +
                 "    C.name                                                                              AS 'companyName',\n" +
-                "    round((SELECT AVG(score)  FROM Reviews R WHERE R.optionId = O.optionId),1)          AS 'score',\n" +
+                "    case when\n" +
+                "        round((SELECT AVG(score)  FROM Reviews R WHERE R.optionId = O.optionId),1) is not null\n" +
+                "        then round((SELECT AVG(score)  FROM Reviews R WHERE R.optionId = O.optionId),1) else 0 end  AS 'score',\n" +
                 "    (SELECT COUNT(*) FROM Reviews R WHERE R.optionId = O.optionId)                      AS 'reviewCnt',\n" +
                 "    concat(round(100*saledPrice/price, 0),'%')                                          AS 'saleRate',\n" +
                 "    CASE WHEN (SELECT COUNT(saledPrice) FROM ItemOptions O WHERE O.itemId = I.itemId)>1\n" +
@@ -198,16 +200,17 @@ public class StoreDao {
                 "    (SELECT COUNT(reviewId) FROM Reviews R WHERE R.optionId = O.optionId AND R.score = 3)       AS 'three',\n" +
                 "    (SELECT COUNT(reviewId) FROM Reviews R WHERE R.optionId = O.optionId AND R.score = 2)       AS 'two',\n" +
                 "    (SELECT COUNT(reviewId) FROM Reviews R WHERE R.optionId = O.optionId AND R.score = 1)       AS 'one',\n" +
-                "    (SELECT COUNT(inquiryId) FROM Inquiry WHERE Inquiry.itemId = I.itemId)              AS 'inquiry'\n" +
+                "    (SELECT COUNT(inquiryId) FROM Inquiry WHERE Inquiry.itemId = I.itemId)                      AS 'inquiry',\n" +
+                "    CASE WHEN scrapId is null THEN 'true' ELSE 'false' END                                      AS 'isScrap'\n" +
                 "FROM (((\n" +
-                "        (Items I inner join ItemOptions O on I.itemId = O.itemId)\n" +
+                "        (Items I left join ItemOptions O on I.itemId = O.itemId)\n" +
                 "        inner join Companies C on C.companyId = I.companyId)\n" +
                 "        left  join Reviews R on R.optionId = O.optionId)\n" +
                 "        left  join ItemInfoPics IIP on I.itemId = IIP.itemId\n" +
-                "     )\n" +
+                "     ) left join Scraps S on S.status = 1 AND S.itemId = I.itemId AND S.userId = ?\n" +
                 "WHERE\n" +
-                "    I.itemId = ?;";
-        long        retrieveStoreItemQueryParams = itemId;
+                "    I.itemId = ?;\n";
+        Object[]        retrieveStoreItemQueryParams = new Object[]{userId, itemId};
 
         String  retrieveItemImgQuery = "SELECT pictureUrl FROM ItemPictures WHERE itemId = ? ;";
         String  retrieveItemInfoImgQuery = "SELECT itemInfoPicUrl FROM ItemInfoPics WHERE itemId = ?;";
@@ -218,7 +221,7 @@ public class StoreDao {
                         rs.getString("itemName"),
                         this.jdbcTemplate.query(retrieveItemImgQuery,
                                 (rs2, rowNum2)-> rs2.getString("pictureUrl")
-                                ,retrieveStoreItemQueryParams),
+                                ,itemId),
                         rs.getLong("companyId"),
                         rs.getString("companyName"),
                         rs.getDouble("score"),
@@ -229,7 +232,7 @@ public class StoreDao {
                         this.jdbcTemplate.query(
                                 retrieveItemInfoImgQuery,
                                 (rs2, rowNum2)-> rs2.getString("itemInfoPicUrl")
-                                , retrieveStoreItemQueryParams
+                                , itemId
                         ),
                         retrieveItemReview(itemId)
                         , rs.getInt("five"),
@@ -237,7 +240,8 @@ public class StoreDao {
                         rs.getInt("three"),
                         rs.getInt("two"),
                         rs.getInt("one"),
-                        rs.getInt("inquiry")
+                        rs.getInt("inquiry"),
+                        Boolean.parseBoolean(rs.getString("isScrap"))
                 ),
                 retrieveStoreItemQueryParams
         );
