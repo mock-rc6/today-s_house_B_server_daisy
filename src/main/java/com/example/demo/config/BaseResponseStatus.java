@@ -87,6 +87,8 @@ public enum BaseResponseStatus {
     INVALID_ITEM_OPTION(false, 3019, "올바르지 않은 상품 옵션입니다."),
     KART_ID_NOT_EXISTS(false, 3020, "장바구니 옵션이 존재하지 않습니다."),
 
+    INVALID_PATCH_COUPON_STATUS_REQUEST(false, 3021, "올바르지 않은 쿠폰 상태 변경 요청입니다."),
+
     /**
      * 4000 : Database, Server 오류
      */

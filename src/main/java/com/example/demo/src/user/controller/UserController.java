@@ -271,4 +271,33 @@ public class UserController {
             return  new BaseResponse<>(baseException.getStatus());
         }
     }
+
+    @ResponseBody
+    @PatchMapping("/coupons/{userId}")
+    public BaseResponse<String>         updateCouponStatus(@PathVariable("userId") String   id,
+                                                           @RequestParam("id")String coupon)    throws BaseException{
+        if(!ValidationRegex.canConvertLong(id) || !ValidationRegex.canConvertLong(coupon)){
+            return  new BaseResponse<>(BaseResponseStatus.INVALID_ID);
+        }
+
+        try{
+            long    userId = Long.parseLong(id);
+            long    jwtUserId = jwtService.getUserId();
+
+            if(userId != jwtUserId){
+                return new BaseResponse<>(BaseResponseStatus.INVALID_USER_JWT);
+            }
+
+            long    couponId = Long.parseLong(coupon);
+
+            PatchCouponStatusReq patchCouponStatusReq = new PatchCouponStatusReq(userId, couponId);
+
+            userService.updateCouponStatus(patchCouponStatusReq);
+
+            String  message="성공적으로 쿠폰을 받았습니다.";
+            return  new BaseResponse<String>(message);
+        }catch (BaseException baseException){
+            return  new BaseResponse<>(baseException.getStatus());
+        }
+    }
 }

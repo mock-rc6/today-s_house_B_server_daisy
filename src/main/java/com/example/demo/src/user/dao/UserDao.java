@@ -256,11 +256,11 @@ public class UserDao {
                 "    DATE_FORMAT(due, '%Y년 %m월 %d일까지')       AS 'due',\n" +
                 "    description,\n" +
                 "    CASE WHEN saleAmount = 0 THEN concat(saleRate, '%')\n" +
-                "         ELSE FORMAT(saleAmount,'원') END       AS 'benefit',\n" +
+                "         ELSE concat(FORMAT(saleAmount, 0),'원') END       AS 'benefit',\n" +
                 "    CASE WHEN status = 'N'   THEN '받기'\n" +
                 "         ELSE '받음' END                        AS 'received'\n" +
                 "FROM Coupons\n" +
-                "WHERE userId = ? AND status != 'Y';";
+                "WHERE userId = ? AND status != 'Y' AND TIMESTAMPDIFF(SECOND, CURRENT_TIMESTAMP, due)>0;";
         long        retrieveUserCouponQueryParams = userId;
 
         return this.jdbcTemplate.query(
@@ -274,5 +274,24 @@ public class UserDao {
                 )
                 ,retrieveUserCouponQueryParams
         );
+    }
+
+    public int      checkPatchCouponReq(PatchCouponStatusReq patchCouponStatusReq){
+        String      checkPatchCouponReqQuery = "SELECT EXISTS(\n" +
+                "    SELECT couponId FROM Coupons\n" +
+                "    WHERE TIMESTAMPDIFF(SECOND, CURRENT_TIMESTAMP, due) > 0 AND status = 'N' AND couponId = ? AND userId = ?\n" +
+                "           );";
+        Object[]    checkPatchCouponReqQueryParams = new Object[]{patchCouponStatusReq.getCouponId(), patchCouponStatusReq.getUserId()};
+
+        return  this.jdbcTemplate.queryForObject(checkPatchCouponReqQuery, int.class, checkPatchCouponReqQueryParams);
+    }
+    public void     updateCouponStatus(long     couponId){
+        String      updateCouponStatusQuery = "UPDATE Coupons\n" +
+                "SET status = 'R'\n" +
+                "WHERE couponId = ?;";
+        long        updateCouponStatusQueryParams = couponId;
+        this.jdbcTemplate.update(updateCouponStatusQuery, updateCouponStatusQueryParams);
+
+        return;
     }
 }

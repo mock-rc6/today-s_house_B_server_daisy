@@ -62,6 +62,8 @@ com/example/demo/src/category/model/GetCategoryEventsRes.java
  com.example.demo.src.category.model.GetCategoryEventsRes
 com/example/demo/src/user/model/GetUserKartRes.java
  com.example.demo.src.user.model.GetUserKartRes
+com/example/demo/src/user/model/PatchCouponStatusReq.java
+ com.example.demo.src.user.model.PatchCouponStatusReq
 com/example/demo/src/review/dao/ReviewDao.java
  com.example.demo.src.review.dao.ReviewDao
 com/example/demo/config/BaseException.java

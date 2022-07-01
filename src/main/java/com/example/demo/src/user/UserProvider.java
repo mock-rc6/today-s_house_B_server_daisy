@@ -119,4 +119,13 @@ public class UserProvider {
             throw   new BaseException(DATABASE_ERROR);
         }
     }
+
+    public int          checkPatchCouponStatusReq(PatchCouponStatusReq patchCouponStatusReq)    throws BaseException{
+        try{
+            return  userDao.checkPatchCouponReq(patchCouponStatusReq);
+        }
+        catch (Exception exception){
+            throw   new BaseException(DATABASE_ERROR);
+        }
+    }
 }

@@ -137,4 +137,23 @@ public class UserService {
             throw new BaseException(DATABASE_ERROR);
         }
     }
+
+    public void             updateCouponStatus(PatchCouponStatusReq patchCouponStatusReq)   throws BaseException{
+        if(userProvider.checkUserId(patchCouponStatusReq.getUserId()) == 0){
+            throw new BaseException(USER_NOT_EXISTS);
+        }
+
+        if(userProvider.checkPatchCouponStatusReq(patchCouponStatusReq) == 0){
+            throw   new BaseException(INVALID_PATCH_COUPON_STATUS_REQUEST);
+        }
+
+        try{
+            userDao.retrieveUserCoupons(patchCouponStatusReq.getUserId());
+
+            return;
+        }
+        catch (Exception exception){
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
 }
