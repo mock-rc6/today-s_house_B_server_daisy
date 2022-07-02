@@ -110,6 +110,7 @@ public class UserDao {
 
     private List<GetKartInfoRes>      retrieveUserKart(long   userId){
         String      retrieveUserKartQuery = "SELECT\n" +
+                "    kartId," +
                 "    (SELECT pictureUrl FROM ItemOptionPictures IOP\n" +
                 "     WHERE IOP.optionId = IO.optionId\n" +
                 "     GROUP BY IOP.optionId)                             AS 'thumbnail',\n" +
@@ -127,6 +128,7 @@ public class UserDao {
         return this.jdbcTemplate.query(
                 retrieveUserKartQuery,
                 (rs, rowNum) -> new GetKartInfoRes(
+                        rs.getLong("kartId"),
                         rs.getString("thumbnail"),
                         rs.getString("optionName"),
                         rs.getLong("optionId"),

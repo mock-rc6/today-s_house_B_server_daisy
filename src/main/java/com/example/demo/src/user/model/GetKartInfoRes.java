@@ -8,6 +8,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class GetKartInfoRes {
+    long        kartId;
     String      imgUrl;
     String      optionName;
     long        optionId;
