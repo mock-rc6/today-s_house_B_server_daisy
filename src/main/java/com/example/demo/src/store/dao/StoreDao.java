@@ -40,7 +40,7 @@ public class StoreDao {
                 "    concat(TIMESTAMPDIFF(DAY, CURRENT_TIMESTAMP, due), '일 남음') as 'due' ,\n" +
                 "    SC.name as 'subCategory',\n" +
                 "    SC.subCategoryId as 'subcategoryId',\n" +
-                "    concat(round(IO.saledPrice*100/IO.price),'%') as 'sale rate',\n" +
+                "    concat(round((IO.price-IO.saledPrice)*100/IO.price),'%') as 'sale rate',\n" +
                 "    I.itemName as 'itemName',\n" +
                 "    concat(FORMAT(IO.saledPrice, 0),'원') as 'price',\n" +
                 "    (SELECT COUNT(*) FROM Reviews R WHERE R.optionId = IO.optionId) as 'review num',\n" +
@@ -191,7 +191,7 @@ public class StoreDao {
                 "        round((SELECT AVG(score)  FROM Reviews R WHERE R.optionId = O.optionId),1) is not null\n" +
                 "        then round((SELECT AVG(score)  FROM Reviews R WHERE R.optionId = O.optionId),1) else 0 end  AS 'score',\n" +
                 "    (SELECT COUNT(*) FROM Reviews R WHERE R.optionId = O.optionId)                      AS 'reviewCnt',\n" +
-                "    concat(round(100*saledPrice/price, 0),'%')                                          AS 'saleRate',\n" +
+                "    concat(round(100*(price-saledPrice)/price, 0),'%')                                          AS 'saleRate',\n" +
                 "    CASE WHEN (SELECT COUNT(saledPrice) FROM ItemOptions O WHERE O.itemId = I.itemId)>1\n" +
                 "         THEN concat(FORMAT(MIN(saledPrice),0), ' 외')\n" +
                 "         ELSE concat(FORMAT(saledPrice,0),'원')                           END           AS 'price',\n" +
@@ -250,7 +250,7 @@ public class StoreDao {
 
     public List<GetItemOptionRes>     retrieveItemOptions(long itemId){
         String      retrieveItemOptionQuery = "SELECT\n" +
-                "    concat(round(saledPrice*100/price,0), '%')                  AS 'saleRate',\n" +
+                "    concat(round((price-saledPrice)*100/price,0), '%')                  AS 'saleRate',\n" +
                 "    FORMAT(saledPrice,0)                                        AS 'saledPrice',\n" +
                 "    O.optionId                                                  AS 'optionId',\n" +
                 "    O.optionName                                                AS 'optionName',\n" +

@@ -34,6 +34,10 @@ com/example/demo/src/category/CategoryProvider.java
  com.example.demo.src.category.CategoryProvider
 com/example/demo/src/user/dao/UserDao.java
  com.example.demo.src.user.dao.UserDao
+com/example/demo/src/user/model/GetScrapFoldersRes.java
+ com.example.demo.src.user.model.GetScrapFoldersRes
+com/example/demo/src/user/model/GetScrapItemRes.java
+ com.example.demo.src.user.model.GetScrapItemRes
 com/example/demo/config/secret/Secret.java
  com.example.demo.config.secret.Secret
 com/example/demo/src/user/model/GetKartInfoRes.java
@@ -74,6 +78,8 @@ com/example/demo/config/AWSConfig.java
  com.example.demo.config.AWSConfig
 com/example/demo/src/review/model/GetMyReviewsRes.java
  com.example.demo.src.review.model.GetMyReviewsRes
+com/example/demo/src/user/model/GetScrapHousePicRes.java
+ com.example.demo.src.user.model.GetScrapHousePicRes
 com/example/demo/src/user/model/PostScrapBookReq.java
  com.example.demo.src.user.model.PostScrapBookReq
 com/example/demo/utils/SHA256.java

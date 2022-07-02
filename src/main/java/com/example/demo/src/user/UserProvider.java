@@ -128,4 +128,17 @@ public class UserProvider {
             throw   new BaseException(DATABASE_ERROR);
         }
     }
+
+    public GetScrapsRes retrieveUserScraps(long userId) throws BaseException{
+        if(checkUserId(userId) == 0){
+            throw   new BaseException(USER_NOT_EXISTS);
+        }
+
+        try{
+            return userDao.retrieveUserScraps(userId);
+        }
+        catch (Exception exception){
+            throw   new BaseException(DATABASE_ERROR);
+        }
+    }
 }

@@ -294,4 +294,130 @@ public class UserDao {
 
         return;
     }
+
+    private List<GetScrapFoldersRes>      retrieveUserFolders(long    userId){
+        String      retrieveUserFoldersQuery = "SELECT\n" +
+                "    scrapBookId         AS 'folderId',\n" +
+                "    name                AS 'folderName',\n" +
+                "    (SELECT houseImgUrl FROM (HouseImgs inner join ScrapHousePics SHP on HouseImgs.housePicId = SHP.housePicId)\n" +
+                "                        WHERE SHP.scrapBookId = SB.scrapBookId\n" +
+                "                        GROUP BY SHP.scrapBookId HAVING MAX(SHP.createdAt)) AS 'houseImgUrl',\n" +
+                "    (SELECT pictureUrl FROM (ItemPictures IP inner join ScrapItems SI on IP.itemId = SI.itemId)\n" +
+                "                       WHERE SI.scrapBookId = SB.scrapBookId\n" +
+                "                       GROUP BY SI.scrapBookId HAVING MAX(SI.createdAt)) AS 'itemImgUrl'\n" +
+                "FROM (Scraps S inner join ScrapBooks SB on S.userId = SB.userId)\n" +
+                "WHERE S.userId = ?\n" +
+                "GROUP BY folderId;";
+        long        retrieveUserFoldersQueryParams = userId;
+
+        return  this.jdbcTemplate.query(retrieveUserFoldersQuery,
+                (rs, rowNum) -> new GetScrapFoldersRes(
+                        rs.getLong("folderId"),
+                        rs.getString("folderName"),
+                        (rs.getString("houseImgUrl" ) == null || rs.getString("itemImgUrl") == null
+                        ? null : (rs.getString("houseImgUrl")==null? rs.getString("itemImgUrl"):rs.getString("houseImgUrl")))
+                )
+            ,retrieveUserFoldersQueryParams);
+    }
+
+    private List<String>            retrieveUserScrapItemCategories(long    userId){
+        String      retrieveUserScrapItemCategoriesQuery = "SELECT\n" +
+                "    MC.description\n" +
+                "FROM ((Items I inner join ScrapItems SI on I.itemId = SI.itemId)\n" +
+                "     inner join ScrapBooks SB on SB.scrapBookId = SI.scrapBookId)\n" +
+                "     inner join MiniCategories MC on MC.miniCategoryId = I.miniCategoryId\n" +
+                "WHERE SB.userId = ?\n" +
+                "GROUP BY MC.description;";
+        long        retrieveUserScrapItemCategoriesQueryParams = userId;
+
+        return this.jdbcTemplate.query(retrieveUserScrapItemCategoriesQuery,
+                (rs, rowNum) -> rs.getString("MC.description"), retrieveUserScrapItemCategoriesQueryParams);
+    }
+
+    private List<GetScrapItemRes>   retrieveScrapItems(long userId){
+        String  retrieveScrapItemsQuery = "SELECT\n" +
+                "    I.itemId        AS 'itemId',\n" +
+                "    (SELECT pictureUrl FROM ItemPictures IP\n" +
+                "                       WHERE IP.itemId = I.itemId GROUP BY IP.itemId HAVING MIN(IP.itemPicId))   AS 'thumbnail',\n" +
+                "    MC.description  AS 'category',\n" +
+                "    I.companyid     AS 'companyId',\n" +
+                "    C.name          AS 'companyName',\n" +
+                "    CASE WHEN (SELECT round(AVG(score),1)  FROM Reviews R WHERE R.optionId = IO.optionId) is null\n" +
+                "        THEN 0 ELSE (SELECT round(AVG(score),1)  FROM Reviews R WHERE R.optionId = IO.optionId) END           AS 'score',\n" +
+                "    CASE WHEN (SELECT COUNT(reviewId)   FROM Reviews R WHERE R.optionId = IO.optionId) is null\n" +
+                "        THEN 0 ELSE FORMAT((SELECT count(reviewId)   FROM Reviews R WHERE R.optionId = IO.optionId),0) END AS 'reviewCnt',\n" +
+                "    concat(round((IO.price-IO.saledPrice)*100/IO.price, 0) ,'%') AS 'saleRate',\n" +
+                "    FORMAT(IO.saledPrice,0)     AS 'price',\n" +
+                "    CASE WHEN round((IO.price-IO.saledPrice)*100/IO.price, 0) >= 30 THEN '특가' ELSE '할인가' END AS 'specialPrice'\n" +
+                "FROM ((((Items I inner join ScrapItems SI on SI.itemId = I.itemId)\n" +
+                "    inner join ScrapBooks SB on SB.scrapBookId = SI.scrapBookId)\n" +
+                "    inner join Companies C on C.companyId = I.companyId)\n" +
+                "    inner join MiniCategories MC on MC.miniCategoryId = I.miniCategoryId)\n" +
+                "    left join ItemOptions IO on IO.itemId = I.itemId\n" +
+                "WHERE SB.userId = ?\n" +
+                "GROUP BY IO.itemId;";
+        long    retrieveScrapItemsQueryParams = userId;
+
+        return this.jdbcTemplate.query(retrieveScrapItemsQuery,
+                (rs, rowNum) -> new GetScrapItemRes(
+                        rs.getLong("itemId"),
+                        rs.getString("thumbnail"),
+                        rs.getString("category"),
+                        rs.getLong("companyId"),
+                        rs.getString("companyName"),
+                        rs.getDouble("score"),
+                        rs.getString("reviewCnt"),
+                        rs.getString("saleRate"),
+                        rs.getString("price"),
+                        rs.getString("specialPrice")
+                )
+                ,retrieveScrapItemsQueryParams);
+    }
+
+    private List<GetScrapHousePicRes>   retrieveUserScrapHousePics(long userId){
+        String  retrieveUserScrapHousePicsQuery = "SELECT\n" +
+                "    U.userId    AS 'userId',\n" +
+                "    U.name      AS 'userName',\n" +
+                "    HP.housePicId   AS 'housePicId',\n" +
+                "    HP.description  AS 'title',\n" +
+                "    HI.houseImgUrl  AS 'thumbnail'\n" +
+                "FROM (((HousePictures HP inner join ScrapHousePics SHP on HP.housePicId = SHP.housePicId)\n" +
+                "     inner join ScrapBooks SB on SB.scrapBookId = SHP.scrapBookId)\n" +
+                "     inner join Users U on U.userId = HP.userId)\n" +
+                "    left join HouseImgs HI on HI.housePicId = HP.housePicId\n" +
+                "WHERE SB.userId = ?\n" +
+                "GROUP BY HI.housePicId;";
+        long    retrieveUserScrapHousePicsQueryParams = userId;
+
+        return this.jdbcTemplate.query(
+                retrieveUserScrapHousePicsQuery,
+                (rs, rowNum) -> new GetScrapHousePicRes(
+                        rs.getLong("housePicId"),
+                        rs.getString("thumbnail"),
+                        rs.getString("userName"),
+                        rs.getLong("userId"),
+                        rs.getString("title")
+                )
+                ,retrieveUserScrapHousePicsQueryParams
+        );
+    }
+
+    public GetScrapsRes   retrieveUserScraps(long userId){
+        String      retrieveUserScrapsQuery = "SELECT name, profilePicUrl FROM Users WHERE userId = ?;";
+        long        retrieveUserScrapsQueryParams = userId;
+
+        return this.jdbcTemplate.queryForObject(
+                retrieveUserScrapsQuery,
+                (rs, rowNum) -> new GetScrapsRes(
+                        retrieveUserScrapsQueryParams,
+                        rs.getString("name"),
+                        rs.getString("profilePicUrl"),
+                        retrieveUserFolders(retrieveUserScrapsQueryParams),
+                        retrieveUserScrapItemCategories(retrieveUserScrapsQueryParams),
+                        retrieveScrapItems(retrieveUserScrapsQueryParams),
+                        retrieveUserScrapHousePics(retrieveUserScrapsQueryParams)
+                )
+                ,retrieveUserScrapsQueryParams
+        );
+    }
 }
