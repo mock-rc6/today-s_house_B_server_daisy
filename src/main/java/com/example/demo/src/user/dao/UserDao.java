@@ -455,7 +455,7 @@ public class UserDao {
     }
 
     private List<GetKartInfoRes>    retrieveOrderedItems(List<Long> orderItems){
-        int                     length = 0;
+        int                     length = orderItems.size();
         List<GetKartInfoRes>    ret = new ArrayList<GetKartInfoRes>();
         String      retrieveOrderedItemsQuery = "SELECT\n" +
                 "    (SELECT pictureUrl FROM ItemOptionPictures IOP\n" +
@@ -469,9 +469,6 @@ public class UserDao {
                 "         ELSE concat(FORMAT(deliveryPrice,0),'원') end   AS 'delivery'\n" +
                 "FROM ((KartItems K inner join ItemOptions IO on K.optionId = IO.optionId)\n" +
                 "     inner join Items I on I.itemId = IO.itemId)\n" +
-                "WHERE kartId = ?;";
-        String      updateKartStatusQuery = "UPDATE KartItems\n" +
-                "SET status = 'P'\n" +
                 "WHERE kartId = ?;";
 
         for(int i=0; i<length;++i){
@@ -490,10 +487,7 @@ public class UserDao {
                     )
                     ,retrieveOrderedItemsQueryParams
             );
-
             ret.add(getKartInfoRes);
-
-            this.jdbcTemplate.update(updateKartStatusQuery, retrieveOrderedItemsQueryParams);
         }
 
         return ret;
