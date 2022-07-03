@@ -324,4 +324,33 @@ public class UserController {
             return  new BaseResponse<>(exception.getStatus());
         }
     }
+
+    @ResponseBody
+    @GetMapping("/payments/{userId}")
+    public  BaseResponse<GetOrderRes>         retrieveOrder(@PathVariable("userId")String id,
+                                              @RequestBody GetOrderReq getOrderReq) throws BaseException{
+        if(getOrderReq.getKartId() == null || getOrderReq.getKartId().size() == 0){
+            return  new BaseResponse<>(BaseResponseStatus.EMPTY_KART_ID_LIST);
+        }
+        if(!ValidationRegex.canConvertLong(id)){
+            return  new BaseResponse<>(BaseResponseStatus.INVALID_ID);
+        }
+
+        try{
+            long    userId = Long.parseLong(id);
+            long    jwtUserId = jwtService.getUserId();
+
+            if(userId != jwtUserId){
+                return  new BaseResponse<>(BaseResponseStatus.INVALID_USER_JWT);
+            }
+
+            getOrderReq.setUserId(userId);
+
+            GetOrderRes getOrderRes = userProvider.retrievePaymentOrder(getOrderReq);
+
+            return  new BaseResponse<GetOrderRes>(getOrderRes);
+        }catch (BaseException baseException){
+            return  new BaseResponse<>(baseException.getStatus());
+        }
+    }
 }

@@ -69,6 +69,7 @@ public enum BaseResponseStatus {
 
     EMPTY_SCRAPBOOK_NAME(false, 2039, "스크랩북 이름을 입력해주세요."),
 
+    EMPTY_KART_ID_LIST(false, 2040, "주문할 상품이 없습니다."),
 
     /**
      * 3000 : Response 오류

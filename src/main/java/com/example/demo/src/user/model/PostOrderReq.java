@@ -12,5 +12,7 @@ import java.util.List;
 public class PostOrderReq {
     List<Long>          kartId;
     int                 points;
-
+    List<Long>          couponId;
+    String              addressCode;
+    String              address;
 }

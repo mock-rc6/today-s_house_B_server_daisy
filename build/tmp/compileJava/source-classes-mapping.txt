@@ -44,6 +44,8 @@ com/example/demo/src/user/model/GetKartInfoRes.java
  com.example.demo.src.user.model.GetKartInfoRes
 com/example/demo/src/user/model/PostScrapBookRes.java
  com.example.demo.src.user.model.PostScrapBookRes
+com/example/demo/src/user/model/PostOrderReq.java
+ com.example.demo.src.user.model.PostOrderReq
 com/example/demo/src/main/model/GetEventsRes.java
  com.example.demo.src.main.model.GetEventsRes
 com/example/demo/src/user/model/PostUserRes.java
@@ -68,6 +70,8 @@ com/example/demo/src/user/model/GetUserKartRes.java
  com.example.demo.src.user.model.GetUserKartRes
 com/example/demo/src/user/model/PatchCouponStatusReq.java
  com.example.demo.src.user.model.PatchCouponStatusReq
+com/example/demo/src/user/model/GetCouponRes.java
+ com.example.demo.src.user.model.GetCouponRes
 com/example/demo/src/review/dao/ReviewDao.java
  com.example.demo.src.review.dao.ReviewDao
 com/example/demo/config/BaseException.java
@@ -82,6 +86,8 @@ com/example/demo/src/user/model/GetScrapHousePicRes.java
  com.example.demo.src.user.model.GetScrapHousePicRes
 com/example/demo/src/user/model/PostScrapBookReq.java
  com.example.demo.src.user.model.PostScrapBookReq
+com/example/demo/src/user/model/PostOrderRes.java
+ com.example.demo.src.user.model.PostOrderRes
 com/example/demo/utils/SHA256.java
  com.example.demo.utils.SHA256
 com/example/demo/src/user/model/PostUserReq.java
@@ -96,6 +102,8 @@ com/example/demo/src/img/service/ImgService.java
  com.example.demo.src.img.service.ImgService
 com/example/demo/src/main/DAO/MainDao.java
  com.example.demo.src.main.DAO.MainDao
+com/example/demo/src/user/model/GetOrderRes.java
+ com.example.demo.src.user.model.GetOrderRes
 com/example/demo/src/user/model/PatchKartOptionRes.java
  com.example.demo.src.user.model.PatchKartOptionRes
 com/example/demo/src/review/service/ReviewService.java
@@ -116,6 +124,8 @@ com/example/demo/src/store/model/GetTodaysDealMainRes.java
  com.example.demo.src.store.model.GetTodaysDealMainRes
 com/example/demo/src/store/model/PostScrapReq.java
  com.example.demo.src.store.model.PostScrapReq
+com/example/demo/src/user/model/GetOrderReq.java
+ com.example.demo.src.user.model.GetOrderReq
 com/example/demo/src/user/model/PatchKartOptionIdReq.java
  com.example.demo.src.user.model.PatchKartOptionIdReq
 com/example/demo/src/main/MainProvider.java
