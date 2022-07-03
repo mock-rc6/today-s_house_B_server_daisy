@@ -89,6 +89,7 @@ public class UserService {
         }
     }
 
+    @Transactional
     public PatchKartOptionRes updateKartOptionNums(PatchKartOptionReq patchKartOptionReq) throws BaseException{
         if(userProvider.checkUserId(patchKartOptionReq.getUserId()) == 0) {
             throw new BaseException(USER_NOT_EXISTS);
@@ -106,6 +107,7 @@ public class UserService {
        // }
     }
 
+    @Transactional
     public PatchKartOptionRes updateKartOption(PatchKartOptionIdReq patchKartOptionIdReq) throws BaseException{
         if(userProvider.checkUserId(patchKartOptionIdReq.getUserId()) == 0) {
             throw new BaseException(USER_NOT_EXISTS);
@@ -126,6 +128,7 @@ public class UserService {
         }
     }
 
+    @Transactional
     public PostScrapBookRes         createScrapBook(PostScrapBookReq    postScrapBookReq) throws BaseException{
         if(userProvider.checkUserId(postScrapBookReq.getUserId()) == 0){
             throw new BaseException(USER_NOT_EXISTS);
@@ -138,6 +141,7 @@ public class UserService {
         }
     }
 
+    @Transactional
     public void             updateCouponStatus(PatchCouponStatusReq patchCouponStatusReq)   throws BaseException{
         if(userProvider.checkUserId(patchCouponStatusReq.getUserId()) == 0){
             throw new BaseException(USER_NOT_EXISTS);
@@ -157,6 +161,7 @@ public class UserService {
         }
     }
 
+    @Transactional
     public PostOrderRes    createOrder(PostOrderReq postOrderReq)  throws BaseException{
         if(userProvider.checkUserId(postOrderReq.getUserId()) == 0){
             throw new BaseException(USER_NOT_EXISTS);

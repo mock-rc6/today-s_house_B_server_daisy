@@ -62,7 +62,7 @@ public class UserController {
             return new BaseResponse<>(BaseResponseStatus.POST_USERS_SHORT_NAME);
         }
         if(postUserReq.getProfilePicUrl()== null){
-            postUserReq.setProfilePicUrl("");
+            postUserReq.setProfilePicUrl("https://d2u3dcdbebyaiu.cloudfront.net/uploads/atch_img/309/59932b0eb046f9fa3e063b8875032edd_crop.jpeg");
         }
 
         // 실제 유저를 생성
