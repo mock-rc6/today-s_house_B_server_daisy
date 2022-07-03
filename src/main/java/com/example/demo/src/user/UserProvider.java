@@ -21,6 +21,7 @@ import static com.example.demo.config.BaseResponseStatus.*;
 
 @Service
 @AllArgsConstructor
+@Transactional
 public class UserProvider {
 
     private final UserDao userDao;
@@ -38,7 +39,6 @@ public class UserProvider {
         }
     }
 
-    @Transactional(readOnly = true)
     public int      checkName(String    name)   throws BaseException{
         try{
             return  userDao.checkName(name);
@@ -47,7 +47,6 @@ public class UserProvider {
         }
     }
 
-    @Transactional(readOnly = true)
     public int      checkUserId(long    userId) throws BaseException{
         try{
             return  userDao.checkUserId(userId);
@@ -57,7 +56,6 @@ public class UserProvider {
         }
     }
 
-    @Transactional(readOnly = true)
     public PostLogInRes logIn(PostLogInReq postLogInReq)    throws BaseException{
         if(checkEmail(postLogInReq.getEmail()) == 0){
             throw new BaseException(FAILED_TO_LOGIN);
@@ -88,7 +86,6 @@ public class UserProvider {
         }
     }
 
-    @Transactional(readOnly = true)
     public GetUserKartRes retrieveUserKartInfos(long  userId) throws BaseException{
         if(checkUserId(userId) == 0){
             throw new BaseException(BaseResponseStatus.USER_NOT_EXISTS);
@@ -101,7 +98,6 @@ public class UserProvider {
         }
     }
 
-    @Transactional(readOnly = true)
     public int          checkKartId(long    kartId) throws BaseException{
         try{
             return  userDao.checkKartId(kartId);
@@ -111,7 +107,6 @@ public class UserProvider {
         }
     }
 
-    @Transactional(readOnly = true)
     public List<GetUserCouponRes>       retrieveUserCoupons(long    userId) throws BaseException{
         if(checkUserId(userId) == 0){
             throw   new BaseException(USER_NOT_EXISTS);
@@ -125,7 +120,6 @@ public class UserProvider {
         }
     }
 
-    @Transactional(readOnly = true)
     public int          checkPatchCouponStatusReq(PatchCouponStatusReq patchCouponStatusReq)    throws BaseException{
         try{
             return  userDao.checkPatchCouponReq(patchCouponStatusReq);
@@ -135,7 +129,6 @@ public class UserProvider {
         }
     }
 
-    @Transactional(readOnly = true)
     public GetScrapsRes retrieveUserScraps(long userId) throws BaseException{
         if(checkUserId(userId) == 0){
             throw   new BaseException(USER_NOT_EXISTS);
@@ -149,7 +142,6 @@ public class UserProvider {
         }
     }
 
-    @Transactional
     public GetOrderRes      retrievePaymentOrder(GetOrderReq getOrderReq) throws BaseException{
         if(checkUserId(getOrderReq.getUserId()) == 0){
             throw new BaseException(USER_NOT_EXISTS);
@@ -158,6 +150,15 @@ public class UserProvider {
         try{
             return userDao.retrievePayment(getOrderReq);
         }catch (Exception exception){
+            throw   new BaseException(DATABASE_ERROR);
+        }
+    }
+
+    public int checkCouponId(long couponId) throws BaseException{
+        try{
+            return  userDao.checkCouponId(couponId);
+        }
+        catch (Exception exception){
             throw   new BaseException(DATABASE_ERROR);
         }
     }

@@ -10,9 +10,16 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 public class PostOrderReq {
+    long                userId;
     List<Long>          kartId;
     int                 points;
-    List<Long>          couponId;
+    long                couponId;
+    String              orderName;
+    String              phoneNum;
+    String              email;
+    String              receivedName;
+    String              receivedPhone;
+    String              placeName;
     String              addressCode;
     String              address;
 }

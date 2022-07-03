@@ -71,6 +71,18 @@ public enum BaseResponseStatus {
 
     EMPTY_KART_ID_LIST(false, 2040, "주문할 상품이 없습니다."),
 
+    // [POST] /users/payments/:userId
+    EMPTY_ORDER_NAME(false, 2041,"주문자의 이름을 입력해주세요."),
+    EMPTY_ORDER_PHONE_NUMBER(false, 2042, "주문자의 휴대폰 번호를 입력해주세요."),
+    EMPTY_EMAIL(false, 2043, "주문자의 이메일을 입력하세요."),
+    EMPTY_RECEIVED_NAME(false, 2044, "받는 사람의 이름을 입력하세요."),
+    EMPTY_RECEIVED_PHONE(false, 2045, "받는 사람의 휴대폰 번호를 입력하세요."),
+    EMPTY_PLACE_NAME(false, 2046,"배송지 명을 입력하세요."),
+    EMPTY_ADDRESS_CODE(false, 2047, "우편번호를 입력하세요."),
+    EMPTY_ADDRESS(false, 2048, "상세 주소를 입력하세요."),
+    INVALID_ADDRESS_CODE(false, 2049, "올바르지 않은 우편번호입니다."),
+    EMPTY_KART_ID(false, 2050, "주문할 상품을 선택해주세요."),
+
     /**
      * 3000 : Response 오류
      */
@@ -89,6 +101,7 @@ public enum BaseResponseStatus {
     KART_ID_NOT_EXISTS(false, 3020, "장바구니 옵션이 존재하지 않습니다."),
 
     INVALID_PATCH_COUPON_STATUS_REQUEST(false, 3021, "올바르지 않은 쿠폰 상태 변경 요청입니다."),
+    INVALID_COUPON_ID(false, 3022, "존재하지 않는 쿠폰 id입니다."),
 
     /**
      * 4000 : Database, Server 오류

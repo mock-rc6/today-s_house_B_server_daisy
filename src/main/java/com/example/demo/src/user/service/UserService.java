@@ -156,4 +156,29 @@ public class UserService {
             throw new BaseException(DATABASE_ERROR);
         }
     }
+
+    public PostOrderRes    createOrder(PostOrderReq postOrderReq)  throws BaseException{
+        if(userProvider.checkUserId(postOrderReq.getUserId()) == 0){
+            throw new BaseException(USER_NOT_EXISTS);
+        }
+
+        int length = postOrderReq.getKartId().size();
+
+        for(int i=0;i<length;++i){
+            if(userProvider.checkKartId(postOrderReq.getKartId().get(i)) == 0){
+                throw new BaseException(KART_ID_NOT_EXISTS);
+            }
+        }
+
+        if(postOrderReq.getCouponId()!= 0 && userProvider.checkCouponId(postOrderReq.getCouponId()) == 0){
+            throw new BaseException(INVALID_COUPON_ID);
+        }
+
+       // try{
+            return  userDao.createOrder(postOrderReq);
+      //  }catch (Exception exception){
+      //      throw new BaseException(DATABASE_ERROR);
+      //  }
+
+    }
 }

@@ -13,9 +13,12 @@ import com.example.demo.utils.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import static com.example.demo.config.BaseResponseStatus.*;
 
 @RestController
 @RequestMapping("/users")
@@ -97,7 +100,7 @@ public class UserController {
     @PatchMapping("/{userId}")
     public BaseResponse<String> updatePassword(@PathVariable("userId")String    id, @RequestBody PatchPasswordReq patchPasswordReq){
         if(!ValidationRegex.canConvertLong(id)){
-            return  new BaseResponse<>(BaseResponseStatus.INVALID_ID);
+            return  new BaseResponse<>(INVALID_ID);
         }
         if(patchPasswordReq.getPassword() == null){
             return new BaseResponse<>(BaseResponseStatus.PATCH_PASSWORD_EMPTY);
@@ -129,7 +132,7 @@ public class UserController {
     @GetMapping("/karts/{userId}")
     public BaseResponse<GetUserKartRes>     retrieveUserKartInfos(@PathVariable("userId") String id)    throws BaseException{
         if(!ValidationRegex.canConvertLong(id)){
-            return new BaseResponse<>(BaseResponseStatus.INVALID_ID);
+            return new BaseResponse<>(INVALID_ID);
         }
 
         try{
@@ -156,7 +159,7 @@ public class UserController {
                                                                 @RequestBody PatchKartOptionReq patchKartOptionReq) throws BaseException{
 
         if (!ValidationRegex.canConvertLong(id) || !ValidationRegex.canConvertLong(kart)) {
-            return new BaseResponse<>(BaseResponseStatus.INVALID_ID);
+            return new BaseResponse<>(INVALID_ID);
         }
 
         try{
@@ -191,7 +194,7 @@ public class UserController {
         }
 
         if(!ValidationRegex.canConvertLong(id) || !ValidationRegex.canConvertLong(kart)){
-            return new BaseResponse<>(BaseResponseStatus.INVALID_ID);
+            return new BaseResponse<>(INVALID_ID);
         }
 
         try{
@@ -220,7 +223,7 @@ public class UserController {
     public BaseResponse<PostScrapBookRes>   createScrapBook(@PathVariable("userId")String id,
             @RequestBody PostScrapBookReq postScrapBookReq) throws BaseException{
         if(!ValidationRegex.canConvertLong(id)){
-            return  new BaseResponse<>(BaseResponseStatus.INVALID_ID);
+            return  new BaseResponse<>(INVALID_ID);
         }
 
         if(postScrapBookReq.getDescription() == null){
@@ -252,7 +255,7 @@ public class UserController {
     @GetMapping("/coupons/{userId}")
     public BaseResponse<List<GetUserCouponRes>>       retrieveUserCoupons(@PathVariable("userId")String id)   throws BaseException{
         if(!ValidationRegex.canConvertLong(id)){
-            return  new BaseResponse<>(BaseResponseStatus.INVALID_ID);
+            return  new BaseResponse<>(INVALID_ID);
         }
 
         try{
@@ -277,7 +280,7 @@ public class UserController {
     public BaseResponse<String>         updateCouponStatus(@PathVariable("userId") String   id,
                                                            @RequestParam("id")String coupon)    throws BaseException{
         if(!ValidationRegex.canConvertLong(id) || !ValidationRegex.canConvertLong(coupon)){
-            return  new BaseResponse<>(BaseResponseStatus.INVALID_ID);
+            return  new BaseResponse<>(INVALID_ID);
         }
 
         try{
@@ -305,7 +308,7 @@ public class UserController {
     @GetMapping("/scraps/{userId}")
     public BaseResponse<GetScrapsRes>  retrieveUserScraps(@PathVariable("userId") String id) throws BaseException{
         if(!ValidationRegex.canConvertLong(id)){
-            return  new BaseResponse<>(BaseResponseStatus.INVALID_ID);
+            return  new BaseResponse<>(INVALID_ID);
         }
 
         try{
@@ -333,7 +336,7 @@ public class UserController {
             return  new BaseResponse<>(BaseResponseStatus.EMPTY_KART_ID_LIST);
         }
         if(!ValidationRegex.canConvertLong(id)){
-            return  new BaseResponse<>(BaseResponseStatus.INVALID_ID);
+            return  new BaseResponse<>(INVALID_ID);
         }
 
         try{
@@ -352,5 +355,73 @@ public class UserController {
         }catch (BaseException baseException){
             return  new BaseResponse<>(baseException.getStatus());
         }
+    }
+
+    @ResponseBody
+    @PostMapping("/payments/{userId}")
+    public BaseResponse<PostOrderRes>    createOrder(@PathVariable("userId")String id,
+                                                    @RequestBody PostOrderReq postOrderReq) throws BaseException{
+
+        if(!ValidationRegex.canConvertLong(id)){
+            return  new BaseResponse<>(INVALID_ID);
+        }
+
+        if(postOrderReq.getOrderName() == null){
+            return  new BaseResponse<>(EMPTY_ORDER_NAME);
+        }
+
+        if(postOrderReq.getPhoneNum() == null){
+            return  new BaseResponse<>(EMPTY_ORDER_PHONE_NUMBER);
+        }
+
+        if(postOrderReq.getEmail() == null){
+            return  new BaseResponse<>(EMPTY_EMAIL);
+        }
+
+        if(!ValidationRegex.isRegexEmail(postOrderReq.getEmail())){
+            return  new BaseResponse<>(POST_USERS_INVALID_EMAIL);
+        }
+
+        if(postOrderReq.getReceivedName() == null){
+            return  new BaseResponse<>(EMPTY_RECEIVED_NAME);
+        }
+
+        if(postOrderReq.getPlaceName() == null){
+            return  new BaseResponse<>(EMPTY_RECEIVED_PHONE);
+        }
+
+        if(postOrderReq.getAddressCode() == null){
+            return  new BaseResponse<>(EMPTY_ADDRESS_CODE);
+        }
+
+        if(!ValidationRegex.isAddressCode(postOrderReq.getAddressCode())){
+            return  new BaseResponse<>(INVALID_ADDRESS_CODE);
+        }
+
+        if(postOrderReq.getAddress() == null){
+            return  new BaseResponse<>(EMPTY_ADDRESS);
+        }
+
+        if(postOrderReq.getKartId() == null){
+            return  new BaseResponse<>(EMPTY_KART_ID);
+        }
+
+        try{
+            long    userId = Long.parseLong(id);
+            long    jwtUserId = jwtService.getUserId();
+
+            if(userId != jwtUserId){
+                return  new BaseResponse<>(INVALID_USER_JWT);
+            }
+
+            postOrderReq.setUserId(userId);
+
+            PostOrderRes postOrderRes = userService.createOrder(postOrderReq);
+            return  new BaseResponse<PostOrderRes>(postOrderRes);
+        }
+        catch (BaseException baseException){
+            return  new BaseResponse<>(baseException.getStatus());
+        }
+
     }
 }

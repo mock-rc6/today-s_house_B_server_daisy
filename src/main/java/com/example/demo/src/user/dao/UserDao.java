@@ -566,4 +566,74 @@ public class UserDao {
                 retrievePaymentKart(getOrderReq)
         );
     }
+
+    public  PostOrderRes    createOrder(PostOrderReq postOrderReq){
+        String      createOrderQuery = "INSERT INTO ItemOrder(userId, orderName, phoneNumber, email, receivedName, receivedPhone, placeName, addressCode, address)\n" +
+                "VALUES (?, ?,?, ?, ?, ?, ?, ?, ?);";
+        Object[]    createOrderQueryParams = new Object[]{
+                postOrderReq.getUserId(), postOrderReq.getOrderName(), postOrderReq.getPhoneNum(), postOrderReq.getEmail(),
+                postOrderReq.getReceivedName(), postOrderReq.getReceivedPhone(), postOrderReq.getPlaceName(),postOrderReq.getAddressCode(), postOrderReq.getAddress()
+        };
+        this.jdbcTemplate.update(createOrderQuery, createOrderQueryParams);
+
+        String      retrieveLastInsertIdQuery = "SELECT last_insert_id();";
+        long        orderId = this.jdbcTemplate.queryForObject(retrieveLastInsertIdQuery, long.class);
+
+        int length = postOrderReq.getKartId().size();
+        String      updateKartStatusQuery = "UPDATE KartItems\n" +
+                "SET status = 'Y'\n" +
+                "WHERE kartId = ?;";
+
+        String      createBoughtItemsQuery = "INSERT INTO BoughtItems(orderId, kartId, receiptId)\n" +
+                "VALUES (?, ?, ?);";
+
+        String      createReceiptQuery = "INSERT INTO Receipts(userId) VALUES (?)";
+        long        createReceiptQueryParams = postOrderReq.getUserId();
+
+        this.jdbcTemplate.update(createReceiptQuery, createReceiptQueryParams);
+
+        long        receiptId = this.jdbcTemplate.queryForObject(retrieveLastInsertIdQuery, long.class);
+
+        for(int i=0; i<length; ++i){
+            long    updateKartStatusQueryParams = postOrderReq.getKartId().get(i);
+            this.jdbcTemplate.update(updateKartStatusQuery, updateKartStatusQueryParams);
+
+            Object[]    createBoughtItemsQueryParams = new Object[]{orderId, updateKartStatusQueryParams, receiptId};
+            this.jdbcTemplate.update(createBoughtItemsQuery, createBoughtItemsQueryParams);
+        }
+
+        String      retrieveOrderResultQuery = "SELECT\n" +
+                "    receiptId,\n" +
+                "    CASE WHEN (SELECT COUNT(boughtId) FROM BoughtItems BI WHERE BI.orderId = ?) > 1 THEN\n" +
+                "        concat(MAX(itemName), ' 외') ELSE itemName END  AS 'itemName',\n" +
+                "    concat(SUM(KI.number), '개') AS 'count',\n" +
+                "    concat(FORMAT(SUM(saledPrice*KI.number)+SUM(deliveryPrice),0),'원') as 'price',\n" +
+                "    MAX((SELECT pictureUrl FROM ItemPictures IP WHERE IP.itemId = I.itemId GROUP BY IP.itemId)) AS 'thumbnail'\n" +
+                "FROM (((BoughtItems BI inner join KartItems KI on BI.kartId = KI.kartId)\n" +
+                "     inner join ItemOptions IO ON IO.optionId = KI.optionId)\n" +
+                "    inner join Items I on I.itemId = IO.itemId)\n" +
+                "WHERE BI.orderId = ?;";
+        Object[]    retrieveOrderResultQueryParams = new Object[]{orderId, orderId};
+
+        return this.jdbcTemplate.queryForObject(
+                retrieveOrderResultQuery,
+                (rs, rowNum) -> new PostOrderRes(
+                        rs.getLong("receiptId"),
+                        rs.getString("itemName"),
+                        rs.getString("thumbnail"),
+                        rs.getString("count"),
+                        rs.getString("price")
+                )
+                ,retrieveOrderResultQueryParams
+        );
+    }
+
+    public int      checkCouponId(long  couponId){
+        String      checkCouponIdQuery = "SELECT EXISTS(\n" +
+                "    SELECT couponId FROM Coupons WHERE couponId = ?\n" +
+                "           );";
+        long        checkCouponIdQueryParams = couponId;
+
+        return  this.jdbcTemplate.queryForObject(checkCouponIdQuery, int.class, checkCouponIdQueryParams);
+    }
 }

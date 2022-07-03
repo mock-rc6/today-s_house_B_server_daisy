@@ -69,5 +69,19 @@ public class ValidationRegex {
         }
         return true;
     }
+
+    public static boolean isAddressCode(String addressCode) {
+        int length = addressCode.length();
+
+        if(length != 5){
+            return false;
+        }
+
+        for(int i=0;i<length;++i)
+            if(addressCode.charAt(i)<'0'||addressCode.charAt(i)>'9')
+                return false;
+        return true;
+
+    }
 }
 
