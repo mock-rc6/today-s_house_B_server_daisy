@@ -1,5 +1,7 @@
 com/example/demo/src/user/model/GetUserCouponRes.java
  com.example.demo.src.user.model.GetUserCouponRes
+com/example/demo/src/oauth/service/OAuthService.java
+ com.example.demo.src.oauth.service.OAuthService
 com/example/demo/src/user/model/PostLogInRes.java
  com.example.demo.src.user.model.PostLogInRes
 com/example/demo/config/Constant.java
@@ -22,6 +24,8 @@ com/example/demo/src/category/model/GetCategoryRes.java
  com.example.demo.src.category.model.GetCategoryRes
 com/example/demo/src/main/model/GetMainRes.java
  com.example.demo.src.main.model.GetMainRes
+com/example/demo/src/oauth/controller/OAuthController.java
+ com.example.demo.src.oauth.controller.OAuthController
 com/example/demo/src/store/model/GetStoreRes.java
  com.example.demo.src.store.model.GetStoreRes
 com/example/demo/src/store/model/PostKartItemRes.java
@@ -68,6 +72,8 @@ com/example/demo/src/category/model/GetCategoryEventsRes.java
  com.example.demo.src.category.model.GetCategoryEventsRes
 com/example/demo/src/user/model/GetUserKartRes.java
  com.example.demo.src.user.model.GetUserKartRes
+com/example/demo/src/oauth/dao/OAuthDAO.java
+ com.example.demo.src.oauth.dao.OAuthDAO
 com/example/demo/src/user/model/PatchCouponStatusReq.java
  com.example.demo.src.user.model.PatchCouponStatusReq
 com/example/demo/src/user/model/GetCouponRes.java
@@ -144,6 +150,8 @@ com/example/demo/src/store/model/GetStoreCategoryRes.java
  com.example.demo.src.store.model.GetStoreCategoryRes
 com/example/demo/DemoApplication.java
  com.example.demo.DemoApplication
+com/example/demo/src/oauth/model/KakaoUser.java
+ com.example.demo.src.oauth.model.KakaoUser
 com/example/demo/src/store/service/StoreService.java
  com.example.demo.src.store.service.StoreService
 com/example/demo/utils/JwtService.java

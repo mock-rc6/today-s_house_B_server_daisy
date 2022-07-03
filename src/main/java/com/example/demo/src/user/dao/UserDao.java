@@ -567,7 +567,7 @@ public class UserDao {
         );
     }
 
-    public  PostOrderRes    createOrder(PostOrderReq postOrderReq){
+    private long        createOrderId(PostOrderReq postOrderReq){
         String      createOrderQuery = "INSERT INTO ItemOrder(userId, orderName, phoneNumber, email, receivedName, receivedPhone, placeName, addressCode, address)\n" +
                 "VALUES (?, ?,?, ?, ?, ?, ?, ?, ?);";
         Object[]    createOrderQueryParams = new Object[]{
@@ -577,8 +577,11 @@ public class UserDao {
         this.jdbcTemplate.update(createOrderQuery, createOrderQueryParams);
 
         String      retrieveLastInsertIdQuery = "SELECT last_insert_id();";
-        long        orderId = this.jdbcTemplate.queryForObject(retrieveLastInsertIdQuery, long.class);
 
+        return  this.jdbcTemplate.queryForObject(retrieveLastInsertIdQuery, long.class);
+    }
+
+    private void        createReceiptId(PostOrderReq postOrderReq, long orderId){
         int length = postOrderReq.getKartId().size();
         String      updateKartStatusQuery = "UPDATE KartItems\n" +
                 "SET status = 'Y'\n" +
@@ -592,6 +595,8 @@ public class UserDao {
 
         this.jdbcTemplate.update(createReceiptQuery, createReceiptQueryParams);
 
+        String      retrieveLastInsertIdQuery = "SELECT last_insert_id();";
+
         long        receiptId = this.jdbcTemplate.queryForObject(retrieveLastInsertIdQuery, long.class);
 
         for(int i=0; i<length; ++i){
@@ -601,6 +606,15 @@ public class UserDao {
             Object[]    createBoughtItemsQueryParams = new Object[]{orderId, updateKartStatusQueryParams, receiptId};
             this.jdbcTemplate.update(createBoughtItemsQuery, createBoughtItemsQueryParams);
         }
+
+        return;
+    }
+
+    public  PostOrderRes    createOrder(PostOrderReq postOrderReq){
+
+        long        orderId = createOrderId(postOrderReq);
+
+        createReceiptId(postOrderReq, orderId);
 
         String      retrieveOrderResultQuery = "SELECT\n" +
                 "    receiptId,\n" +
