@@ -11,5 +11,6 @@ import java.util.List;
 @AllArgsConstructor
 public class GetEventDetailRes {
     long            eventId;
+    String          eventName;
     List<String>    imgUrlList;
 }

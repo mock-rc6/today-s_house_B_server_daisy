@@ -60,7 +60,11 @@ public class MainDao {
                 "FROM    EventImgs   WHERE eventId = ?;";
         long        retrieveEventDetailsQueryParams = eventId;
 
+        String      retrieveEventNameQuery = "SELECT description FROM rising_test.Events WHERE eventId = ?;";
+        long        retrieveEventNameQueryParams = eventId;
+
         return  new GetEventDetailRes(eventId,
+                this.jdbcTemplate.queryForObject(retrieveEventNameQuery, String.class,retrieveEventNameQueryParams),
                 this.jdbcTemplate.query(retrieveEventDetailsQuery,
                         (rs, rowNum)-> rs.getString("imgUrl")
                         ,retrieveEventDetailsQueryParams));
