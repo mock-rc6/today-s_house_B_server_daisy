@@ -102,6 +102,7 @@ public enum BaseResponseStatus {
 
     INVALID_PATCH_COUPON_STATUS_REQUEST(false, 3021, "올바르지 않은 쿠폰 상태 변경 요청입니다."),
     INVALID_COUPON_ID(false, 3022, "존재하지 않는 쿠폰 id입니다."),
+    EMAIL_NOT_EXISTS(false, 3023, "존재하지 않는 이메일입니다."),
 
     /**
      * 4000 : Database, Server 오류

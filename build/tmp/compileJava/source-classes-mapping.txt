@@ -38,6 +38,8 @@ com/example/demo/src/category/CategoryProvider.java
  com.example.demo.src.category.CategoryProvider
 com/example/demo/src/user/dao/UserDao.java
  com.example.demo.src.user.dao.UserDao
+com/example/demo/src/store/test/TestController.java
+ com.example.demo.src.store.test.TestController
 com/example/demo/src/user/model/GetScrapFoldersRes.java
  com.example.demo.src.user.model.GetScrapFoldersRes
 com/example/demo/src/user/model/GetScrapItemRes.java
@@ -62,6 +64,8 @@ com/example/demo/src/category/model/GetCategoryDetailRes.java
  com.example.demo.src.category.model.GetCategoryDetailRes
 com/example/demo/src/main/model/GetEventDetailRes.java
  com.example.demo.src.main.model.GetEventDetailRes
+com/example/demo/src/oauth/config/KakaoOAuth.java
+ com.example.demo.src.oauth.config.KakaoOAuth
 com/example/demo/src/store/controller/StoreController.java
  com.example.demo.src.store.controller.StoreController
 com/example/demo/src/user/model/GetScrapCategory.java
@@ -72,8 +76,6 @@ com/example/demo/src/category/model/GetCategoryEventsRes.java
  com.example.demo.src.category.model.GetCategoryEventsRes
 com/example/demo/src/user/model/GetUserKartRes.java
  com.example.demo.src.user.model.GetUserKartRes
-com/example/demo/src/oauth/dao/OAuthDAO.java
- com.example.demo.src.oauth.dao.OAuthDAO
 com/example/demo/src/user/model/PatchCouponStatusReq.java
  com.example.demo.src.user.model.PatchCouponStatusReq
 com/example/demo/src/user/model/GetCouponRes.java
@@ -122,8 +124,6 @@ com/example/demo/src/WebSecurityConfig.java
  com.example.demo.src.WebSecurityConfig
 com/example/demo/src/category/model/GetAllCategoryRes.java
  com.example.demo.src.category.model.GetAllCategoryRes
-com/example/demo/src/test/TestController.java
- com.example.demo.src.test.TestController
 com/example/demo/src/store/model/PostScrapRes.java
  com.example.demo.src.store.model.PostScrapRes
 com/example/demo/src/store/model/GetTodaysDealMainRes.java
@@ -146,6 +146,8 @@ com/example/demo/src/user/model/PostLogInReq.java
  com.example.demo.src.user.model.PostLogInReq
 com/example/demo/src/store/model/PostKartItemReq.java
  com.example.demo.src.store.model.PostKartItemReq
+com/example/demo/src/user/model/GetUserRes.java
+ com.example.demo.src.user.model.GetUserRes
 com/example/demo/src/store/model/GetStoreCategoryRes.java
  com.example.demo.src.store.model.GetStoreCategoryRes
 com/example/demo/DemoApplication.java

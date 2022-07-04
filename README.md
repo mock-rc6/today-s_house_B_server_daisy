@@ -2,6 +2,9 @@
 ## 💻 Tech Stack
 - Back-end
 
+<img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=for-the-badge&logo=Spring Boot&logoColor=white">
+<img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=MySQL&logoColor=white">
+<img src="https://img.shields.io/badge/NginX-009639?style=for-the-badge&logo=NGINX&logoColor=white">
 
 ## 📜 ERD
 👉 [ERD로 바로가기](https://aquerytool.com/aquerymain/index/?rurl=396ea193-ceab-4631-9fb7-a89881e24ad1)
@@ -75,8 +78,12 @@
   - 100*(price-saledPrice)/price가 할인률인데 100*saledPrice/price라고 되어 있어서 이를 수정하였다.
 - 지금 제작 중인 주문 생성 API를 만드는 도중 장바구니 조회 API에서 장바구니의 기본 키가 필요한 것을 발견
     - 장바구니 조회 API에 인자를 추가하였다.
+
 ### 9️⃣ 9일차[2022-07-03] 진행 상황
 - 주문 생성 API 작성 및 리팩토링
 - 유저 회원가입 시 기본 프로필 사진 url 등록
 - 주문 화면 불러오기 API 작성
+
+### 🔟 10일차[2022-07-04] 진행 상황
+- 카카오톡 oAuth
 - 

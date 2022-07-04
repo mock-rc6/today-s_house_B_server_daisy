@@ -23,7 +23,7 @@ public class UserDao {
     public int  checkEmail(String   email){
         String      checkEmailQuery = "SELECT\n" +
                 "    EXISTS(\n" +
-                "        SELECT email    FROM Users  WHERE   email = ? AND status = 'ACTIVE'\n" +
+                "        SELECT email    FROM Users  WHERE   email = ? AND status != 'DEACTIVE'\n" +
                 "        );";
         String      checkEmailQueryParams = email;
 
@@ -649,5 +649,41 @@ public class UserDao {
         long        checkCouponIdQueryParams = couponId;
 
         return  this.jdbcTemplate.queryForObject(checkCouponIdQuery, int.class, checkCouponIdQueryParams);
+    }
+
+
+    public List<GetUserRes> getUserByKakaoId(long userId) {
+        String  getUserByKakaoIdQuery = "SELECT * FROM Users WHERE (userId = ? AND status != 'DEACTIVATE')";
+        long    getUserByKakaoIdQueryParams = userId;
+
+        return this.jdbcTemplate.query(getUserByKakaoIdQuery,
+                (rs, rowNum) -> new GetUserRes(
+                        rs.getLong("userId"),
+                        rs.getString("name"),
+                        rs.getString("email"),
+                        rs.getString("password")
+                )
+                ,getUserByKakaoIdQueryParams);
+    }
+
+    public List<GetUserRes> getUserByEmail(String email) {
+        String  getUserByEmailQuery = "SELECT * FROM Users WHERE (email = ? AND status != 'DEACTIVATE')";
+        String    getUserByEmailQueryParams = email;
+
+        return this.jdbcTemplate.query(getUserByEmailQuery,
+                (rs, rowNum) -> new GetUserRes(
+                        rs.getLong("userId"),
+                        rs.getString("name"),
+                        rs.getString("email"),
+                        rs.getString("password")
+                )
+                ,getUserByEmailQueryParams);
+    }
+
+    public int createKakaoId(long userId, String email) {
+        String modifyUserNameQuery = "UPDATE Users SET userId = ? WHERE email = ? ";
+        Object[] modifyUserNameParams = new Object[]{userId , email};
+
+        return this.jdbcTemplate.update(modifyUserNameQuery,modifyUserNameParams);
     }
 }

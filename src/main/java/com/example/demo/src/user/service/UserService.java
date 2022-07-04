@@ -186,4 +186,17 @@ public class UserService {
       //  }
 
     }
+
+    @Transactional
+    public void createKakaoId(long userId, String email) throws BaseException{
+        try{
+            int result = userDao.createKakaoId(userId, email);
+            if(result == 0){
+                throw new BaseException(BaseResponseStatus.USERS_EMPTY_USER_ID);
+            }
+        }
+        catch (Exception e){
+            throw new BaseException(BaseResponseStatus.DATABASE_ERROR);
+        }
+    }
 }

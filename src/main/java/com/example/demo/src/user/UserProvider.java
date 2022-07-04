@@ -162,4 +162,24 @@ public class UserProvider {
             throw   new BaseException(DATABASE_ERROR);
         }
     }
+
+    public List<GetUserRes> getUserByKakaoId(long userId) throws BaseException{
+        try{
+            List<GetUserRes>   kakaoUser = userDao.getUserByKakaoId(userId);
+            return             kakaoUser;
+        }
+        catch (Exception exception){
+            throw new BaseException(BaseResponseStatus.DATABASE_ERROR);
+        }
+    }
+
+    public List<GetUserRes> getUserByEmail(String email) throws BaseException{
+        try{
+            List<GetUserRes> userList = userDao.getUserByEmail(email);
+            return userList;
+        }catch (Exception exception){
+            throw new BaseException(BaseResponseStatus.DATABASE_ERROR);
+        }
+    }
 }
+
