@@ -33,7 +33,7 @@ public class MainService {
         if(storeProvider.checkOptionId(postReviewReq.getOptionId()) == 0){
             throw   new BaseException(BaseResponseStatus.OPTION_ID_NOT_EXISTS);
         }
-        if(mainProvider.checkReviewOption(postReviewReq.getUserId(), postReviewReq.getOptionId()) == 0){
+        if(mainProvider.checkReviewOption(postReviewReq.getUserId(), postReviewReq.getOptionId()) == 1){
             throw   new BaseException(BaseResponseStatus.REVIEW_ALREADY_WRITTEN);
         }
         try{
