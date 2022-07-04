@@ -117,4 +117,13 @@ public class MainProvider {
             throw   new BaseException(BaseResponseStatus.DATABASE_ERROR);
         }
     }
+
+    public int              checkReviewOption(long  userId, long optionId)  throws BaseException{
+        try{
+            return  mainDao.checkReviewOption(userId, optionId);
+        }
+        catch (Exception exception){
+            throw new BaseException(BaseResponseStatus.DATABASE_ERROR);
+        }
+    }
 }

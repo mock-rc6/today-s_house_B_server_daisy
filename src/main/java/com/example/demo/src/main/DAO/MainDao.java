@@ -317,4 +317,16 @@ public class MainDao {
                 this.jdbcTemplate.queryForObject(retrieveLastInsertQuery, long.class)
                 ,"성공적으로 리뷰가 등록되었습니다.");
     }
+
+    public int      checkReviewOption(long  userId, long    optionId){
+        String      checkReviewOptionQuery = "SELECT EXISTS(\n" +
+                "    SELECT reviewId\n" +
+                "    FROM (Reviews R inner join ItemOptions IO on IO.optionId = R.optionId)\n" +
+                "        inner join Items I on I.itemId = IO.optionId\n" +
+                "    WHERE R.optionId = ? AND R.userId = ?\n" +
+                "           );";
+        Object[]    checkReviewOptionQueryParams = new Object[]{optionId, userId};
+
+        return  this.jdbcTemplate.queryForObject(checkReviewOptionQuery, int.class, checkReviewOptionQueryParams);
+    }
 }

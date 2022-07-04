@@ -70,9 +70,6 @@ public enum BaseResponseStatus {
     EMPTY_SCRAPBOOK_NAME(false, 2039, "스크랩북 이름을 입력해주세요."),
 
     EMPTY_KART_ID_LIST(false, 2040, "주문할 상품이 없습니다."),
-    EMPTY_REVIEW_DESCRIPTION(false, 2041, "리뷰를 작성해주세요."),
-    SHORT_REVIEW_DESCRIPTION(false, 2042, "리뷰는 20자 이상 입력해야합니다."),
-    INVALID_REVIEW_SCORE(false, 2043, "올바르지 않은 점수입니다."),
 
     // [POST] /users/payments/:userId
     EMPTY_ORDER_NAME(false, 2041,"주문자의 이름을 입력해주세요."),
@@ -86,6 +83,9 @@ public enum BaseResponseStatus {
     INVALID_ADDRESS_CODE(false, 2049, "올바르지 않은 우편번호입니다."),
     EMPTY_KART_ID(false, 2050, "주문할 상품을 선택해주세요."),
     EMPTY_COUPON_CODE(false, 2051, "쿠폰 번호를 입력해주세요."),
+    EMPTY_REVIEW_DESCRIPTION(false, 2052, "리뷰를 작성해주세요."),
+    SHORT_REVIEW_DESCRIPTION(false, 2053, "리뷰는 20자 이상 입력해야합니다."),
+    INVALID_REVIEW_SCORE(false, 2054, "올바르지 않은 점수입니다."),
 
     /**
      * 3000 : Response 오류
@@ -108,6 +108,7 @@ public enum BaseResponseStatus {
     INVALID_COUPON_ID(false, 3022, "존재하지 않는 쿠폰 id입니다."),
     EMAIL_NOT_EXISTS(false, 3023, "존재하지 않는 이메일입니다."),
     COUPON_CODE_NOT_EXISTS(false, 3024, "이미 등록되었거나 존재하지 않는 쿠폰 코드입니다."),
+    REVIEW_ALREADY_WRITTEN(false, 3025, "이미 사용자가 제품에 대한 리뷰를 작성했습니다."),
 
     /**
      * 4000 : Database, Server 오류
