@@ -424,4 +424,35 @@ public class UserController {
         }
 
     }
+
+    @ResponseBody
+    @PostMapping("/coupons/{userId}")
+    public BaseResponse<PostCouponRes>      createCoupon(@PathVariable("userId")String id,
+                                                         @RequestBody PostCouponReq postCouponReq) throws BaseException{
+        if(!ValidationRegex.canConvertInt(id)){
+            return  new BaseResponse<>(INVALID_ID);
+        }
+
+        if(postCouponReq.getCouponCode()==null){
+            return  new BaseResponse<>(EMPTY_COUPON_CODE);
+        }
+
+        try{
+            long        userId = Long.parseLong(id);
+            long        jwtUserId = jwtService.getUserId();
+
+            if(userId != jwtUserId){
+                return  new BaseResponse<>(INVALID_USER_JWT);
+            }
+
+            postCouponReq.setUserId(userId);
+
+            PostCouponRes postCouponRes = userService.createCoupon(postCouponReq);
+
+            return  new BaseResponse<PostCouponRes>(postCouponRes);
+        }
+        catch (BaseException baseException){
+            return  new BaseResponse<>(baseException.getStatus());
+        }
+    }
 }

@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
+
 @RestController
 @RequestMapping("/oauth/kakao")
 @AllArgsConstructor
@@ -27,8 +29,8 @@ public class OAuthController {
     }
 
     @ResponseBody
-    @GetMapping("/kakao/logout")
-    public BaseResponse<String>         kakaoLogOut(@RequestParam("code") String code){
+    @GetMapping("/log-out")
+    public BaseResponse<String>         kakaoLogOut(@RequestParam("code")String code){
         try{
             String  res = "로그아웃에 성공하였습니다.";
             oAuthService.logOut(code);

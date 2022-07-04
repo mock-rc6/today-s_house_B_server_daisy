@@ -181,5 +181,13 @@ public class UserProvider {
             throw new BaseException(BaseResponseStatus.DATABASE_ERROR);
         }
     }
+
+    public int  checkCouponCode(String  couponCode) throws BaseException{
+        try{
+            return  userDao.checkCouponCode(couponCode);
+        }catch (Exception exception){
+            throw   new BaseException(DATABASE_ERROR);
+        }
+    }
 }
 

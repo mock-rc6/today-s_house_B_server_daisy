@@ -199,4 +199,17 @@ public class UserService {
             throw new BaseException(BaseResponseStatus.DATABASE_ERROR);
         }
     }
+
+    @Transactional
+    public PostCouponRes        createCoupon(PostCouponReq postCouponReq)   throws BaseException{
+        if(userProvider.checkCouponCode(postCouponReq.getCouponCode()) == 0){
+            throw new BaseException(COUPON_CODE_NOT_EXISTS);
+        }
+        try{
+            return  userDao.createCoupon(postCouponReq);
+        }
+        catch (Exception exception){
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
 }

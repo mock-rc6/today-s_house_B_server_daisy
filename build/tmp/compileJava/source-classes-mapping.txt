@@ -114,6 +114,8 @@ com/example/demo/src/user/model/GetOrderRes.java
  com.example.demo.src.user.model.GetOrderRes
 com/example/demo/src/user/model/PatchKartOptionRes.java
  com.example.demo.src.user.model.PatchKartOptionRes
+com/example/demo/src/user/model/PostCouponRes.java
+ com.example.demo.src.user.model.PostCouponRes
 com/example/demo/src/review/service/ReviewService.java
  com.example.demo.src.review.service.ReviewService
 com/example/demo/src/category/controller/CategoryController.java
@@ -140,6 +142,8 @@ com/example/demo/src/review/ReviewProvider.java
  com.example.demo.src.review.ReviewProvider
 com/example/demo/src/store/model/GetStoreItemRes.java
  com.example.demo.src.store.model.GetStoreItemRes
+com/example/demo/src/user/model/GetCouponCodeRes.java
+ com.example.demo.src.user.model.GetCouponCodeRes
 com/example/demo/src/main/model/GetMainHouseRes.java
  com.example.demo.src.main.model.GetMainHouseRes
 com/example/demo/src/user/model/PostLogInReq.java
@@ -168,5 +172,7 @@ com/example/demo/src/user/model/GetUserScrapRes.java
  com.example.demo.src.user.model.GetUserScrapRes
 com/example/demo/src/category/model/GetCategory.java
  com.example.demo.src.category.model.GetCategory
+com/example/demo/src/user/model/PostCouponReq.java
+ com.example.demo.src.user.model.PostCouponReq
 com/example/demo/src/user/service/UserService.java
  com.example.demo.src.user.service.UserService

@@ -85,5 +85,9 @@ public class KakaoOAuth {
                 logoutRequest,
                 String.class
         );
+
+        JSONObject body = new JSONObject();
+        System.out.println(body.getLong("id"));
+        return;
     }
 }

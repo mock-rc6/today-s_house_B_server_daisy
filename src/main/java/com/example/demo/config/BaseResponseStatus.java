@@ -82,6 +82,7 @@ public enum BaseResponseStatus {
     EMPTY_ADDRESS(false, 2048, "상세 주소를 입력하세요."),
     INVALID_ADDRESS_CODE(false, 2049, "올바르지 않은 우편번호입니다."),
     EMPTY_KART_ID(false, 2050, "주문할 상품을 선택해주세요."),
+    EMPTY_COUPON_CODE(false, 2051, "쿠폰 번호를 입력해주세요."),
 
     /**
      * 3000 : Response 오류
@@ -103,6 +104,7 @@ public enum BaseResponseStatus {
     INVALID_PATCH_COUPON_STATUS_REQUEST(false, 3021, "올바르지 않은 쿠폰 상태 변경 요청입니다."),
     INVALID_COUPON_ID(false, 3022, "존재하지 않는 쿠폰 id입니다."),
     EMAIL_NOT_EXISTS(false, 3023, "존재하지 않는 이메일입니다."),
+    COUPON_CODE_NOT_EXISTS(false, 3024, "이미 등록되었거나 존재하지 않는 쿠폰 코드입니다."),
 
     /**
      * 4000 : Database, Server 오류

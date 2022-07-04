@@ -686,4 +686,66 @@ public class UserDao {
 
         return this.jdbcTemplate.update(modifyUserNameQuery,modifyUserNameParams);
     }
+
+    public int  checkCouponCode(String  couponCode){
+        String  checkCouponCodeQuery = "SELECT EXISTS(\n" +
+                "    SELECT couponCodeId FROM CouponCodes\n" +
+                "    WHERE couponCode = ? AND status = 'N'\n" +
+                "           );";
+        String  checkCouponCodeQueryParams = couponCode;
+
+        return  this.jdbcTemplate.queryForObject(checkCouponCodeQuery, int.class, checkCouponCodeQueryParams);
+    }
+
+    private int updateCouponCodeStatus(String   couponCode){
+        String  updateCouponCodeStatusQuery = "UPDATE CouponCodes\n" +
+                "SET status = 'Y'\n" +
+                "WHERE couponCode = ?;";
+        String  updateCouponCodeStatusQueryParams = couponCode;
+
+        return this.jdbcTemplate.update(updateCouponCodeStatusQuery, updateCouponCodeStatusQueryParams);
+    }
+
+    private GetCouponCodeRes        retrieveCouponCodeInfo(String   couponCode){
+        String      retrieveCouponCodeInfoQuery = "SELECT due, description, saleAmount, saleRate\n" +
+                "FROM CouponCodes WHERE couponCode = ?;";
+        String      retrieveCouponCodeInfoQueryParams = couponCode;
+
+        return  this.jdbcTemplate.queryForObject(
+                retrieveCouponCodeInfoQuery,
+                (rs, rowNum) -> new GetCouponCodeRes(
+                        rs.getString("due"),
+                        rs.getString("description"),
+                        rs.getInt("saleAmount"),
+                        rs.getInt("saleRate")
+                )
+                ,retrieveCouponCodeInfoQueryParams
+        );
+    }
+
+    public PostCouponRes    createCoupon(PostCouponReq postCouponReq){
+        int             res = updateCouponCodeStatus(postCouponReq.getCouponCode());
+        if(res == 0){
+
+        }
+
+        GetCouponCodeRes getCouponCodeRes = retrieveCouponCodeInfo(postCouponReq.getCouponCode());
+
+        String              createCouponQuery = "INSERT INTO Coupons(userId, due, description, saleAmount, saleRate)\n" +
+                "VALUES (?, ?, ?, ?, ?);";
+        Object[]            createCouponQueryParams = new Object[]{
+                postCouponReq.getUserId(), getCouponCodeRes.getDue(), getCouponCodeRes.getDescription(),
+                getCouponCodeRes.getSaleAmount(), getCouponCodeRes.getSaleRate()
+        };
+        this.jdbcTemplate.update(createCouponQuery, createCouponQueryParams);
+
+        String      retrieveLastInsertId = "SELECT LAST_INSERT_ID();";
+
+        PostCouponRes postCouponRes = new PostCouponRes(
+                this.jdbcTemplate.queryForObject(retrieveLastInsertId, long.class),
+                "성공적으로 쿠폰을 등록했습니다."
+        );
+
+        return  postCouponRes;
+    }
 }

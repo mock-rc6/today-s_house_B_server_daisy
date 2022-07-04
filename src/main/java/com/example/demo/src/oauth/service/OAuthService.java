@@ -55,11 +55,11 @@ public class OAuthService {
     }
 
     public void     logOut(String code) throws BaseException{
-        //  try{
-        kakaoOAuth.kakaoLogOut(code);
-        // }
-        // catch (Exception exception){
-        //      throw new BaseException(BaseResponseStatus.DATABASE_ERROR);
-        //   }
+          //try{
+             kakaoOAuth.kakaoLogOut(code);
+         //}
+         //catch (Exception exception){
+         //     throw new BaseException(BaseResponseStatus.DATABASE_ERROR);
+         //  }
     }
 }
