@@ -3,7 +3,6 @@ package com.example.demo.src.store.controller;
 import com.example.demo.config.BaseException;
 import com.example.demo.config.BaseResponse;
 import com.example.demo.config.BaseResponseStatus;
-import com.example.demo.src.img.service.ImgService;
 import com.example.demo.src.store.StoreProvider;
 import com.example.demo.src.store.model.*;
 import com.example.demo.src.store.service.StoreService;
@@ -24,8 +23,6 @@ public class StoreController {
     private final StoreProvider storeProvider;
     @Autowired
     private final StoreService  storeService;
-    @Autowired
-    private final ImgService    imgService;
     @Autowired
     private final JwtService    jwtService;
 

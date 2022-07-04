@@ -8,6 +8,8 @@ com/example/demo/config/Constant.java
  com.example.demo.config.Constant
 com/example/demo/src/user/model/PatchKartOptionReq.java
  com.example.demo.src.user.model.PatchKartOptionReq
+com/example/demo/src/main/model/PostReviewReq.java
+ com.example.demo.src.main.model.PostReviewReq
 com/example/demo/utils/ValidationRegex.java
  com.example.demo.utils.ValidationRegex
 com/example/demo/src/user/controller/UserController.java
@@ -32,8 +34,6 @@ com/example/demo/src/store/model/PostKartItemRes.java
  com.example.demo.src.store.model.PostKartItemRes
 com/example/demo/src/main/model/GetMyShoppingRes.java
  com.example.demo.src.main.model.GetMyShoppingRes
-com/example/demo/src/img/model/Img.java
- com.example.demo.src.img.model.Img
 com/example/demo/src/category/CategoryProvider.java
  com.example.demo.src.category.CategoryProvider
 com/example/demo/src/user/dao/UserDao.java
@@ -76,6 +76,8 @@ com/example/demo/src/category/model/GetCategoryEventsRes.java
  com.example.demo.src.category.model.GetCategoryEventsRes
 com/example/demo/src/user/model/GetUserKartRes.java
  com.example.demo.src.user.model.GetUserKartRes
+com/example/demo/src/main/model/PostReviewRes.java
+ com.example.demo.src.main.model.PostReviewRes
 com/example/demo/src/user/model/PatchCouponStatusReq.java
  com.example.demo.src.user.model.PatchCouponStatusReq
 com/example/demo/src/user/model/GetCouponRes.java
@@ -86,8 +88,8 @@ com/example/demo/config/BaseException.java
  com.example.demo.config.BaseException
 com/example/demo/src/review/controller/ReviewController.java
  com.example.demo.src.review.controller.ReviewController
-com/example/demo/config/AWSConfig.java
- com.example.demo.config.AWSConfig
+com/example/demo/src/main/model/GetReviewWriteRes.java
+ com.example.demo.src.main.model.GetReviewWriteRes
 com/example/demo/src/review/model/GetMyReviewsRes.java
  com.example.demo.src.review.model.GetMyReviewsRes
 com/example/demo/src/user/model/GetScrapHousePicRes.java
@@ -106,8 +108,6 @@ com/example/demo/src/store/model/GetItemOptionRes.java
  com.example.demo.src.store.model.GetItemOptionRes
 com/example/demo/src/store/dao/StoreDao.java
  com.example.demo.src.store.dao.StoreDao
-com/example/demo/src/img/service/ImgService.java
- com.example.demo.src.img.service.ImgService
 com/example/demo/src/main/DAO/MainDao.java
  com.example.demo.src.main.DAO.MainDao
 com/example/demo/src/user/model/GetOrderRes.java

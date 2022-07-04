@@ -251,4 +251,42 @@ public class MainDao {
                 retrieveMyReviewsQueryParams
         );
     }
+
+    public GetReviewWriteRes        retrieveReviewWrite(long    itemId, long    userId){
+        String      retrieveReviewWrite = "SELECT\n" +
+                "    itemName        AS 'name',\n" +
+                "    pictureUrl      AS 'thumbnail',\n" +
+                "    I.itemId        AS 'itemId'\n" +
+                "FROM\n" +
+                "    (Items I inner join ItemPictures IP on I.itemId = IP.itemId)\n" +
+                "WHERE\n" +
+                "    I.itemId = ?\n" +
+                "GROUP BY IP.itemId;";
+        long        retrieveReviewWriteQuery = itemId;
+
+        String      subQuery = "SELECT reviewPicUrl\n" +
+                "FROM ReviewPics RP inner join Reviews R on RP.reviewId = R.reviewId\n" +
+                "WHERE R.userId = ?;";
+        long        subQueryParams = userId;
+
+        return this.jdbcTemplate.queryForObject(retrieveReviewWrite,
+                (rs, rowNum) -> new GetReviewWriteRes(
+                        rs.getString("name"),
+                        rs.getString("thumbnail"),
+                        rs.getLong("itemId"),
+                        this.jdbcTemplate.query(subQuery,
+                                (rs2, rowNum2) -> rs2.getString("reviewPicUrl")
+                                ,subQueryParams)
+                )
+                ,retrieveReviewWriteQuery);
+    }
+
+    public int      checkItemId(long    itemId){
+        String      checkItemIdQuery = "SELECT EXISTS(\n" +
+                "    SELECT itemId FROM Items WHERE itemId = ?\n" +
+                "           );";
+        long        checkItemIdQueryParams = itemId;
+
+        return  this.jdbcTemplate.queryForObject(checkItemIdQuery, int.class, checkItemIdQueryParams);
+    }
 }

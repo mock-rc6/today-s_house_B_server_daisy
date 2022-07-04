@@ -98,4 +98,24 @@ public class MainProvider {
             throw new BaseException(BaseResponseStatus.DATABASE_ERROR);
         }
     }
+
+    public int      checkItemId(long    itemId) throws BaseException{
+        try{
+            return  mainDao.checkItemId(itemId);
+        }catch (Exception exception){
+            throw   new BaseException(BaseResponseStatus.DATABASE_ERROR);
+        }
+    }
+
+    public GetReviewWriteRes        retrieveReviewWrite(long    itemId, long    userId) throws BaseException{
+        if(checkItemId(itemId) == 0){
+            throw new BaseException(BaseResponseStatus.ITEM_ID_NOT_EXISTS);
+        }
+
+        try{
+            return mainDao.retrieveReviewWrite(itemId, userId);
+        }catch (Exception exception){
+            throw   new BaseException(BaseResponseStatus.DATABASE_ERROR);
+        }
+    }
 }

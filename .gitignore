@@ -32,3 +32,4 @@ application-s3.properties
 
 # AWS Config 파일
 AWSConfig.java
+aws.yml

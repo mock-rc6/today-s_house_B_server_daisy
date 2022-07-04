@@ -169,4 +169,31 @@ public class MainController {
             return  new BaseResponse<>(baseException.getStatus());
         }
     }
+
+    @ResponseBody
+    @GetMapping("/reviews/{userId}")
+    public BaseResponse<GetReviewWriteRes>      retrieveReviewWrite(@PathVariable("userId")String id,
+                                                                    @RequestParam("id") String item)    throws BaseException{
+        if(!ValidationRegex.canConvertLong(id) || !ValidationRegex.canConvertLong(item)){
+            return  new BaseResponse<>(BaseResponseStatus.INVALID_ID);
+        }
+
+        try{
+            long        userId = Long.parseLong(id);
+            long        jwtUserId = jwtService.getUserId();
+
+            if(userId != jwtUserId){
+                return  new BaseResponse<>(BaseResponseStatus.INVALID_USER_JWT);
+            }
+
+            long itemId = Long.parseLong(item);
+
+            GetReviewWriteRes   getReviewWriteRes = mainProvider.retrieveReviewWrite(itemId, userId);
+
+            return new BaseResponse<GetReviewWriteRes>(getReviewWriteRes);
+        }
+        catch (BaseException baseException){
+            return new BaseResponse<>(baseException.getStatus());
+        }
+    }
 }
