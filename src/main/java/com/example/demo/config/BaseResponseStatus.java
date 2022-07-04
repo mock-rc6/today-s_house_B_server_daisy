@@ -70,6 +70,9 @@ public enum BaseResponseStatus {
     EMPTY_SCRAPBOOK_NAME(false, 2039, "스크랩북 이름을 입력해주세요."),
 
     EMPTY_KART_ID_LIST(false, 2040, "주문할 상품이 없습니다."),
+    EMPTY_REVIEW_DESCRIPTION(false, 2041, "리뷰를 작성해주세요."),
+    SHORT_REVIEW_DESCRIPTION(false, 2042, "리뷰는 20자 이상 입력해야합니다."),
+    INVALID_REVIEW_SCORE(false, 2043, "올바르지 않은 점수입니다."),
 
     // [POST] /users/payments/:userId
     EMPTY_ORDER_NAME(false, 2041,"주문자의 이름을 입력해주세요."),

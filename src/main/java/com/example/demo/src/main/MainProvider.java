@@ -5,6 +5,7 @@ import com.example.demo.config.BaseResponseStatus;
 import com.example.demo.src.main.DAO.MainDao;
 import com.example.demo.src.main.model.*;
 import com.example.demo.src.review.model.GetMyReviewsRes;
+import com.example.demo.src.store.StoreProvider;
 import com.example.demo.src.user.UserProvider;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,8 @@ public class MainProvider {
     private final MainDao       mainDao;
     @Autowired
     private final UserProvider  userProvider;
+    @Autowired
+    private final StoreProvider storeProvider;
 
     public List<GetEventsRes>   retrieveEvents()    throws BaseException{
         try{
@@ -99,21 +102,17 @@ public class MainProvider {
         }
     }
 
-    public int      checkItemId(long    itemId) throws BaseException{
-        try{
-            return  mainDao.checkItemId(itemId);
-        }catch (Exception exception){
-            throw   new BaseException(BaseResponseStatus.DATABASE_ERROR);
-        }
-    }
-
-    public GetReviewWriteRes        retrieveReviewWrite(long    itemId, long    userId) throws BaseException{
-        if(checkItemId(itemId) == 0){
+    public GetReviewWriteRes        retrieveReviewWrite(long    optionId, long    userId) throws BaseException{
+        if(storeProvider.checkOptionId(optionId) == 0){
             throw new BaseException(BaseResponseStatus.ITEM_ID_NOT_EXISTS);
         }
 
+        if(userProvider.checkUserId(userId) == 0){
+            throw   new BaseException(BaseResponseStatus.USER_NOT_EXISTS);
+        }
+
         try{
-            return mainDao.retrieveReviewWrite(itemId, userId);
+            return mainDao.retrieveReviewWrite(optionId, userId);
         }catch (Exception exception){
             throw   new BaseException(BaseResponseStatus.DATABASE_ERROR);
         }

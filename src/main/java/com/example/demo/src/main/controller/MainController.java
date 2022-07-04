@@ -5,6 +5,7 @@ import com.example.demo.config.BaseResponse;
 import com.example.demo.config.BaseResponseStatus;
 import com.example.demo.src.main.MainProvider;
 import com.example.demo.src.main.model.*;
+import com.example.demo.src.main.service.MainService;
 import com.example.demo.src.review.model.GetMyReviewsRes;
 import com.example.demo.utils.JwtService;
 import com.example.demo.utils.ValidationRegex;
@@ -22,6 +23,8 @@ public class MainController {
     private final MainProvider  mainProvider;
     @Autowired
     private final JwtService    jwtService;
+    @Autowired
+    private final MainService   mainService;
 
     /*
     * [GET] /events
@@ -194,6 +197,41 @@ public class MainController {
         }
         catch (BaseException baseException){
             return new BaseResponse<>(baseException.getStatus());
+        }
+    }
+
+    @ResponseBody
+    @PostMapping("/reviews/{userId}")
+    public BaseResponse<PostReviewRes>        createReview(@PathVariable("userId") String id,
+                                             @RequestBody PostReviewReq postReviewReq)  throws BaseException{
+        if(!ValidationRegex.canConvertLong(id)){
+            return  new BaseResponse<>(BaseResponseStatus.INVALID_ID);
+        }
+        if(postReviewReq.getReviewDescription() == null){
+            return  new BaseResponse<>(BaseResponseStatus.EMPTY_REVIEW_DESCRIPTION);
+        }
+        if(postReviewReq.getReviewDescription().length()<20){
+            return  new BaseResponse<>(BaseResponseStatus.SHORT_REVIEW_DESCRIPTION);
+        }
+        if(postReviewReq.getScore()<=0 || postReviewReq.getScore()>5){
+            return  new BaseResponse<>(BaseResponseStatus.INVALID_REVIEW_SCORE);
+        }
+
+        try {
+            long    userId = Long.parseLong(id);
+            long    jwtUserId = jwtService.getUserId();
+
+            if(userId != jwtUserId){
+                return  new BaseResponse<>(BaseResponseStatus.INVALID_USER_JWT);
+            }
+
+            postReviewReq.setUserId(userId);
+
+            PostReviewRes postReviewRes = mainService.createReview(postReviewReq);
+
+            return  new BaseResponse<PostReviewRes>(postReviewRes);
+        }catch (BaseException baseException){
+            return  new BaseResponse<>(baseException.getStatus());
         }
     }
 }

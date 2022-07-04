@@ -252,17 +252,18 @@ public class MainDao {
         );
     }
 
-    public GetReviewWriteRes        retrieveReviewWrite(long    itemId, long    userId){
+    public GetReviewWriteRes        retrieveReviewWrite(long    optionId, long    userId){
         String      retrieveReviewWrite = "SELECT\n" +
-                "    itemName        AS 'name',\n" +
+                "    concat(concat(itemName,' '),optionName)        AS 'name',\n" +
                 "    pictureUrl      AS 'thumbnail',\n" +
                 "    I.itemId        AS 'itemId'\n" +
                 "FROM\n" +
                 "    (Items I inner join ItemPictures IP on I.itemId = IP.itemId)\n" +
+                "    inner join ItemOptions IO on IO.itemId = I.itemId\n" +
                 "WHERE\n" +
-                "    I.itemId = ?\n" +
+                "    IO.optionId = 1\n" +
                 "GROUP BY IP.itemId;";
-        long        retrieveReviewWriteQuery = itemId;
+        long        retrieveReviewWriteQuery = optionId;
 
         String      subQuery = "SELECT reviewPicUrl\n" +
                 "FROM ReviewPics RP inner join Reviews R on RP.reviewId = R.reviewId\n" +
@@ -288,5 +289,32 @@ public class MainDao {
         long        checkItemIdQueryParams = itemId;
 
         return  this.jdbcTemplate.queryForObject(checkItemIdQuery, int.class, checkItemIdQueryParams);
+    }
+
+    public int      checkBoughtItem(long    optionId){
+        String      checkBoughtItemQuery = "SELECT EXISTS(\n" +
+                "    SELECT kartId FROM (KartItems KI inner join ItemOptions IO on KI.optionId = IO.optionId)\n" +
+                "    WHERE KI.status = 'Y' AND IO.optionId = ?\n" +
+                "           );";
+        long        checkBoughtItemQueryParams = optionId;
+
+        return  this.jdbcTemplate.queryForObject(checkBoughtItemQuery, int.class, checkBoughtItemQueryParams);
+    }
+
+    public PostReviewRes    createReview(PostReviewReq  postReviewReq){
+        int         buy = checkBoughtItem(postReviewReq.getOptionId());
+
+        String      createReviewQuery = "INSERT INTO Reviews(optionId, userId, score, description, buy)\n" +
+                "VALUE(?,?,?,?,?);";
+        Object[]    createReviewQueryParams = new Object[]{
+                postReviewReq.getOptionId(), postReviewReq.getUserId(), postReviewReq.getScore(),
+                postReviewReq.getReviewDescription(), buy
+        };
+        this.jdbcTemplate.update(createReviewQuery, createReviewQueryParams);
+
+        String      retrieveLastInsertQuery = "SELECT LAST_INSERT_ID();";
+        return new PostReviewRes(
+                this.jdbcTemplate.queryForObject(retrieveLastInsertQuery, long.class)
+                ,"성공적으로 리뷰가 등록되었습니다.");
     }
 }

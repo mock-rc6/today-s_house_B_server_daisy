@@ -26,14 +26,16 @@ com/example/demo/src/category/model/GetCategoryRes.java
  com.example.demo.src.category.model.GetCategoryRes
 com/example/demo/src/main/model/GetMainRes.java
  com.example.demo.src.main.model.GetMainRes
-com/example/demo/src/oauth/controller/OAuthController.java
- com.example.demo.src.oauth.controller.OAuthController
 com/example/demo/src/store/model/GetStoreRes.java
  com.example.demo.src.store.model.GetStoreRes
+com/example/demo/src/oauth/controller/OAuthController.java
+ com.example.demo.src.oauth.controller.OAuthController
 com/example/demo/src/store/model/PostKartItemRes.java
  com.example.demo.src.store.model.PostKartItemRes
 com/example/demo/src/main/model/GetMyShoppingRes.java
  com.example.demo.src.main.model.GetMyShoppingRes
+com/example/demo/src/main/service/MainService.java
+ com.example.demo.src.main.service.MainService
 com/example/demo/src/category/CategoryProvider.java
  com.example.demo.src.category.CategoryProvider
 com/example/demo/src/user/dao/UserDao.java
