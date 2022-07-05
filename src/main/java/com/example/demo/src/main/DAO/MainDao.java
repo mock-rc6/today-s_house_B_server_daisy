@@ -2,6 +2,8 @@ package com.example.demo.src.main.DAO;
 
 import com.example.demo.src.main.model.*;
 import com.example.demo.src.review.model.GetMyReviewsRes;
+import com.example.demo.src.store.model.GetInquiryAnswerRes;
+import com.example.demo.src.store.model.GetInquiryRes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;

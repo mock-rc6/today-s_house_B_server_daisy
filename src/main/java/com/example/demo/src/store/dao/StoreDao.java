@@ -201,7 +201,7 @@ public class StoreDao {
                 "    (SELECT COUNT(reviewId) FROM Reviews R WHERE R.optionId = O.optionId AND R.score = 3)       AS 'three',\n" +
                 "    (SELECT COUNT(reviewId) FROM Reviews R WHERE R.optionId = O.optionId AND R.score = 2)       AS 'two',\n" +
                 "    (SELECT COUNT(reviewId) FROM Reviews R WHERE R.optionId = O.optionId AND R.score = 1)       AS 'one',\n" +
-                "    (SELECT COUNT(inquiryId) FROM Inquiry WHERE Inquiry.itemId = I.itemId)                      AS 'inquiry',\n" +
+                "    (SELECT COUNT(inquiryId) FROM Inquiry WHERE Inquiry.optionId = O.optionId)                  AS 'inquiry',\n" +
                 "    CASE WHEN scrapId is null THEN 'true' ELSE 'false' END                                      AS 'isScrap'\n" +
                 "FROM (((\n" +
                 "        (Items I left join ItemOptions O on I.itemId = O.itemId)\n" +
@@ -335,6 +335,53 @@ public class StoreDao {
         return  new PostScrapRes(
                 this.jdbcTemplate.queryForObject(retrieveLastInsertIdQuery, long.class)
                 ,message
+        );
+    }
+
+    private GetInquiryAnswerRes retrieveInquiryAnswer(long  inquiryId){
+        String      retrieveInquiryAnswerQuery = "SELECT\n" +
+                "    CASE WHEN I.isPublic = 1 THEN IA.description\n" +
+                "        ELSE '비밀글입니다.' END AS 'description',\n" +
+                "    DATE_FORMAT(IA.createdAt, '%Y-%m-%d')   AS 'createdAt',\n" +
+                "    U.name      AS 'name'\n" +
+                "FROM (InquiryAnswers IA inner join Users U on IA.userId = U.userId)\n" +
+                "     inner join Inquiry I on I.inquiryId = IA.inquiryId\n" +
+                "WHERE IA.inquiryId = ?;";
+        long        retireveInquiryAnswerQueryParams = inquiryId;
+
+        return  this.jdbcTemplate.queryForObject(retrieveInquiryAnswerQuery,
+                (rs, rowNum) -> new GetInquiryAnswerRes(
+                        rs.getString("name"),
+                        rs.getString("createdAt"),
+                        rs.getString("description")
+                )
+                ,retireveInquiryAnswerQueryParams);
+    }
+
+    public List<GetInquiryRes>      retrieveOptionInquiry(long  optionId){
+        String      retrieveOptionInquiryQuery = "SELECT\n" +
+                "    I.inquiryId AS 'inquiryId',\n" +
+                "    inquiryCategory     AS 'category',\n" +
+                "    CASE WHEN isPublic = 1 THEN '공개' ELSE '비밀글입니다.' END AS 'isPublic',\n" +
+                "    title,\n" +
+                "    I.description   AS 'description',\n" +
+                "    DATE_FORMAT(I.createdAt, '%Y-%m-%d') AS 'createdAt',\n" +
+                "    concat(LEFT(U.name, 2), '***')   as 'name'\n" +
+                "FROM (Inquiry I inner join Users U on I.userId = U.userId)\n" +
+                "WHERE I.optionId = ?;";
+        long        retrieveOptionInquiryQueryParams = optionId;
+
+        return      this.jdbcTemplate.query(
+                retrieveOptionInquiryQuery,
+                (rs, rowNum) -> new GetInquiryRes(
+                        rs.getString("title"),
+                        rs.getString("description"),
+                        rs.getString("createdAt"),
+                        rs.getString("name"),
+                        rs.getString("category"),
+                        retrieveInquiryAnswer(rs.getLong("inquiryId"))
+                )
+                ,retrieveOptionInquiryQueryParams
         );
     }
 }

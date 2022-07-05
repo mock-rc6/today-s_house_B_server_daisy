@@ -110,11 +110,26 @@ public class StoreProvider {
         }
     }
 
+    @Transactional(readOnly = true)
     public int      checkKartItem(long userId, long optionId)   throws BaseException{
         try{
             return storeDao.checkKartItem(userId, optionId);
         }catch (Exception exception){
             throw new BaseException(BaseResponseStatus.DATABASE_ERROR);
         }
+    }
+
+    @Transactional(readOnly = true)
+    public List<GetInquiryRes>  retrieveOptionInquiry(long  optionId)   throws BaseException{
+        if(checkOptionId(optionId) == 0){
+            throw   new BaseException(BaseResponseStatus.OPTION_ID_NOT_EXISTS);
+        }
+
+        //try{
+            return  storeDao.retrieveOptionInquiry(optionId);
+        //}
+        //catch (Exception exception){
+        //    throw   new BaseException(BaseResponseStatus.DATABASE_ERROR);
+        //}
     }
 }

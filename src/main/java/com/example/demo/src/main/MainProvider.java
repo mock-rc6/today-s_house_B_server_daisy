@@ -6,6 +6,7 @@ import com.example.demo.src.main.DAO.MainDao;
 import com.example.demo.src.main.model.*;
 import com.example.demo.src.review.model.GetMyReviewsRes;
 import com.example.demo.src.store.StoreProvider;
+import com.example.demo.src.store.model.GetInquiryRes;
 import com.example.demo.src.user.UserProvider;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

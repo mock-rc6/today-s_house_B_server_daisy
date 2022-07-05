@@ -170,4 +170,23 @@ public class StoreController {
             return  new BaseResponse<>(baseException.getStatus());
         }
     }
+
+    @ResponseBody
+    @GetMapping("/inquirys")
+    public BaseResponse<List<GetInquiryRes>>        retrieveInquiry(@RequestParam("id")String id)   throws BaseException{
+        if(!ValidationRegex.canConvertLong(id)){
+            return  new BaseResponse<>(BaseResponseStatus.INVALID_ID);
+        }
+
+        try{
+            long        optionId = Long.parseLong(id);
+
+            List<GetInquiryRes> getInquiryResList = storeProvider.retrieveOptionInquiry(optionId);
+
+            return  new BaseResponse<List<GetInquiryRes>>(getInquiryResList);
+        }
+        catch (BaseException baseException){
+            return  new BaseResponse<>(baseException.getStatus());
+        }
+    }
 }

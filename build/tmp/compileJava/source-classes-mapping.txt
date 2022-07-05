@@ -12,6 +12,8 @@ com/example/demo/src/main/model/PostReviewReq.java
  com.example.demo.src.main.model.PostReviewReq
 com/example/demo/utils/ValidationRegex.java
  com.example.demo.utils.ValidationRegex
+com/example/demo/src/store/model/GetInquiryAnswerRes.java
+ com.example.demo.src.store.model.GetInquiryAnswerRes
 com/example/demo/src/user/controller/UserController.java
  com.example.demo.src.user.controller.UserController
 com/example/demo/src/main/model/GetMyProfileRes.java
@@ -136,6 +138,8 @@ com/example/demo/src/store/model/PostScrapReq.java
  com.example.demo.src.store.model.PostScrapReq
 com/example/demo/src/user/model/GetOrderReq.java
  com.example.demo.src.user.model.GetOrderReq
+com/example/demo/src/store/model/GetInquiryRes.java
+ com.example.demo.src.store.model.GetInquiryRes
 com/example/demo/src/user/model/PatchKartOptionIdReq.java
  com.example.demo.src.user.model.PatchKartOptionIdReq
 com/example/demo/src/main/MainProvider.java
