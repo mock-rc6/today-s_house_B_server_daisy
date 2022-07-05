@@ -13,5 +13,6 @@ public class GetInquiryRes {
     String                  createdAt;
     String                  userName;
     String                  category;
+    String                  status;
     GetInquiryAnswerRes     answer;
 }

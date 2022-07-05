@@ -338,26 +338,6 @@ public class StoreDao {
         );
     }
 
-    private GetInquiryAnswerRes retrieveInquiryAnswer(long  inquiryId){
-        String      retrieveInquiryAnswerQuery = "SELECT\n" +
-                "    CASE WHEN I.isPublic = 1 THEN IA.description\n" +
-                "        ELSE '비밀글입니다.' END AS 'description',\n" +
-                "    DATE_FORMAT(IA.createdAt, '%Y-%m-%d')   AS 'createdAt',\n" +
-                "    U.name      AS 'name'\n" +
-                "FROM (InquiryAnswers IA inner join Users U on IA.userId = U.userId)\n" +
-                "     inner join Inquiry I on I.inquiryId = IA.inquiryId\n" +
-                "WHERE IA.inquiryId = ?;";
-        long        retireveInquiryAnswerQueryParams = inquiryId;
-
-        return  this.jdbcTemplate.queryForObject(retrieveInquiryAnswerQuery,
-                (rs, rowNum) -> new GetInquiryAnswerRes(
-                        rs.getString("name"),
-                        rs.getString("createdAt"),
-                        rs.getString("description")
-                )
-                ,retireveInquiryAnswerQueryParams);
-    }
-
     public List<GetInquiryRes>      retrieveOptionInquiry(long  optionId){
         String      retrieveOptionInquiryQuery = "SELECT\n" +
                 "    I.inquiryId AS 'inquiryId',\n" +
@@ -366,10 +346,19 @@ public class StoreDao {
                 "    title,\n" +
                 "    I.description   AS 'description',\n" +
                 "    DATE_FORMAT(I.createdAt, '%Y-%m-%d') AS 'createdAt',\n" +
-                "    concat(LEFT(U.name, 2), '***')   as 'name'\n" +
+                "    concat(LEFT(U.name, 2), '***')   as 'name',\n" +
+                "    CASE WHEN IA.createdAt is null THEN '답변 대기 중'\n" +
+                "    ELSE '답변 완료' END AS 'answerStatus',\n" +
+                "    CASE WHEN I.isPublic = 1 THEN IA.description\n" +
+                "         ELSE '비밀글입니다.' END AS 'answerDescription',\n" +
+                "    DATE_FORMAT(IA.createdAt, '%Y-%m-%d')   AS 'answerCreatedAt',\n" +
+                "    U2.name AS 'answerName'\n" +
                 "FROM (Inquiry I inner join Users U on I.userId = U.userId)\n" +
+                "     left join (InquiryAnswers IA inner join Users U2 on U2.userId = IA.userId)\n" +
+                "    on IA.inquiryId = I.inquiryId\n" +
                 "WHERE I.optionId = ?;";
         long        retrieveOptionInquiryQueryParams = optionId;
+
 
         return      this.jdbcTemplate.query(
                 retrieveOptionInquiryQuery,
@@ -379,7 +368,12 @@ public class StoreDao {
                         rs.getString("createdAt"),
                         rs.getString("name"),
                         rs.getString("category"),
-                        retrieveInquiryAnswer(rs.getLong("inquiryId"))
+                        rs.getString("answerStatus"),
+                        new GetInquiryAnswerRes(
+                                rs.getString("answerName"),
+                                rs.getString("answerCreatedAt"),
+                                rs.getString("answerDescription")
+                        )
                 )
                 ,retrieveOptionInquiryQueryParams
         );
