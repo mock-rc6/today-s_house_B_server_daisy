@@ -204,7 +204,7 @@ public class UserProvider {
             throw   new BaseException(USER_NOT_EXISTS);
         }
 
-        if(checkLikeCategory(userId, categoryId) == 0){
+        if(categoryId != 0 && checkLikeCategory(userId, categoryId) == 0){
             throw new BaseException(LIKE_CATEGORY_NOT_EXISTS);
         }
 
