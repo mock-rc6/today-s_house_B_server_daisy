@@ -838,4 +838,22 @@ public class UserDao {
                 ,retrieveFollowingQueryParams
         );
     }
+
+    public List<GetUserFollowerRes> retrieveUserFollowers(long  userId){
+        String      retrieveUserFollowersQuery = "SELECT\n" +
+                "    profilePicUrl,\n" +
+                "    U.userId        AS 'userId',\n" +
+                "    name\n" +
+                "FROM (Users U inner join Follows F on U.userId = F.followedId)\n" +
+                "WHERE F.userId = ?;";
+        long        retrieveUserFollowersQueryParams = userId;
+
+        return  this.jdbcTemplate.query(retrieveUserFollowersQuery,
+                (rs, rowNum) -> new GetUserFollowerRes(
+                        rs.getLong("userId"),
+                        rs.getString("name"),
+                        rs.getString("profilePicUrl")
+                )
+                ,retrieveUserFollowersQueryParams);
+    }
 }

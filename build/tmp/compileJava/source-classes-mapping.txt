@@ -26,6 +26,8 @@ com/example/demo/src/user/dao/UserDao.java
  com.example.demo.src.user.dao.UserDao
 com/example/demo/src/store/test/TestController.java
  com.example.demo.src.store.test.TestController
+com/example/demo/src/user/model/GetUserFollowerRes.java
+ com.example.demo.src.user.model.GetUserFollowerRes
 com/example/demo/src/user/model/GetScrapItemRes.java
  com.example.demo.src.user.model.GetScrapItemRes
 com/example/demo/src/user/model/GetKartInfoRes.java
