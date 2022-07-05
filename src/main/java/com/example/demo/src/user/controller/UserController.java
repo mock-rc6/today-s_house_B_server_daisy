@@ -481,4 +481,27 @@ public class UserController {
             return  new BaseResponse<>(baseException.getStatus());
         }
     }
+
+    @ResponseBody
+    @GetMapping("/{userId}/following")
+    public BaseResponse<List<GetUserFollowingRes>>      retrieveUserFollowing(@PathVariable("userId")String id) throws BaseException{
+        if(!ValidationRegex.canConvertLong(id)){
+            return new BaseResponse<>(INVALID_ID);
+        }
+
+        try{
+            long    userId = Long.parseLong(id);
+            long    jwtUserId = jwtService.getUserId();
+
+            if(userId != jwtUserId){
+                return new BaseResponse<>(INVALID_USER_JWT);
+            }
+
+            List<GetUserFollowingRes>   getUserFollowingResList = userProvider.retrieveUserFollowing(userId);
+
+            return  new BaseResponse<List<GetUserFollowingRes>>(getUserFollowingResList);
+        }catch (BaseException baseException){
+            return new BaseResponse<>(baseException.getStatus());
+        }
+    }
 }

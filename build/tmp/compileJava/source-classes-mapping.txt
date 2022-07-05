@@ -10,6 +10,8 @@ com/example/demo/src/user/controller/UserController.java
  com.example.demo.src.user.controller.UserController
 com/example/demo/src/main/model/GetMyProfileRes.java
  com.example.demo.src.main.model.GetMyProfileRes
+com/example/demo/src/user/model/GetUserFollowingRes.java
+ com.example.demo.src.user.model.GetUserFollowingRes
 com/example/demo/config/BaseResponseStatus.java
  com.example.demo.config.BaseResponseStatus
 com/example/demo/src/main/model/GetMainEventRes.java

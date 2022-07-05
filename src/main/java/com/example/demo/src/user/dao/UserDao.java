@@ -818,4 +818,24 @@ public class UserDao {
 
         return this.jdbcTemplate.queryForObject(checkLikeCategoryQuery, int.class, checkLikeCategoryQueryParams);
     }
+
+    public List<GetUserFollowingRes>        retrieveFollowing(long  userId){
+        String      retrieveFollowingQuery = "SELECT\n" +
+                "    profilePicUrl,\n" +
+                "    U.userId        AS 'userId',\n" +
+                "    name\n" +
+                "FROM (Users U inner join Follows F on U.userId = F.userId)\n" +
+                "WHERE followedId = ?;";
+        long        retrieveFollowingQueryParams = userId;
+
+        return  this.jdbcTemplate.query(
+                retrieveFollowingQuery,
+                (rs, rowNum) -> new GetUserFollowingRes(
+                        rs.getLong("userId"),
+                        rs.getString("profilePicUrl"),
+                        rs.getString("name")
+                )
+                ,retrieveFollowingQueryParams
+        );
+    }
 }
