@@ -748,4 +748,74 @@ public class UserDao {
 
         return  postCouponRes;
     }
+
+    private List<GetLikePosts>        retrieveUserLikePosts(long  userId, long categoryId){
+        String      retrieveUserLikesPostsQuery = "SELECT\n" +
+                "    houseImgUrl                 AS 'thumbnail',\n" +
+                "    HP.housePicId               AS 'housePicId',\n" +
+                "    HPC.description             AS 'category'\n" +
+                "FROM ((HousePicLikes HPL inner join HousePictures HP on HPL.housePicId = HP.housePicId)\n" +
+                "     inner join HousePicCateogries  HPC on HPC.houseCategoryId = HP.houseCategoryId)\n" +
+                "     left join HouseImgs HI on HI.housePicId = HP.housePicId\n" +
+                "WHERE HPL.userId = ?\n" +
+                (categoryId == 0 ? "" : "AND HPC.houseCategoryId = "+categoryId+"\n")+
+                "GROUP BY HI.housePicId;";
+        long        retrieveUserLikesPostsQueryParams = userId;
+
+        return  this.jdbcTemplate.query(retrieveUserLikesPostsQuery,
+                (rs, rowNum) -> new GetLikePosts(
+                        rs.getLong("housePicId"),
+                        rs.getString("thumbnail"),
+                        rs.getString("category")
+                )
+                ,retrieveUserLikesPostsQueryParams);
+    }
+
+    private List<GetHouseCategoryRes>   retrieveLikeHouseCategory(long  userId){
+        String      retrieveLikeHouseCategoryQuery = "SELECT\n" +
+                "    HPC.description     AS 'category',\n" +
+                "    COUNT(houseLikeId)  AS 'count'\n" +
+                "FROM\n" +
+                "    (HousePicLikes HPL inner join HousePictures HP on HPL.housePicId = HP.housePicId)\n" +
+                "    inner join HousePicCateogries HPC on HPC.houseCategoryId = HP.housePicId\n" +
+                "WHERE HPL.userId = ?\n" +
+                "GROUP BY HP.houseCategoryId;";
+        long        retrieveLikeHouseCategoryQueryParams = userId;
+
+        return this.jdbcTemplate.query(
+                retrieveLikeHouseCategoryQuery,
+                (rs, rowNum) -> new GetHouseCategoryRes(
+                        rs.getString("category"),
+                        rs.getInt("count")
+                )
+                ,retrieveLikeHouseCategoryQueryParams
+        );
+    }
+
+    public GetUserLikeRes       retrieveUserLike(long   userId, long categoryId){
+        String      retrieveUserLikeCountQuery = "SELECT COUNT(houseLikeId)   FROM HousePicLikes\n" +
+                "WHERE userId = ?;";
+        long        retrieveUserLikeCountQueryParams = userId;
+
+        return  new GetUserLikeRes(
+          this.jdbcTemplate.queryForObject(retrieveUserLikeCountQuery, int.class, retrieveUserLikeCountQueryParams),
+          retrieveUserLikePosts(userId, categoryId),
+          retrieveLikeHouseCategory(userId)
+        );
+    }
+
+    public int      checkLikeCategory(long  userId, long categoryId){
+        String      checkLikeCategoryQuery = "SELECT EXISTS(\n" +
+                "    SELECT HPL.houseLikeId\n" +
+                "    FROM (HousePicLikes HPL inner join HousePictures HP on HPL.housePicId = HP.housePicId)\n" +
+                "          inner join HousePicCateogries HPC on HPC.houseCategoryId = HP.houseCategoryId\n" +
+                "    WHERE HPL.userId = ? AND HPC.houseCategoryId = ?\n" +
+                "           );";
+
+        Object[]    checkLikeCategoryQueryParams = new Object[]{
+                userId, categoryId
+        };
+
+        return this.jdbcTemplate.queryForObject(checkLikeCategoryQuery, int.class, checkLikeCategoryQueryParams);
+    }
 }

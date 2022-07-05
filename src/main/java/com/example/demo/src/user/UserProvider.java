@@ -189,5 +189,29 @@ public class UserProvider {
             throw   new BaseException(DATABASE_ERROR);
         }
     }
-}
 
+    public int      checkLikeCategory(long userId, long categoryId)  throws BaseException{
+        try{
+            return  userDao.checkLikeCategory(userId, categoryId);
+        }
+        catch (Exception exception){
+            throw   new BaseException(DATABASE_ERROR);
+        }
+    }
+
+    public GetUserLikeRes   retrieveUserLike(long   userId, long categoryId) throws BaseException{
+        if(checkUserId(userId) == 0){
+            throw   new BaseException(USER_NOT_EXISTS);
+        }
+
+        if(checkLikeCategory(userId, categoryId) == 0){
+            throw new BaseException(LIKE_CATEGORY_NOT_EXISTS);
+        }
+
+        try{
+            return userDao.retrieveUserLike(userId, categoryId);
+        }catch (Exception exception){
+            throw   new BaseException(DATABASE_ERROR);
+        }
+    }
+}

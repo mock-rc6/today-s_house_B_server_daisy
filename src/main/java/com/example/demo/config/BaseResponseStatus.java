@@ -112,6 +112,7 @@ public enum BaseResponseStatus {
     EMAIL_NOT_EXISTS(false, 3023, "존재하지 않는 이메일입니다."),
     COUPON_CODE_NOT_EXISTS(false, 3024, "이미 등록되었거나 존재하지 않는 쿠폰 코드입니다."),
     REVIEW_ALREADY_WRITTEN(false, 3025, "이미 사용자가 제품에 대한 리뷰를 작성했습니다."),
+    LIKE_CATEGORY_NOT_EXISTS(false, 3026, "존재하지 않는 카테고리이거나 유저가 좋아요 누르지 않은 카테고리입니다."),
 
     /**
      * 4000 : Database, Server 오류

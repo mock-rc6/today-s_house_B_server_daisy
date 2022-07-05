@@ -455,4 +455,30 @@ public class UserController {
             return  new BaseResponse<>(baseException.getStatus());
         }
     }
+
+    @ResponseBody
+    @GetMapping("/{userId}/likes")
+    public BaseResponse<GetUserLikeRes>     retrieveUserLikes(@PathVariable("userId")String id,
+                                                              @RequestParam(name = "category", required = false, defaultValue = "0") String category) throws BaseException{
+        if(!ValidationRegex.canConvertLong(id) || !ValidationRegex.canConvertLong(category)){
+            return new BaseResponse<>(INVALID_ID);
+        }
+
+        try{
+            long    userId = Long.parseLong(id);
+            long    jwtUserId = jwtService.getUserId();
+
+            if(userId != jwtUserId){
+                return  new BaseResponse<>(INVALID_USER_JWT);
+            }
+
+            long    categoryId = Long.parseLong(category);
+
+            GetUserLikeRes  getUserLikeRes = userProvider.retrieveUserLike(userId, categoryId);
+
+            return  new BaseResponse<GetUserLikeRes>(getUserLikeRes);
+        }catch (BaseException baseException){
+            return  new BaseResponse<>(baseException.getStatus());
+        }
+    }
 }
