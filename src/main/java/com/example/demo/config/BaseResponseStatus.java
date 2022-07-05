@@ -86,6 +86,9 @@ public enum BaseResponseStatus {
     EMPTY_REVIEW_DESCRIPTION(false, 2052, "리뷰를 작성해주세요."),
     SHORT_REVIEW_DESCRIPTION(false, 2053, "리뷰는 20자 이상 입력해야합니다."),
     INVALID_REVIEW_SCORE(false, 2054, "올바르지 않은 점수입니다."),
+    EMPTY_INQUIRY_CATEGORY(false, 2055, "문의 카테고리를 입력해주세요."),
+    EMPTY_INQUIRY_DESCRIPTION(false, 2056, "문의 내용을 입력해주세요."),
+    INVALID_INQUIRY_ISPUBLIC(false, 2057, "공개 여부 코드가 잘못되었습니다. 0과 1 중에 다시 선택해주세요."),
 
     /**
      * 3000 : Response 오류

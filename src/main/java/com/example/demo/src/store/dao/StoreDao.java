@@ -1,5 +1,6 @@
 package com.example.demo.src.store.dao;
 
+import com.example.demo.config.BaseException;
 import com.example.demo.src.category.model.GetCategory;
 import com.example.demo.src.category.model.GetCategoryEventsRes;
 import com.example.demo.src.review.model.GetMyReviewsRes;
@@ -342,14 +343,14 @@ public class StoreDao {
         String      retrieveOptionInquiryQuery = "SELECT\n" +
                 "    I.inquiryId AS 'inquiryId',\n" +
                 "    inquiryCategory     AS 'category',\n" +
-                "    CASE WHEN isPublic = 1 THEN '공개' ELSE '비밀글입니다.' END AS 'isPublic',\n" +
-                "    title,\n" +
-                "    I.description   AS 'description',\n" +
+                "    CASE WHEN isPublic = 0 THEN '공개' ELSE '비밀글입니다.' END AS 'isPublic',\n" +
+                "    CASE WHEN isPublic = 0 THEN I.description\n" +
+                "        ELSE '비밀글입니다.' END          AS 'description',\n" +
                 "    DATE_FORMAT(I.createdAt, '%Y-%m-%d') AS 'createdAt',\n" +
                 "    concat(LEFT(U.name, 2), '***')   as 'name',\n" +
                 "    CASE WHEN IA.createdAt is null THEN '답변 대기 중'\n" +
                 "    ELSE '답변 완료' END AS 'answerStatus',\n" +
-                "    CASE WHEN I.isPublic = 1 THEN IA.description\n" +
+                "    CASE WHEN I.isPublic = 0 THEN IA.description\n" +
                 "         ELSE '비밀글입니다.' END AS 'answerDescription',\n" +
                 "    DATE_FORMAT(IA.createdAt, '%Y-%m-%d')   AS 'answerCreatedAt',\n" +
                 "    U2.name AS 'answerName'\n" +
@@ -363,7 +364,6 @@ public class StoreDao {
         return      this.jdbcTemplate.query(
                 retrieveOptionInquiryQuery,
                 (rs, rowNum) -> new GetInquiryRes(
-                        rs.getString("title"),
                         rs.getString("description"),
                         rs.getString("createdAt"),
                         rs.getString("name"),
@@ -376,6 +376,24 @@ public class StoreDao {
                         )
                 )
                 ,retrieveOptionInquiryQueryParams
+        );
+    }
+
+    public PostInquiryRes       createInquriy(PostInquiryReq    postInquiryReq) throws BaseException{
+        String          createInquiryQuery = "INSERT INTO Inquiry(userId, optionId, description, isPublic, inquiryCategory)\n" +
+                "VALUES(?, ?, ?, ?, ?);";
+        Object[]        createInquiryQueryParams = new Object[]{
+                postInquiryReq.getUserId(), postInquiryReq.getOptionId(), postInquiryReq.getDescription(),
+                postInquiryReq.getIsPublic(), postInquiryReq.getCategory()
+        };
+
+        this.jdbcTemplate.update(createInquiryQuery, createInquiryQueryParams);
+
+        String          retrieveLastInsertId = "SELECT LAST_INSERT_ID();";
+
+        return  new PostInquiryRes(
+                this.jdbcTemplate.queryForObject(retrieveLastInsertId, long.class)
+          , "성공적으로 문의되었습니다."
         );
     }
 }

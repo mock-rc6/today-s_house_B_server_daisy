@@ -125,11 +125,11 @@ public class StoreProvider {
             throw   new BaseException(BaseResponseStatus.OPTION_ID_NOT_EXISTS);
         }
 
-        //try{
+        try{
             return  storeDao.retrieveOptionInquiry(optionId);
-        //}
-        //catch (Exception exception){
-        //    throw   new BaseException(BaseResponseStatus.DATABASE_ERROR);
-        //}
+        }
+        catch (Exception exception){
+            throw   new BaseException(BaseResponseStatus.DATABASE_ERROR);
+        }
     }
 }

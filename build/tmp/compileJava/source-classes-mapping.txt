@@ -136,6 +136,8 @@ com/example/demo/src/store/model/GetTodaysDealMainRes.java
  com.example.demo.src.store.model.GetTodaysDealMainRes
 com/example/demo/src/store/model/PostScrapReq.java
  com.example.demo.src.store.model.PostScrapReq
+com/example/demo/src/store/model/PostInquiryReq.java
+ com.example.demo.src.store.model.PostInquiryReq
 com/example/demo/src/user/model/GetOrderReq.java
  com.example.demo.src.user.model.GetOrderReq
 com/example/demo/src/store/model/GetInquiryRes.java
@@ -148,6 +150,8 @@ com/example/demo/src/review/ReviewProvider.java
  com.example.demo.src.review.ReviewProvider
 com/example/demo/src/store/model/GetStoreItemRes.java
  com.example.demo.src.store.model.GetStoreItemRes
+com/example/demo/src/store/model/PostInquiryRes.java
+ com.example.demo.src.store.model.PostInquiryRes
 com/example/demo/src/user/model/GetCouponCodeRes.java
  com.example.demo.src.user.model.GetCouponCodeRes
 com/example/demo/src/main/model/GetMainHouseRes.java

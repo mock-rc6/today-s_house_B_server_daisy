@@ -189,4 +189,40 @@ public class StoreController {
             return  new BaseResponse<>(baseException.getStatus());
         }
     }
+
+    @ResponseBody
+    @PostMapping("/inquirys")
+    public BaseResponse<PostInquiryRes>         createInquiry(@RequestParam("id")String id,
+                                                              @RequestBody PostInquiryReq postInquiryReq)   throws BaseException{
+        if(!ValidationRegex.canConvertLong(id)){
+            return  new BaseResponse<>(BaseResponseStatus.INVALID_ID);
+        }
+
+        if(postInquiryReq.getCategory()==null){
+            return  new BaseResponse<>(BaseResponseStatus.EMPTY_INQUIRY_CATEGORY);
+        }
+
+        if(postInquiryReq.getDescription() == null){
+            return  new BaseResponse<>(BaseResponseStatus.EMPTY_INQUIRY_DESCRIPTION);
+        }
+
+        if(postInquiryReq.getIsPublic() != 0 && postInquiryReq.getIsPublic() != 1){
+            return  new BaseResponse<>(BaseResponseStatus.INVALID_INQUIRY_ISPUBLIC);
+        }
+
+        try{
+            long        optionId = Long.parseLong(id);
+            long        userId = jwtService.getUserId();
+
+            postInquiryReq.setUserId(userId);
+            postInquiryReq.setOptionId(optionId);
+
+            PostInquiryRes postInquiryRes = storeService.createInquiry(postInquiryReq);
+
+            return  new BaseResponse<PostInquiryRes>(postInquiryRes);
+        }
+        catch (BaseException baseException){
+            return  new BaseResponse<>(baseException.getStatus());
+        }
+    }
 }

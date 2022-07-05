@@ -8,7 +8,6 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class GetInquiryRes {
-    String                  title;
     String                  description;
     String                  createdAt;
     String                  userName;
