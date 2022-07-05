@@ -92,3 +92,17 @@
 - 쿠폰 등록 API 제작
   - 이 과정에서 쿠폰 코드들을 저장하는 테이블이 필요하여 ERD를 수정하였다.
     - `CouponCodes`라는 테이블을 추가하여 쿠폰 코드들을 저장해두었고 해당 코드들의 status로 사용자 등록 여부를 확인하였다.
+
+### 1️⃣1️⃣ 11일차[2022-07-05] 진행 상황
+- Inquiry에서 상품 옵션 별로 문의를 넣을 수 있으므로 optionId로 테이블 설계를 바꾸었다. itemId에서 optionId로 바꾸었으므로 key constraint도 바꾸었고, 쿼리문도 일부 수정하였다.
+  - 커밋 기록: [4db7816](https://github.com/mock-rc6/today-s_house_B_server_daisy/commit/4db78165a9d2c9afd4e1ef3671ff92a28363aa38)
+- 상품 옵션 문의 조회 API를 추가
+  - 커밋 기록 : [d5a9b59](https://github.com/mock-rc6/today-s_house_B_server_daisy/commit/d5a9b595782f3dcc0f4bb6862de37141f98e0454)
+- 상품 문의 생성 API 추가
+  - 커밋 기록 : [513fce0](https://github.com/mock-rc6/today-s_house_B_server_daisy/commit/513fce05dccf03ad9778a31fe48d14a316ffc162)
+- 유저 좋아요 목록 API 추가
+  - 커밋 기록 : [dbbb23a](https://github.com/mock-rc6/today-s_house_B_server_daisy/commit/513fce05dccf03ad9778a31fe48d14a316ffc162)
+- 팔로잉/팔로워 목록 조회 API 추가
+  - 커밋 기록 : [739ffd7](https://github.com/mock-rc6/today-s_house_B_server_daisy/commit/739ffd7ae5b415cbc9316d33dd2d8dee37b78236), [a377a9a](https://github.com/mock-rc6/today-s_house_B_server_daisy/commit/a377a9a029f6e13e88c48705287c2f363b28ee50)
+
+### 1️⃣2️⃣ 12일차[2022-07-06] 진행 상황
