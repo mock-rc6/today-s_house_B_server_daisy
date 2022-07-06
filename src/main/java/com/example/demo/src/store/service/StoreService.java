@@ -20,10 +20,8 @@ public class StoreService {
     private final UserProvider  userProvider;
 
     public long     createKartItem(PostKartItemReq postKartItemReq, long userId, long itemId) throws BaseException{
-        int num = Integer.parseInt(postKartItemReq.getNumber());
-        long optionId = Long.parseLong(postKartItemReq.getOptionId());
 
-        if(num<=0){
+        if(postKartItemReq.getNumber()<=0){
             throw new BaseException(BaseResponseStatus.INVALID_ITEM_NUMBER);
         }
 
@@ -31,23 +29,23 @@ public class StoreService {
             throw   new BaseException(BaseResponseStatus.USER_NOT_EXISTS);
         }
 
-        if(storeProvider.checkOptionId(optionId) == 0){
+        if(storeProvider.checkOptionId(postKartItemReq.getOptionId()) == 0){
             throw   new BaseException(BaseResponseStatus.OPTION_ID_NOT_EXISTS);
         }
 
-        if(storeProvider.checkItemOption(itemId, optionId) == 0){
+        if(storeProvider.checkItemOption(itemId, postKartItemReq.getOptionId()) == 0){
             throw   new BaseException(BaseResponseStatus.INVALID_ITEM_OPTION);
         }
 
-        if(storeProvider.checkKartItem(userId, optionId) == 1){
+        if(storeProvider.checkKartItem(userId, postKartItemReq.getOptionId()) == 1){
             throw   new BaseException(BaseResponseStatus.KART_ITEM_ALREADY_EXISTS);
         }
 
-        try{
+       // try{
             return storeDao.createKartItem(postKartItemReq, userId);
-        }catch (Exception exception){
-            throw   new BaseException(BaseResponseStatus.DATABASE_ERROR);
-        }
+       // }catch (Exception exception){
+       //     throw   new BaseException(BaseResponseStatus.DATABASE_ERROR);
+       // }
     }
 
     public PostScrapRes     createItemScrap(PostScrapReq postScrapReq)  throws BaseException{

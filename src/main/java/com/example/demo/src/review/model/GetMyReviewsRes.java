@@ -18,5 +18,5 @@ public class GetMyReviewsRes {
     String          buyAt;
     String          itemName;
     String          description;
-    List<String>    imgList;
+    String          img;
 }

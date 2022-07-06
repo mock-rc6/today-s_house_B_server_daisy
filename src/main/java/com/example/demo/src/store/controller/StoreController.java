@@ -108,17 +108,15 @@ public class StoreController {
     public BaseResponse<PostKartItemRes>       createKartItem(@PathVariable("userId") String id,
             @RequestParam("id") String item,
             @RequestBody PostKartItemReq postKartItemReq) throws BaseException{
-        if(postKartItemReq.getNumber() == null){
+        if(postKartItemReq.getNumber() == 0){
             return  new BaseResponse<>(BaseResponseStatus.EMPTY_OPTION_NUMBER);
         }
 
-        if(postKartItemReq.getOptionId() == null){
+        if(postKartItemReq.getOptionId() == 0){
             return new BaseResponse<>(BaseResponseStatus.EMPTY_OPTION_ID);
         }
 
-        if(!ValidationRegex.canConvertLong(id) || !ValidationRegex.canConvertLong(item)
-        || !ValidationRegex.canConvertLong(postKartItemReq.getOptionId())
-                || !ValidationRegex.canConvertInt(postKartItemReq.getNumber())){
+        if(!ValidationRegex.canConvertLong(id) || !ValidationRegex.canConvertLong(item)){
             // String 형을 int형이나 long형으로 변환할 수 있는지 여부
             return  new BaseResponse<>(BaseResponseStatus.INVALID_ID);
         }

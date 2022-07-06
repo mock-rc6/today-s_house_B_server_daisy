@@ -222,18 +222,14 @@ public class MainDao {
                 "         ELSE '다른 쇼핑몰 구매' END as 'buyAt',\n" +
                 "    I.itemName  as 'itemName',\n" +
                 "    LEFT(R.description, 200) as 'description',\n" +
-                "    reviewId\n" +
+                "    R.reviewId AS 'reviewId',\n" +
+                "   reviewPicUrl" +
                 "FROM (((Reviews R inner join Users U on R.userId = U.userId)\n" +
                 "      inner join ItemOptions IO on IO.optionId = R.optionId)\n" +
-                "      inner join Items I on I.itemId = IO.itemId)\n" +
+                "      inner join Items I on I.itemId = IO.itemId)" +
                 "WHERE U.userId = ?\n")+
                 (isPhotoReview? "AND EXISTS (SELECT reviewPicId FROM ReviewPics RP WHERE RP.reviewId = R.reviewId) = 1\n": "")+
                 (isBestReviews?"ORDER BY score DESC;" : "ORDER BY createdAt DESC;");
-
-        String      retrieveReviewImgsQuery = "SELECT reviewPicUrl\n" +
-                "FROM (ReviewPics RP inner join Reviews R on RP.reviewId = R.reviewId)\n" +
-                "WHERE R.userId = ? AND R.reviewId = ?;";
-
         long        retrieveMyReviewsQueryParams = userId;
 
         return  this.jdbcTemplate.query(
@@ -247,11 +243,7 @@ public class MainDao {
                         rs.getString("buyAt"),
                         rs.getString("itemName"),
                         rs.getString("description"),
-                        this.jdbcTemplate.query(
-                            retrieveReviewImgsQuery,
-                                (rs2, rowNum2) -> rs2.getString("reviewPicUrl"),
-                                retrieveMyReviewsQueryParams, rs.getLong("reviewId")
-                        )
+                        rs.getString("reviewPicUrl")
                 )
                 ,
                 retrieveMyReviewsQueryParams

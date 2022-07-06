@@ -146,19 +146,14 @@ public class StoreDao {
                 "         ELSE '다른 쇼핑몰 구매' END as 'buyAt',\n" +
                 "    I.itemName  as 'itemName',\n" +
                 "    LEFT(R.description, 200) as 'description',\n" +
-                "    reviewId\n" +
+                "    R.reviewId AS 'reviewId',\n" +
+                "    reviewPicUrl\n" +
                 "FROM (((Reviews R inner join Users U on R.userId = U.userId)\n" +
                 "      inner join ItemOptions IO on IO.optionId = R.optionId)\n" +
                 "      inner join Items I on I.itemId = IO.itemId)\n" +
+                "      left join ReviewPics RP on RP.reviewId = R.reviewId\n" +
                 "WHERE I.itemId = ?;";
         long        retrieveItemReviewQueryParams = itemId;
-
-        String      retrieveReviewImgListQuery = "SELECT reviewPicUrl\n" +
-                "FROM ((ReviewPics RP inner join Reviews R on RP.reviewId = R.reviewId)\n" +
-                "     inner join ItemOptions IO on IO.optionId = R.optionId)\n" +
-                "     inner join Items I on I.itemId = IO.itemId\n" +
-                "WHERE I.itemId = ? AND R.userId = ?;";
-        long        retrieveReviewImgListQueryParams = itemId;
 
         return  this.jdbcTemplate.query(
                 retrieveItemReviewQuery,
@@ -171,11 +166,7 @@ public class StoreDao {
                         rs.getString("buyAt"),
                         rs.getString("itemName"),
                         rs.getString("description"),
-                        this.jdbcTemplate.query(
-                                retrieveReviewImgListQuery,
-                                (rs2, rowNum2) -> rs2.getString("reviewPicUrl"),
-                                retrieveReviewImgListQueryParams, rs.getLong("userId")
-                        )
+                        rs.getString("reviewPicUrl")
                 )
                 ,
                 retrieveItemReviewQueryParams
@@ -192,26 +183,26 @@ public class StoreDao {
                 "        round((SELECT AVG(score)  FROM Reviews R WHERE R.optionId = O.optionId),1) is not null\n" +
                 "        then round((SELECT AVG(score)  FROM Reviews R WHERE R.optionId = O.optionId),1) else 0 end  AS 'score',\n" +
                 "    (SELECT COUNT(*) FROM Reviews R WHERE R.optionId = O.optionId)                      AS 'reviewCnt',\n" +
-                "    concat(round(100*(price-saledPrice)/price, 0),'%')                                          AS 'saleRate',\n" +
+                "    concat(round(100*saledPrice/price, 0),'%')                                            AS 'saleRate',\n" +
                 "    CASE WHEN (SELECT COUNT(saledPrice) FROM ItemOptions O WHERE O.itemId = I.itemId)>1\n" +
                 "         THEN concat(FORMAT(MIN(saledPrice),0), ' 외')\n" +
-                "         ELSE concat(FORMAT(saledPrice,0),'원')                           END           AS 'price',\n" +
-                "    (SELECT COUNT(scrapId) FROM Scraps S WHERE S.itemId = I.itemId)                     AS 'scrapCnt',\n" +
-                "    (SELECT COUNT(reviewId) FROM Reviews R WHERE R.optionId = O.optionId AND R.score = 5)       AS 'five',\n" +
-                "    (SELECT COUNT(reviewId) FROM Reviews R WHERE R.optionId = O.optionId AND R.score = 4)       AS 'four',\n" +
-                "    (SELECT COUNT(reviewId) FROM Reviews R WHERE R.optionId = O.optionId AND R.score = 3)       AS 'three',\n" +
-                "    (SELECT COUNT(reviewId) FROM Reviews R WHERE R.optionId = O.optionId AND R.score = 2)       AS 'two',\n" +
-                "    (SELECT COUNT(reviewId) FROM Reviews R WHERE R.optionId = O.optionId AND R.score = 1)       AS 'one',\n" +
-                "    (SELECT COUNT(inquiryId) FROM Inquiry WHERE Inquiry.optionId = O.optionId)                  AS 'inquiry',\n" +
-                "    CASE WHEN scrapId is null THEN 'true' ELSE 'false' END                                      AS 'isScrap'\n" +
-                "FROM (((\n" +
+                "         ELSE concat(FORMAT(saledPrice,0),'원')                           END              AS 'price',\n" +
+                "    (SELECT COUNT(scrapId) FROM Scraps S WHERE S.itemId = I.itemId)                       AS 'scrapCnt',\n" +
+                "    (SELECT COUNT(reviewId) FROM Reviews R WHERE R.optionId = O.optionId AND R.score = 5) AS 'five',\n" +
+                "    (SELECT COUNT(reviewId) FROM Reviews R WHERE R.optionId = O.optionId AND R.score = 4) AS 'four',\n" +
+                "    (SELECT COUNT(reviewId) FROM Reviews R WHERE R.optionId = O.optionId AND R.score = 3) AS 'three',\n" +
+                "    (SELECT COUNT(reviewId) FROM Reviews R WHERE R.optionId = O.optionId AND R.score = 2) AS 'two',\n" +
+                "    (SELECT COUNT(reviewId) FROM Reviews R WHERE R.optionId = O.optionId AND R.score = 1) AS 'one',\n" +
+                "    (SELECT COUNT(inquiryId) FROM Inquiry WHERE Inquiry.optionId = O.itemId)              AS 'inquiry',\n" +
+                "    CASE WHEN scrapId is null THEN 'true' ELSE 'false' END                                AS 'isScrap'\n" +
+                "FROM ((((\n" +
                 "        (Items I left join ItemOptions O on I.itemId = O.itemId)\n" +
                 "        inner join Companies C on C.companyId = I.companyId)\n" +
                 "        left  join Reviews R on R.optionId = O.optionId)\n" +
                 "        left  join ItemInfoPics IIP on I.itemId = IIP.itemId\n" +
-                "     ) left join Scraps S on S.status = 1 AND S.itemId = I.itemId AND S.userId = ?\n" +
+                "     ) left join Scraps S on S.status = 1 AND S.itemId = I.itemId AND S.userId = ?)\n" +
                 "WHERE\n" +
-                "    I.itemId = ?;\n";
+                "    I.itemId = ?;";
         Object[]        retrieveStoreItemQueryParams = new Object[]{userId, itemId};
 
         String  retrieveItemImgQuery = "SELECT pictureUrl FROM ItemPictures WHERE itemId = ? ;";
@@ -221,9 +212,11 @@ public class StoreDao {
           retrieveStoreItemQuery,
                 (rs, rowNum) -> new GetStoreItemRes(
                         rs.getString("itemName"),
-                        this.jdbcTemplate.query(retrieveItemImgQuery,
+                        this.jdbcTemplate.query(
+                                retrieveItemImgQuery,
                                 (rs2, rowNum2)-> rs2.getString("pictureUrl")
-                                ,itemId),
+                                ,itemId
+                        ),
                         rs.getLong("companyId"),
                         rs.getString("companyName"),
                         rs.getDouble("score"),
@@ -305,7 +298,7 @@ public class StoreDao {
         String          createKartItemQuery = "INSERT INTO KartItems(optionId, userId, number)\n" +
                 "VALUES(?, ?, ?);";
         Object[]        createKartItemQueryParams = new Object[]{
-                Long.parseLong(postKartItemReq.getOptionId()), userId, Integer.parseInt(postKartItemReq.getNumber())};
+                postKartItemReq.getOptionId(), userId, postKartItemReq.getNumber()};
         this.jdbcTemplate.update(createKartItemQuery, createKartItemQueryParams);
 
         String          lastInsertIdQuery = "SELECT last_insert_id();";

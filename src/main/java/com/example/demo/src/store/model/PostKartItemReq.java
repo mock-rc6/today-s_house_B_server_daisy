@@ -8,6 +8,6 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class PostKartItemReq {
-    String        optionId;
-    String        number;
+    long        optionId;
+    int        number;
 }
