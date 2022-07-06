@@ -308,7 +308,7 @@ public class StoreDao {
     public int          checkKartItem(long  userId, long optionId){
         String      checkKartItemQuery = "SELECT EXISTS(\n" +
                 "    SELECT kartId FROM KartItems\n" +
-                "    WHERE optionId = ? AND userId = ? AND status= 'N'\n" +
+                "    WHERE optionId = ? AND userId = ? AND status != 'Y'\n" +
                 "           );";
 
         Object[]    checkKartItemQueryParams = new Object[]{optionId, userId};

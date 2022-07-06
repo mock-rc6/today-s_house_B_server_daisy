@@ -103,6 +103,8 @@ public class StoreProvider {
             throw new BaseException(BaseResponseStatus.OPTION_ID_NOT_EXISTS);
         }
 
+        System.out.println(storeDao.checkItemOption(itemId, optionId));
+
         try{
             return storeDao.checkItemOption(itemId, optionId);
         }catch (Exception exception){

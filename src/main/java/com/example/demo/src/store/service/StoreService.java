@@ -41,11 +41,11 @@ public class StoreService {
             throw   new BaseException(BaseResponseStatus.KART_ITEM_ALREADY_EXISTS);
         }
 
-       // try{
+        try{
             return storeDao.createKartItem(postKartItemReq, userId);
-       // }catch (Exception exception){
-       //     throw   new BaseException(BaseResponseStatus.DATABASE_ERROR);
-       // }
+        }catch (Exception exception){
+            throw   new BaseException(BaseResponseStatus.DATABASE_ERROR);
+        }
     }
 
     public PostScrapRes     createItemScrap(PostScrapReq postScrapReq)  throws BaseException{

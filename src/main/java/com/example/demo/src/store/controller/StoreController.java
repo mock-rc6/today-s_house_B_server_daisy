@@ -137,7 +137,7 @@ public class StoreController {
 
             return new BaseResponse<PostKartItemRes>(postKartItemRes);
         }catch (BaseException baseException){
-            return new BaseResponse<>(BaseResponseStatus.DATABASE_ERROR);
+            return new BaseResponse<>(baseException.getStatus());
         }
     }
 
