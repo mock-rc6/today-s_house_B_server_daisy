@@ -114,6 +114,9 @@ public enum BaseResponseStatus {
     REVIEW_ALREADY_WRITTEN(false, 3025, "이미 사용자가 제품에 대한 리뷰를 작성했습니다."),
     LIKE_CATEGORY_NOT_EXISTS(false, 3026, "존재하지 않는 카테고리이거나 유저가 좋아요 누르지 않은 카테고리입니다."),
 
+    GUEST_ORDER_EMAIL_NOT_EXISTS(false, 3027, "존재하지 않는 비회원 주문 이메일입니다."),
+    GUEST_ORDER_NUMBER_NOT_EXISTS(false, 3028, "존재하지 않는 비회원 주문번호입니다."),
+
     /**
      * 4000 : Database, Server 오류
      */

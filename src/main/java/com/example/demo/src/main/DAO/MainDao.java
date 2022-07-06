@@ -328,4 +328,76 @@ public class MainDao {
 
         return  this.jdbcTemplate.queryForObject(checkReviewOptionQuery, int.class, checkReviewOptionQueryParams);
     }
+
+    public GetGuestOrderRes     retrieveGuestOrder(GetGuestOrderReq getGuestOrderReq){
+        String      retrieveGuestOrderQuery = "SELECT\n" +
+                "    CASE WHEN COUNT(guestOrderItemId) > 1 THEN concat(concat(concat(itemName, ' '), optionName), ' 외')\n" +
+                "    ELSE concat(concat(itemName, ' '), optionName) END AS 'orderItemName',\n" +
+                "    concat(FORMAT((SELECT\n" +
+                "         SUM(count*IO.saledPrice) + SUM(deliveryPrice)\n" +
+                "     FROM GuestOrders WHERE GuestOrders.guestOrderId = GOI.guestOrderId\n" +
+                "         ),0), '원') AS 'price',\n" +
+                "    concat(SUM(count),'개')  AS 'count',\n" +
+                "    CASE WHEN GO.status = 'PURCHASED' THEN '입금 완료'\n" +
+                "         WHEN GO.status = 'READY' THEN '상품 준비 중'\n" +
+                "        WHEN GO.status = 'DELIVERY' THEN '상품 배송 중'\n" +
+                "        ELSE '배송 완료' END AS 'status',\n" +
+                "    DATE_FORMAT(createdAt, '%Y-%m-%d')  as 'orderDate',\n" +
+                "    DATE_FORMAT(updatedAt, '%Y-%m-%d')  as 'updateDate',\n" +
+                "    orderName,\n" +
+                "    phoneNumber,\n" +
+                "    receivedName,\n" +
+                "    placeName,\n" +
+                "    receivedPhone,\n" +
+                "    addressCode,\n" +
+                "    address\n" +
+                "FROM\n" +
+                "    ((GuestOrderItem GOI inner join GuestOrders GO on GOI.guestOrderId = GO.guestOrderId)\n" +
+                "    inner join ItemOptions IO on IO.optionId = GOI.optionId)\n" +
+                "    inner join Items I on I.itemId = IO.optionId\n" +
+                "WHERE email = ? AND GO.guestOrderId = ?;";
+        Object[]    retrieveGuestOrderQueryParams = new Object[]{
+                getGuestOrderReq.getEmail(), getGuestOrderReq.getOrderNum()
+        };
+
+        return  this.jdbcTemplate.queryForObject(
+                retrieveGuestOrderQuery,
+                (rs, rowNum) -> new GetGuestOrderRes(
+                        rs.getString("orderItemName"),
+                        rs.getString("price"),
+                        rs.getString("count"),
+                        rs.getString("status"),
+                        rs.getString("orderDate"),
+                        rs.getString("updateDate"),
+                        rs.getString("orderName"),
+                        rs.getString("phoneNumber"),
+                        rs.getString("placeName"),
+                        rs.getString("receivedPhone"),
+                        rs.getString("addressCode"),
+                        rs.getString("address")
+                )
+                ,retrieveGuestOrderQueryParams
+        );
+    }
+
+    public int      checkGuestOrderId(long  guestOrderId){
+        String      checkGuestOrderIdQuery = "SELECT EXISTS(\n" +
+                "    SELECT guestOrderId\n" +
+                "    FROM GuestOrders WHERE guestOrderId = ?\n" +
+                "           );";
+        long        checkGuestOrderIdQueryParams = guestOrderId;
+
+        return  this.jdbcTemplate.queryForObject(checkGuestOrderIdQuery, int.class, checkGuestOrderIdQueryParams);
+    }
+
+    public int      checkGuestOrderEmail(String email){
+        String      checkGuestOrderEmailQuery = "SELECT EXISTS(\n" +
+                "    SELECT guestOrderId\n" +
+                "    FROM GuestOrders WHERE email= ?\n" +
+                "           );";
+        String      checkGuestOrderEmailQueryParams = email;
+
+        return  this.jdbcTemplate.queryForObject(checkGuestOrderEmailQuery, int.class, checkGuestOrderEmailQueryParams);
+
+    }
 }

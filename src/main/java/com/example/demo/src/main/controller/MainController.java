@@ -234,4 +234,32 @@ public class MainController {
             return  new BaseResponse<>(baseException.getStatus());
         }
     }
+
+    @ResponseBody
+    @GetMapping("/guests")
+    public BaseResponse<GetGuestOrderRes>   retrieveGuestOrder(@RequestParam("id")String id,
+                                                               @RequestBody GetGuestOrderReq getGuestOrderReq)   throws BaseException{
+        if(!ValidationRegex.canConvertLong(id)){
+            return  new BaseResponse<>(BaseResponseStatus.INVALID_ID);
+        }
+
+        if(getGuestOrderReq.getEmail() == null){
+            return  new BaseResponse<>(BaseResponseStatus.EMPTY_EMAIL);
+        }
+
+        if(!ValidationRegex.isRegexEmail(getGuestOrderReq.getEmail())){
+            return  new BaseResponse<>(BaseResponseStatus.POST_USERS_INVALID_EMAIL);
+        }
+
+        try{
+            long        orderId = Long.parseLong(id);
+
+            getGuestOrderReq.setOrderNum(orderId);
+            GetGuestOrderRes getGuestOrderRes = mainProvider.retrieveGuestOrder(getGuestOrderReq);
+
+            return  new BaseResponse<GetGuestOrderRes>(getGuestOrderRes);
+        }catch (BaseException baseException){
+            return  new BaseResponse<>(baseException.getStatus());
+        }
+    }
 }

@@ -22,6 +22,8 @@ com/example/demo/src/store/model/GetStoreRes.java
  com.example.demo.src.store.model.GetStoreRes
 com/example/demo/src/main/model/GetMyShoppingRes.java
  com.example.demo.src.main.model.GetMyShoppingRes
+com/example/demo/src/main/model/GetGuestOrderReq.java
+ com.example.demo.src.main.model.GetGuestOrderReq
 com/example/demo/src/user/dao/UserDao.java
  com.example.demo.src.user.dao.UserDao
 com/example/demo/src/store/test/TestController.java
@@ -162,6 +164,8 @@ com/example/demo/src/user/model/PatchKartOptionRes.java
  com.example.demo.src.user.model.PatchKartOptionRes
 com/example/demo/src/category/controller/CategoryController.java
  com.example.demo.src.category.controller.CategoryController
+com/example/demo/src/main/model/GetGuestOrderRes.java
+ com.example.demo.src.main.model.GetGuestOrderRes
 com/example/demo/src/main/controller/MainController.java
  com.example.demo.src.main.controller.MainController
 com/example/demo/src/WebSecurityConfig.java

@@ -96,11 +96,11 @@ public class MainProvider {
             throw   new BaseException(BaseResponseStatus.USER_NOT_EXISTS);
         }
 
-        //try{
+        try{
              return mainDao.retrieveMyReviews(userId, isPhotoReview, isBestReviews);
-        //}catch (Exception exception){
-        //    throw new BaseException(BaseResponseStatus.DATABASE_ERROR);
-        //}
+        }catch (Exception exception){
+            throw new BaseException(BaseResponseStatus.DATABASE_ERROR);
+        }
     }
 
     public GetReviewWriteRes        retrieveReviewWrite(long    optionId, long    userId) throws BaseException{
@@ -125,6 +125,39 @@ public class MainProvider {
         }
         catch (Exception exception){
             throw new BaseException(BaseResponseStatus.DATABASE_ERROR);
+        }
+    }
+
+    private int      checkGuestOrderId(long  guestOrderId) throws BaseException{
+        try{
+            return mainDao.checkGuestOrderId(guestOrderId);
+        }
+        catch (Exception exception){
+            throw   new BaseException(BaseResponseStatus.DATABASE_ERROR);
+        }
+    }
+
+    private int     checkGuestOrderEmail(String email)  throws BaseException{
+        try{
+            return  mainDao.checkGuestOrderEmail(email);
+        }
+        catch (Exception exception){
+            throw new BaseException(BaseResponseStatus.DATABASE_ERROR);
+        }
+    }
+    public GetGuestOrderRes     retrieveGuestOrder(GetGuestOrderReq getGuestOrderReq)   throws BaseException{
+        if(checkGuestOrderEmail(getGuestOrderReq.getEmail()) == 0){
+            throw   new BaseException(BaseResponseStatus.GUEST_ORDER_EMAIL_NOT_EXISTS);
+        }
+
+        if(checkGuestOrderId(getGuestOrderReq.getOrderNum()) == 0){
+            throw   new BaseException(BaseResponseStatus.GUEST_ORDER_NUMBER_NOT_EXISTS);
+        }
+
+        try{
+            return  mainDao.retrieveGuestOrder(getGuestOrderReq);
+        }catch (Exception exception){
+            throw   new BaseException(BaseResponseStatus.DATABASE_ERROR);
         }
     }
 }
