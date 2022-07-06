@@ -223,10 +223,11 @@ public class MainDao {
                 "    I.itemName  as 'itemName',\n" +
                 "    LEFT(R.description, 200) as 'description',\n" +
                 "    R.reviewId AS 'reviewId',\n" +
-                "   reviewPicUrl" +
+                "   reviewPicUrl\n" +
                 "FROM (((Reviews R inner join Users U on R.userId = U.userId)\n" +
                 "      inner join ItemOptions IO on IO.optionId = R.optionId)\n" +
-                "      inner join Items I on I.itemId = IO.itemId)" +
+                "      inner join Items I on I.itemId = IO.itemId)\n" +
+                "      left join ReviewPics RP on RP.reviewId = R.reviewId \n"+
                 "WHERE U.userId = ?\n")+
                 (isPhotoReview? "AND EXISTS (SELECT reviewPicId FROM ReviewPics RP WHERE RP.reviewId = R.reviewId) = 1\n": "")+
                 (isBestReviews?"ORDER BY score DESC;" : "ORDER BY createdAt DESC;");
