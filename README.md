@@ -118,3 +118,5 @@
   - 커밋 기록 : [20a3006](https://github.com/mock-rc6/today-s_house_B_server_daisy/commit/20a300630462ef76de975b6559aaee731538cf8c)
 
 ### 1️⃣3️⃣ 13일차[2022-07-07] 진행 상황
+- 이메일 인증을 위한 이메일 전송 API와 이메일 코드 확인 API 작성
+  - 커밋 기록: [3605921](https://github.com/mock-rc6/today-s_house_B_server_daisy/commit/36059212f23d367bf6acb23b2cdc29016c560f36)
