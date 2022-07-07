@@ -89,7 +89,9 @@ public enum BaseResponseStatus {
     EMPTY_INQUIRY_CATEGORY(false, 2055, "문의 카테고리를 입력해주세요."),
     EMPTY_INQUIRY_DESCRIPTION(false, 2056, "문의 내용을 입력해주세요."),
     INVALID_INQUIRY_ISPUBLIC(false, 2057, "공개 여부 코드가 잘못되었습니다. 0과 1 중에 다시 선택해주세요."),
-
+    EMPTY_VERIFICATION_CODE(false, 2058, "인증 코드를 입력하세요."),
+    EMPTY_VERIFICATION_CODE_ID(false, 2059, "인증 코드 id를 입력해주세요."),
+    INVALID_VERIFICATION_CODE(false, 2060, "올바르지 않은 이메일 인증 코드이거나 만료된 인증 코드입니다."),
     /**
      * 3000 : Response 오류
      */
