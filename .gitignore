@@ -27,8 +27,6 @@ Secret.java
 
 # 애플리케이션 설정
 application.yml
-application-oauth.properties
-application-s3.properties
 
 # AWS Config 파일
 AWSConfig.java
