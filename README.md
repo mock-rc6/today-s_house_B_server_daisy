@@ -2,9 +2,7 @@
 ## 💻 Tech Stack
 - Back-end
 
-<img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=for-the-badge&logo=Spring Boot&logoColor=white">
-<img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=MySQL&logoColor=white">
-<img src="https://img.shields.io/badge/NginX-009639?style=for-the-badge&logo=NGINX&logoColor=white">
+<img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=for-the-badge&logo=Spring Boot&logoColor=white"> <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=MySQL&logoColor=white"> <img src="https://img.shields.io/badge/NginX-009639?style=for-the-badge&logo=NGINX&logoColor=white">
 
 ## 📜 ERD
 👉 [ERD로 바로가기](https://aquerytool.com/aquerymain/index/?rurl=396ea193-ceab-4631-9fb7-a89881e24ad1)
@@ -106,3 +104,17 @@
   - 커밋 기록 : [739ffd7](https://github.com/mock-rc6/today-s_house_B_server_daisy/commit/739ffd7ae5b415cbc9316d33dd2d8dee37b78236), [a377a9a](https://github.com/mock-rc6/today-s_house_B_server_daisy/commit/a377a9a029f6e13e88c48705287c2f363b28ee50)
 
 ### 1️⃣2️⃣ 12일차[2022-07-06] 진행 상황
+- 리뷰 확인 API 수정
+  - 이미지는 최대 1개가 들어갈 수 있으므로 List형이 아니라 String형으로 바꿔달라는 클라이언트 개발자 분의 요청에 따라 수정
+  - 리뷰 관련 API를 전부 수정하였다.
+  - 커밋 기록: [55ac42f](https://github.com/mock-rc6/today-s_house_B_server_daisy/commit/55ac42f400896914d4bfd065f1e900878eb19b6b)
+- 장바구니 담기 API 수정
+  - 클라이어트 개발자 분이 장바구니 담기 API를 엮는 도중 validation이 이상하다는 말씀을 하셨다.
+  - 실제로, 이미 장바구니에 담긴 상품을 장바구니 또 담으려고 하면 `이미 장바구니에 담겨져 있는 상품입니다.`라는 에러가 떠야하는데 `데이터베이스 연결에 실패하였습니다.`라는 에러가 떴다.
+  - 따라서 이 부분을 수정하였다.
+  - 커밋 기록: [548c7ac](https://github.com/mock-rc6/today-s_house_B_server_daisy/commit/548c7ac6bb629c2e681f9d4ea4022395326d8994)
+- 비회원 주문 조회 API 생성
+  - 유일한 비회원 API인 비회원 주문 조회 API를 생성했다.
+  - 커밋 기록 : [20a3006](https://github.com/mock-rc6/today-s_house_B_server_daisy/commit/20a300630462ef76de975b6559aaee731538cf8c)
+
+### 1️⃣3️⃣ 13일차[2022-07-07] 진행 상황
