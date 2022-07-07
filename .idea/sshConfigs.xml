@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="SshConfigs">
-    <configs>
-      <sshConfig host="43.200.100.43" id="8a2310e9-0172-4434-92b5-a84ccf3a0b9c" keyPath="C:\Users\so464\Desktop\라이징캠프\라이징테스트\rising test.pem" port="22" nameFormat="DESCRIPTIVE" username="ubuntu" useOpenSSHConfig="true" />
-    </configs>
-  </component>
-</project>
