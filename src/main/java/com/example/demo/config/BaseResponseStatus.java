@@ -92,6 +92,9 @@ public enum BaseResponseStatus {
     EMPTY_VERIFICATION_CODE(false, 2058, "인증 코드를 입력하세요."),
     EMPTY_VERIFICATION_CODE_ID(false, 2059, "인증 코드 id를 입력해주세요."),
     INVALID_VERIFICATION_CODE(false, 2060, "올바르지 않은 이메일 인증 코드이거나 만료된 인증 코드입니다."),
+
+    INVALID_ID_USER(false, 2061, "올바르지 않은 유저 id 형식입니다."),
+
     /**
      * 3000 : Response 오류
      */

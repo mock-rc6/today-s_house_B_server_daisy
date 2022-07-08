@@ -57,9 +57,14 @@ public class StoreController {
     @GetMapping("/items")
     public BaseResponse<GetStoreItemRes>   retrieveStoreItem(@RequestParam("id") String id,
                                                              @RequestParam("user") String user)    throws BaseException{
-        if(!ValidationRegex.canConvertLong(id) || !ValidationRegex.canConvertLong(user)){
+        if(!ValidationRegex.canConvertLong(id)){
             return  new BaseResponse<>(BaseResponseStatus.INVALID_ID);
         }
+
+        if(!ValidationRegex.canConvertLong(user)){
+            return  new BaseResponse<>(BaseResponseStatus.INVALID_ID_USER);
+        }
+
         try{
             long    itemId = Long.parseLong(id);
             long    userId = Long.parseLong(user);

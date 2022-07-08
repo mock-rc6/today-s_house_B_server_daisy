@@ -112,11 +112,11 @@ public class MainProvider {
             throw   new BaseException(BaseResponseStatus.USER_NOT_EXISTS);
         }
 
-        try{
+        //try{
             return mainDao.retrieveReviewWrite(optionId, userId);
-        }catch (Exception exception){
-            throw   new BaseException(BaseResponseStatus.DATABASE_ERROR);
-        }
+        ///}catch (Exception exception){
+         //   throw   new BaseException(BaseResponseStatus.DATABASE_ERROR);
+       // }
     }
 
     public int              checkReviewOption(long  userId, long optionId)  throws BaseException{

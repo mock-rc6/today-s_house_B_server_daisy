@@ -258,9 +258,9 @@ public class MainDao {
                 "    I.itemId        AS 'itemId'\n" +
                 "FROM\n" +
                 "    (Items I inner join ItemPictures IP on I.itemId = IP.itemId)\n" +
-                "    inner join ItemOptions IO on IO.itemId = I.itemId\n" +
+                "    left join ItemOptions IO on IO.itemId = I.itemId\n" +
                 "WHERE\n" +
-                "    IO.optionId = 1\n" +
+                "    IO.optionId = ?\n" +
                 "GROUP BY IP.itemId;";
         long        retrieveReviewWriteQuery = optionId;
 

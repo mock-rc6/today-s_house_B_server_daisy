@@ -9,7 +9,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class GetItemOptionRes {
     String      saleRate;
-    String      saledPrice;
+    int         saledPrice;
     long        optionId;
     String      optionName;
     String      specialPrice;

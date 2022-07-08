@@ -245,7 +245,7 @@ public class StoreDao {
     public List<GetItemOptionRes>     retrieveItemOptions(long itemId){
         String      retrieveItemOptionQuery = "SELECT\n" +
                 "    concat(round((price-saledPrice)*100/price,0), '%')                  AS 'saleRate',\n" +
-                "    FORMAT(saledPrice,0)                                        AS 'saledPrice',\n" +
+                "    saledPrice                                                  AS 'saledPrice',\n" +
                 "    O.optionId                                                  AS 'optionId',\n" +
                 "    O.optionName                                                AS 'optionName',\n" +
                 "    CASE WHEN   round(saledPrice*100/price,0)>=30.0\n" +
@@ -262,7 +262,7 @@ public class StoreDao {
         return  this.jdbcTemplate.query(retrieveItemOptionQuery,
                 (rs, rowNum) -> new GetItemOptionRes(
                         rs.getString("saleRate"),
-                        rs.getString("saledPrice"),
+                        rs.getInt("saledPrice"),
                         rs.getLong("optionId"),
                         rs.getString("optionName"),
                         rs.getString("specialPrice"),
