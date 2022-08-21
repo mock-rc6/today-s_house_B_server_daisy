@@ -1,0 +1,212 @@
+com/example/demo/src/user/model/GetUserLikeRes.java
+ com.example.demo.src.user.model.GetUserLikeRes
+com/example/demo/src/oauth/service/OAuthService.java
+ com.example.demo.src.oauth.service.OAuthService
+com/example/demo/src/user/model/PostLogInRes.java
+ com.example.demo.src.user.model.PostLogInRes
+com/example/demo/src/store/model/GetInquiryAnswerRes.java
+ com.example.demo.src.store.model.GetInquiryAnswerRes
+com/example/demo/src/user/controller/UserController.java
+ com.example.demo.src.user.controller.UserController
+com/example/demo/src/main/model/GetMyProfileRes.java
+ com.example.demo.src.main.model.GetMyProfileRes
+com/example/demo/src/user/model/GetUserFollowingRes.java
+ com.example.demo.src.user.model.GetUserFollowingRes
+com/example/demo/config/BaseResponseStatus.java
+ com.example.demo.config.BaseResponseStatus
+com/example/demo/src/main/model/GetMainEventRes.java
+ com.example.demo.src.main.model.GetMainEventRes
+com/example/demo/src/category/model/GetCategoryRes.java
+ com.example.demo.src.category.model.GetCategoryRes
+com/example/demo/src/store/model/GetStoreRes.java
+ com.example.demo.src.store.model.GetStoreRes
+com/example/demo/src/main/model/GetMyShoppingRes.java
+ com.example.demo.src.main.model.GetMyShoppingRes
+com/example/demo/src/main/model/GetGuestOrderReq.java
+ com.example.demo.src.main.model.GetGuestOrderReq
+com/example/demo/src/user/dao/UserDao.java
+ com.example.demo.src.user.dao.UserDao
+com/example/demo/src/store/test/TestController.java
+ com.example.demo.src.store.test.TestController
+com/example/demo/src/user/model/GetUserFollowerRes.java
+ com.example.demo.src.user.model.GetUserFollowerRes
+com/example/demo/src/user/model/GetScrapItemRes.java
+ com.example.demo.src.user.model.GetScrapItemRes
+com/example/demo/src/user/model/GetKartInfoRes.java
+ com.example.demo.src.user.model.GetKartInfoRes
+com/example/demo/src/user/model/PostOrderReq.java
+ com.example.demo.src.user.model.PostOrderReq
+com/example/demo/src/main/model/GetEventsRes.java
+ com.example.demo.src.main.model.GetEventsRes
+com/example/demo/src/user/model/PostUserRes.java
+ com.example.demo.src.user.model.PostUserRes
+com/example/demo/src/mail/model/PostVerifyCodeReq.java
+ com.example.demo.src.mail.model.PostVerifyCodeReq
+com/example/demo/src/category/model/GetCategoryDetailRes.java
+ com.example.demo.src.category.model.GetCategoryDetailRes
+com/example/demo/src/main/model/GetEventDetailRes.java
+ com.example.demo.src.main.model.GetEventDetailRes
+com/example/demo/src/store/controller/StoreController.java
+ com.example.demo.src.store.controller.StoreController
+com/example/demo/src/store/StoreProvider.java
+ com.example.demo.src.store.StoreProvider
+com/example/demo/src/category/model/GetCategoryEventsRes.java
+ com.example.demo.src.category.model.GetCategoryEventsRes
+com/example/demo/src/review/controller/ReviewController.java
+ com.example.demo.src.review.controller.ReviewController
+com/example/demo/src/user/model/PostOrderRes.java
+ com.example.demo.src.user.model.PostOrderRes
+com/example/demo/utils/SHA256.java
+ com.example.demo.utils.SHA256
+com/example/demo/src/store/dao/StoreDao.java
+ com.example.demo.src.store.dao.StoreDao
+com/example/demo/src/main/DAO/MainDao.java
+ com.example.demo.src.main.DAO.MainDao
+com/example/demo/src/user/model/GetOrderRes.java
+ com.example.demo.src.user.model.GetOrderRes
+com/example/demo/src/user/model/PostCouponRes.java
+ com.example.demo.src.user.model.PostCouponRes
+com/example/demo/src/review/service/ReviewService.java
+ com.example.demo.src.review.service.ReviewService
+com/example/demo/src/store/model/GetTodaysDealMainRes.java
+ com.example.demo.src.store.model.GetTodaysDealMainRes
+com/example/demo/src/store/model/PostScrapReq.java
+ com.example.demo.src.store.model.PostScrapReq
+com/example/demo/src/mail/service/MailService.java
+ com.example.demo.src.mail.service.MailService
+com/example/demo/src/user/model/GetHouseCategoryRes.java
+ com.example.demo.src.user.model.GetHouseCategoryRes
+com/example/demo/src/store/model/GetInquiryRes.java
+ com.example.demo.src.store.model.GetInquiryRes
+com/example/demo/src/store/model/GetStoreItemRes.java
+ com.example.demo.src.store.model.GetStoreItemRes
+com/example/demo/src/store/model/PostInquiryRes.java
+ com.example.demo.src.store.model.PostInquiryRes
+com/example/demo/src/user/model/GetCouponCodeRes.java
+ com.example.demo.src.user.model.GetCouponCodeRes
+com/example/demo/src/main/model/GetMainHouseRes.java
+ com.example.demo.src.main.model.GetMainHouseRes
+com/example/demo/src/store/model/GetStoreCategoryRes.java
+ com.example.demo.src.store.model.GetStoreCategoryRes
+com/example/demo/src/oauth/model/KakaoUser.java
+ com.example.demo.src.oauth.model.KakaoUser
+com/example/demo/src/store/service/StoreService.java
+ com.example.demo.src.store.service.StoreService
+com/example/demo/utils/JwtService.java
+ com.example.demo.utils.JwtService
+com/example/demo/src/user/UserProvider.java
+ com.example.demo.src.user.UserProvider
+com/example/demo/src/store/model/GetStoreMainEvents.java
+ com.example.demo.src.store.model.GetStoreMainEvents
+com/example/demo/src/user/model/GetUserScrapRes.java
+ com.example.demo.src.user.model.GetUserScrapRes
+com/example/demo/src/user/service/UserService.java
+ com.example.demo.src.user.service.UserService
+com/example/demo/src/user/model/GetUserCouponRes.java
+ com.example.demo.src.user.model.GetUserCouponRes
+com/example/demo/config/Constant.java
+ com.example.demo.config.Constant
+com/example/demo/src/user/model/PatchKartOptionReq.java
+ com.example.demo.src.user.model.PatchKartOptionReq
+com/example/demo/src/main/model/PostReviewReq.java
+ com.example.demo.src.main.model.PostReviewReq
+com/example/demo/utils/ValidationRegex.java
+ com.example.demo.utils.ValidationRegex
+com/example/demo/src/category/model/GetCategoryItemRes.java
+ com.example.demo.src.category.model.GetCategoryItemRes
+com/example/demo/src/main/model/GetMainRes.java
+ com.example.demo.src.main.model.GetMainRes
+com/example/demo/src/oauth/controller/OAuthController.java
+ com.example.demo.src.oauth.controller.OAuthController
+com/example/demo/src/store/model/PostKartItemRes.java
+ com.example.demo.src.store.model.PostKartItemRes
+com/example/demo/src/main/service/MainService.java
+ com.example.demo.src.main.service.MainService
+com/example/demo/src/category/CategoryProvider.java
+ com.example.demo.src.category.CategoryProvider
+com/example/demo/src/user/model/GetScrapFoldersRes.java
+ com.example.demo.src.user.model.GetScrapFoldersRes
+com/example/demo/src/mail/dao/MailDao.java
+ com.example.demo.src.mail.dao.MailDao
+com/example/demo/config/secret/Secret.java
+ com.example.demo.config.secret.Secret
+com/example/demo/src/user/model/PostScrapBookRes.java
+ com.example.demo.src.user.model.PostScrapBookRes
+com/example/demo/src/user/model/GetScrapsRes.java
+ com.example.demo.src.user.model.GetScrapsRes
+com/example/demo/config/BaseResponse.java
+ com.example.demo.config.BaseResponse
+com/example/demo/src/oauth/config/KakaoOAuth.java
+ com.example.demo.src.oauth.config.KakaoOAuth
+com/example/demo/src/user/model/GetScrapCategory.java
+ com.example.demo.src.user.model.GetScrapCategory
+com/example/demo/src/user/model/GetUserKartRes.java
+ com.example.demo.src.user.model.GetUserKartRes
+com/example/demo/src/main/model/PostReviewRes.java
+ com.example.demo.src.main.model.PostReviewRes
+com/example/demo/src/user/model/PatchCouponStatusReq.java
+ com.example.demo.src.user.model.PatchCouponStatusReq
+com/example/demo/src/user/model/GetCouponRes.java
+ com.example.demo.src.user.model.GetCouponRes
+com/example/demo/src/review/dao/ReviewDao.java
+ com.example.demo.src.review.dao.ReviewDao
+com/example/demo/config/BaseException.java
+ com.example.demo.config.BaseException
+com/example/demo/src/main/model/GetReviewWriteRes.java
+ com.example.demo.src.main.model.GetReviewWriteRes
+com/example/demo/src/user/model/GetScrapHousePicRes.java
+ com.example.demo.src.user.model.GetScrapHousePicRes
+com/example/demo/src/user/model/PostScrapBookReq.java
+ com.example.demo.src.user.model.PostScrapBookReq
+com/example/demo/src/review/model/GetMyReviewsRes.java
+ com.example.demo.src.review.model.GetMyReviewsRes
+com/example/demo/src/user/model/PostUserReq.java
+ com.example.demo.src.user.model.PostUserReq
+com/example/demo/src/category/dao/CategoryDao.java
+ com.example.demo.src.category.dao.CategoryDao
+com/example/demo/src/store/model/GetItemOptionRes.java
+ com.example.demo.src.store.model.GetItemOptionRes
+com/example/demo/src/user/model/PatchKartOptionRes.java
+ com.example.demo.src.user.model.PatchKartOptionRes
+com/example/demo/src/category/controller/CategoryController.java
+ com.example.demo.src.category.controller.CategoryController
+com/example/demo/src/main/model/GetGuestOrderRes.java
+ com.example.demo.src.main.model.GetGuestOrderRes
+com/example/demo/src/mail/controller/MailController.java
+ com.example.demo.src.mail.controller.MailController
+com/example/demo/src/main/controller/MainController.java
+ com.example.demo.src.main.controller.MainController
+com/example/demo/src/WebSecurityConfig.java
+ com.example.demo.src.WebSecurityConfig
+com/example/demo/src/category/model/GetAllCategoryRes.java
+ com.example.demo.src.category.model.GetAllCategoryRes
+com/example/demo/src/store/model/PostScrapRes.java
+ com.example.demo.src.store.model.PostScrapRes
+com/example/demo/config/mail/MailConfig.java
+ com.example.demo.config.mail.MailConfig
+com/example/demo/src/store/model/PostInquiryReq.java
+ com.example.demo.src.store.model.PostInquiryReq
+com/example/demo/src/user/model/GetOrderReq.java
+ com.example.demo.src.user.model.GetOrderReq
+com/example/demo/src/user/model/PatchKartOptionIdReq.java
+ com.example.demo.src.user.model.PatchKartOptionIdReq
+com/example/demo/src/main/MainProvider.java
+ com.example.demo.src.main.MainProvider
+com/example/demo/src/review/ReviewProvider.java
+ com.example.demo.src.review.ReviewProvider
+com/example/demo/src/user/model/GetLikePosts.java
+ com.example.demo.src.user.model.GetLikePosts
+com/example/demo/src/user/model/PostLogInReq.java
+ com.example.demo.src.user.model.PostLogInReq
+com/example/demo/src/store/model/PostKartItemReq.java
+ com.example.demo.src.store.model.PostKartItemReq
+com/example/demo/src/user/model/GetUserRes.java
+ com.example.demo.src.user.model.GetUserRes
+com/example/demo/DemoApplication.java
+ com.example.demo.DemoApplication
+com/example/demo/src/user/model/PatchPasswordReq.java
+ com.example.demo.src.user.model.PatchPasswordReq
+com/example/demo/src/category/model/GetCategory.java
+ com.example.demo.src.category.model.GetCategory
+com/example/demo/src/user/model/PostCouponReq.java
+ com.example.demo.src.user.model.PostCouponReq
